@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import {  OnInit, ViewChild } from '@angular/core'; 
-import {  MatTableDataSource } from '@angular/material/table'; 
+import { Component,OnInit, ViewChild } from '@angular/core';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table'; 
 import { MatSort, MatSortModule } from '@angular/material/sort'; 
 import { MatIconModule } from '@angular/material/icon'; 
 import { MatButtonModule } from '@angular/material/button'; 
@@ -17,16 +15,10 @@ export interface Student {
   estado: string; 
 }
 
-const DATOS_ALUMNOS: Student[] = [
-  {id: 1, nombre: 'Tomas', apellido: 'Gonzalez', carrera: 'Ing. Sistemas', estado: 'Activo'},
-  {id: 2, nombre: 'Maria', apellido: 'Lopez', carrera: 'Arquitectura', estado: 'Inactivo'},
-  
-];
-
 @Component({
   selector: 'app-career-self-management',
-  imports: [MatTableModule, 
-    MatTableModule,
+  imports: [
+    MatTableModule, 
     MatSortModule,       
     MatButtonModule,     
     MatIconModule,       
@@ -36,10 +28,16 @@ const DATOS_ALUMNOS: Student[] = [
   styleUrl: './student-self-management.css',
 })
 export class StudentSelfManagement {
+
+  private alumnosData: Student[] = [
+    {id: 1, nombre: 'Tomas', apellido: 'Gonzalez', carrera: 'Ing. Sistemas', estado: 'Activo'},
+    {id: 2, nombre: 'Maria', apellido: 'Lopez', carrera: 'Arquitectura', estado: 'Inactivo'},
+  
+  ]
   displayedColumns: string[] = ['nombre', 'apellido', 'carrera', 'estado', 'acciones'];
 
   
-  dataSource = new MatTableDataSource(DATOS_ALUMNOS);
+  dataSource = new MatTableDataSource(this.alumnosData);
   
   
   @ViewChild(MatSort) sort!: MatSort; 
@@ -64,7 +62,12 @@ export class StudentSelfManagement {
   }
 
   eliminarAlumno  (id: number) {
-    console.log('Eliminar ID:', id);
+    if(!confirm('¿Estás seguro de que deseas eliminar este alumno?')) {
+      return;
+    }
+    this.alumnosData = this.alumnosData.filter(alum => alum.id !== id);
+    this.dataSource.data = this.alumnosData;
+    console.log('Alumno eliminado con ID ${id} eliminada');
     
   }
 }
