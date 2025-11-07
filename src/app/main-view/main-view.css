@@ -1,0 +1,107 @@
+section {
+  display: flex;
+  align-items: center;
+  
+}
+
+.example-label {
+  font-size: 14px;
+  margin: 0 16px 0 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.titulo-centrado {
+  display:flex;
+  align-items: center;
+
+  justify-content: center;
+ font-size: 1.6rem;
+  font-weight: 500;
+  justify-content: center;
+  
+}
+/* src/app/career-list/career-list.css */
+
+/* --- Estilos Mobile First --- */
+
+/* 1. Contenedor principal para centrar la tarjeta */
+.menu-container-wrapper {
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical (si el contenedor tiene altura suficiente) */
+  padding: 16px; 
+  margin-top:8%;
+
+           /* Espacio alrededor */
+}
+
+/* 2. Estilos del recuadro (MatCard) */
+.menu-card {
+  /* Ancho para Mobile: Ocupa casi todo el ancho, pero con margen */
+  width: 100%; 
+  max-width: 400px; /* Define un ancho máximo para que no se extienda demasiado en desktop */
+
+  /* Bordes redondeados */
+  border-radius: 12px; 
+  
+  /* Sombra suave: mat-elevation-z4 ya proporciona una buena sombra */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* 3. Estilos de los ítems */
+.menu-item {
+  cursor: pointer;
+  padding: 16px 0; /* Espaciado entre items (top/bottom) */
+}
+
+.menu-item:hover {
+  background-color: #f5f5f5; /* Efecto visual al pasar el ratón */
+}
+
+/* 4. Estilo del título */
+.card-title {
+  text-align: center; /* Centrar el texto dentro del header de la tarjeta */
+  margin-bottom: 8px;
+  font-size: 2rem;
+  cursor:pointer;
+  transition: text-shadow 0.4s ease;
+}
+.card-title:hover {
+   /* Cambia el color al pasar el ratón */
+  text-shadow: 2px 0px 7px rgba(19, 18, 18, 0.925);
+}
+
+/* 5. Asegurar separación (solo si usas MatList) */
+mat-list-item {
+  /* Quita el padding vertical por defecto de mat-list-item para usar el padding del .menu-item */
+  height: auto !important;
+  padding: 1rem !important;
+  font-size: 1.8rem;
+  
+  
+}
+.self-management-item {
+  cursor:pointer;
+  font-size: 1.6rem;
+  transition: color 0.3s ease;
+ 
+}
+
+.self-management-item:hover {
+  color: #5a5252; /* Cambia el color al pasar el ratón */
+}
