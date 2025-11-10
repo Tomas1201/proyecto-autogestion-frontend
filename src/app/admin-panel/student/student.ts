@@ -24,8 +24,8 @@ export interface Student {
     MatIconModule,       
     MatFormFieldModule,  
     MatInputModule],
-  templateUrl: './student-self-management.html',
-  styleUrl: './student-self-management.css',
+  templateUrl: './student.html',
+  styleUrl: './student.css',
 })
 export class StudentSelfManagement {
 
