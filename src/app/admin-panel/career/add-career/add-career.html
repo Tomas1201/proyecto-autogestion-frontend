@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Agregar Nueva Carrera</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form class="career-form">
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre de la Carrera</mat-label>
+      <input matInput [(ngModel)]="nuevaCarrera.nombre" name="nombre" required>
+      <mat-icon matSuffix>school</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Duración (años)</mat-label>
+      <input matInput type="number" [(ngModel)]="nuevaCarrera.duracion" name="duracion" required>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descripción / Perfil</mat-label>
+      <textarea matInput 
+                [(ngModel)]="nuevaCarrera.descripcion" 
+                name="descripcion" 
+                rows="4" 
+                maxlength="500"></textarea>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="!nuevaCarrera.nombre || !nuevaCarrera.duracion" (click)="onGuardar()">Guardar</button>
+</mat-dialog-actions>

@@ -1,0 +1,24 @@
+/* Asegura que el formulario dentro del contenido del modal sea un contenedor flexible */
+.career-form {
+  display: flex;
+  flex-direction: row; /* Elementos en fila por defecto */
+  flex-wrap: wrap; /* Permite que los elementos salten a la siguiente línea */
+  gap: 16px; /* Espacio entre los campos */
+}
+
+/* Campos que deben ocupar el 100% del ancho */
+.full-width {
+  width: 100%;
+}
+
+/* Campos que queremos que ocupen un ancho menor (ej. la duración) */
+/* Es importante usar 'flex-grow: 1' para que crezcan si hay espacio */
+.half-width {
+  flex-grow: 1; /* Permite que el campo se estire */
+  min-width: 120px; /* Ancho mínimo para que no se vea feo */
+}
+
+/* Opcional: Estilo para que el contenido del modal ocupe más espacio si es necesario */
+mat-dialog-content {
+  padding: 0 24px 20px 24px;
+}

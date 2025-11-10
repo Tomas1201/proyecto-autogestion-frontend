@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button'; 
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
+import { AddCareer } from './add-career/add-career';
 
 export interface Carrera {
   id: number; 
@@ -30,7 +32,9 @@ export interface Carrera {
   styleUrl: './career-self-management.css',
 })
 export class CareerSelfManagement implements OnInit {
+  constructor(private dialog: MatDialog) { }
   
+
   // 1. Datos iniciales como propiedad mutable de la clase
   private carrerasData: Carrera[] = [
     {id: 1, nombre: 'Ing. Sistemas', materias: 'Ver Materias', descripcion: 'Análisis y desarrollo de software', duracion: 5},
@@ -55,8 +59,17 @@ export class CareerSelfManagement implements OnInit {
   }
 
   agregarCarrera() {
-    console.log('Abrir formulario para agregar');
-    // Lógica pendiente: Abrir modal o navegar a formulario
+  const dialogRef = this.dialog.open(AddCareer, {
+     minWidth: '300px', 
+    maxWidth: '600px', // Limita el ancho máximo en pantallas grandes
+    width: '90%',
+    });
+    dialogRef.afterClosed().subscribe(nuevaCarrera => {
+      if (nuevaCarrera) {
+        console.log('Carrera recibida:', nuevaCarrera);
+        // Aquí puedes procesar/guardar la nueva carrera
+      }
+    });
   }
 
   editarCarrera(carrera: Carrera) {

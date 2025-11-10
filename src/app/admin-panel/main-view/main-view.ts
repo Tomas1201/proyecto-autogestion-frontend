@@ -6,6 +6,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'mainViewComponent',
   standalone: true,
