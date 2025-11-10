@@ -9,10 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 
 export interface Student {
   id: number; 
-  nombre: string;
-  apellido: string; 
-  carrera: string;
-  estado: string; 
+  name: string;
+  lastName: string; 
+  career: string;
+  status: string; 
 }
 
 @Component({
@@ -29,15 +29,15 @@ export interface Student {
 })
 export class StudentSelfManagement {
 
-  private alumnosData: Student[] = [
-    {id: 1, nombre: 'Tomas', apellido: 'Gonzalez', carrera: 'Ing. Sistemas', estado: 'Activo'},
-    {id: 2, nombre: 'Maria', apellido: 'Lopez', carrera: 'Arquitectura', estado: 'Inactivo'},
+  private studentData: Student[] = [
+    {id: 1, name: 'Tomas', lastName: 'Gonzalez', career: 'Ing. Sistemas', status: 'Activo'},
+    {id: 2, name: 'Maria', lastName: 'Lopez', career: 'Arquitectura', status: 'Inactivo'},
   
   ]
-  displayedColumns: string[] = ['nombre', 'apellido', 'carrera', 'estado', 'acciones'];
+  displayedColumns: string[] = ['name', 'lastName', 'career', 'status', 'actions'];
 
   
-  dataSource = new MatTableDataSource(this.alumnosData);
+  dataSource = new MatTableDataSource(this.studentData);
   
   
   @ViewChild(MatSort) sort!: MatSort; 
@@ -46,28 +46,27 @@ export class StudentSelfManagement {
     this.dataSource.sort = this.sort;
   }
 
- 
-  aplicarFiltro(event: Event) {
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   
-  agregarAlumno() {
+  addStudent() {
     console.log('Abrir formulario para agregar');
   }
 
-  editarAlumno(alumno: Student) {
-    console.log('Editar:', alumno);
+  editStudent(student: Student) {
+    console.log('Editar:', student);
   }
 
-  eliminarAlumno  (id: number) {
+  deleteStudent(id: number) {
     if(!confirm('¿Estás seguro de que deseas eliminar este alumno?')) {
       return;
     }
-    this.alumnosData = this.alumnosData.filter(alum => alum.id !== id);
-    this.dataSource.data = this.alumnosData;
-    console.log('Alumno eliminado con ID ${id} eliminada');
+    this.studentData = this.studentData.filter(student => student.id !== id);
+    this.dataSource.data = this.studentData;
+    console.log(`Alumno eliminado con ID ${id} eliminada`);
     
   }
 }

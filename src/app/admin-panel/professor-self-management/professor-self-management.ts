@@ -8,10 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 
 export interface Professor {
   id: number; 
-  nombre: string;
-  apellido: string; 
-  carrera: string;
-  estado: string; 
+  name: string;
+  lastName: string; 
+  career: string;
+  status: string; 
 }
 
 
@@ -19,7 +19,7 @@ export interface Professor {
 @Component({
   selector: 'app-career-self-management',
   imports: [
-    MatTableModule, // Eliminada la duplicación
+    MatTableModule,
     MatSortModule,       
     MatButtonModule,     
     MatIconModule,       
@@ -31,14 +31,14 @@ export interface Professor {
 })
 export class ProfessorSelfManagement implements OnInit {
   
-  private profesoresData: Professor[] = [
-    {id: 1, nombre: 'Juan', apellido: 'Pérez', carrera: 'Ing. Sistemas', estado: 'Activo'},
-    {id: 2, nombre: 'María', apellido: 'Gómez', carrera: 'Arquitectura', estado: 'Inactivo'},
+  private professorData: Professor[] = [
+    {id: 1, name: 'Juan', lastName: 'Pérez', career: 'Ing. Sistemas', status: 'Activo'},
+    {id: 2, name: 'María', lastName: 'Gómez', career: 'Arquitectura', status: 'Inactivo'},
     // Puedes añadir más datos aquí
   ];
   displayedColumns: string[] = ['nombre', 'apellido', 'carrera', 'estado', 'acciones'];
 
-  dataSource = new MatTableDataSource(this.profesoresData);
+  dataSource = new MatTableDataSource(this.professorData);
   
   @ViewChild(MatSort) sort!: MatSort;
  
@@ -48,29 +48,29 @@ export class ProfessorSelfManagement implements OnInit {
   }
 
  
-  aplicarFiltro(event: Event) {
+  aplyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   
-  agregarProfesor() {
+  addProfessor() {
     console.log('Abrir formulario para agregar');
   }
 
-  editarProfesor(profesor: Professor) {
+  editProfessor(profesor: Professor) {
     console.log('Editar:', profesor);
   }
 
   
-  eliminarProfesor(id: number) {
+  deleteProfessor(id: number) {
     if(!confirm('¿Estás seguro de que deseas eliminar este profesor?')) {
       return;
     }
 
-    this.profesoresData = this.profesoresData.filter(prof => prof.id !== id);
-    this.dataSource.data = this.profesoresData;
-    console.log('Profesor eliminado con ID ${id} eliminada');
+    this.professorData = this.professorData.filter(prof => prof.id !== id);
+    this.dataSource.data = this.professorData;
+    console.log(`Profesor eliminado con ID ${id} eliminada`);
     
   }
 }

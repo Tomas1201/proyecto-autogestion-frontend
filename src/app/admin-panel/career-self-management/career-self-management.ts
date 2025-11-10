@@ -6,12 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatInputModule } from '@angular/material/input';
 
-export interface Carrera {
+export interface Career {
   id: number; 
-  nombre: string;
-  materias: string; 
-  descripcion: string;
-  duracion: number; 
+  name: string;
+  subjects: string; 
+  description: string;
+  duration: number; 
 }
 
 
@@ -32,16 +32,16 @@ export interface Carrera {
 export class CareerSelfManagement implements OnInit {
   
   // 1. Datos iniciales como propiedad mutable de la clase
-  private carrerasData: Carrera[] = [
-    {id: 1, nombre: 'Ing. Sistemas', materias: 'Ver Materias', descripcion: 'Análisis y desarrollo de software', duracion: 5},
-    {id: 2, nombre: 'Arquitectura', materias: 'Ver Materias', descripcion: 'Diseño y construcción de espacios', duracion: 4},
+  private careerData: Career[] = [
+    {id: 1, name: 'Ing. Sistemas', subjects: 'Ver Materias', description: 'Análisis y desarrollo de software', duration: 5},
+    {id: 2, name: 'Arquitectura', subjects: 'Ver Materias', description: 'Diseño y construcción de espacios', duration: 4},
     // Puedes añadir más datos aquí
   ];
   
-  displayedColumns: string[] = ['nombre', 'materias', 'descripcion', 'duracion', 'acciones'];
+  displayedColumns: string[] = ['name', 'subjects', 'description', 'duration', 'actions'];
 
   // 2. dataSource se inicializa con la propiedad mutable
-  dataSource = new MatTableDataSource(this.carrerasData);
+  dataSource = new MatTableDataSource(this.careerData);
   
   @ViewChild(MatSort) sort!: MatSort; 
 
@@ -49,18 +49,18 @@ export class CareerSelfManagement implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  aplicarFiltro(event: Event) {
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  agregarCarrera() {
+  addCareer() {
     console.log('Abrir formulario para agregar');
     // Lógica pendiente: Abrir modal o navegar a formulario
   }
 
-  editarCarrera(carrera: Carrera) {
-    console.log('Editar:', carrera);
+  editCareer(career: Career) {
+    console.log('Editar:', career);
     // Lógica pendiente: Abrir modal de edición pre-rellenado
   }
 
@@ -68,7 +68,7 @@ export class CareerSelfManagement implements OnInit {
    * Elimina una carrera del arreglo y refresca la tabla.
    * @param id El ID de la carrera a eliminar.
    */
-  eliminarCarrera(id: number) {
+  deleteCareer(id: number) {
      
     // Lógica real de eliminación (puedes añadir la confirmación aquí)
     if (!confirm('¿Estás seguro de que deseas eliminar esta carrera?')) {
@@ -76,10 +76,10 @@ export class CareerSelfManagement implements OnInit {
     }
     
     // 1. Filtrar el arreglo original (quitar el elemento)
-    this.carrerasData = this.carrerasData.filter(carrera => carrera.id !== id);
+    this.careerData = this.careerData.filter(career => career.id !== id);
 
     // 2. Refrescar la tabla asignando el nuevo arreglo de vuelta al dataSource
-    this.dataSource.data = this.carrerasData;
+    this.dataSource.data = this.careerData;
     
     console.log(`Carrera con ID ${id} eliminada.`);
   }
