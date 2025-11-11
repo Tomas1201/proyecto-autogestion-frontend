@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button'; 
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatInputModule } from '@angular/material/input';
-
+import { CommonModule } from '@angular/common';
 
 export interface Subject {
   id: number; 
@@ -22,9 +22,10 @@ export interface Subject {
     MatButtonModule,     
     MatIconModule,       
     MatFormFieldModule,  
-    MatInputModule],
-  templateUrl: './subject-self-management.html',
-  styleUrl: './subject-self-management.css',
+    MatInputModule,
+  CommonModule],
+  templateUrl: './subject.html',
+  styleUrl: './subject.css',
 })
 export class SubjectSelfManagement {
 

@@ -29,8 +29,8 @@ export interface Career {
     MatInputModule,
     MatDialogModule
   ],
-  templateUrl: './career-self-management.html',
-  styleUrls: ['./career-self-management.css'],
+  templateUrl: './career.html',
+  styleUrls: ['./career.css'],
 })
 export class CareerSelfManagement implements OnInit {
   constructor(private dialog: MatDialog) { }

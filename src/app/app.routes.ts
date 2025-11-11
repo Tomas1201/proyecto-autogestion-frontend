@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { MainView } from './admin-panel/main-view/main-view';
-import { CareerSelfManagement } from './admin-panel/career/career-self-management';
-import { ProfessorSelfManagement } from './admin-panel/professor/professor-self-management';
+import { CareerSelfManagement } from './admin-panel/career/career';
+import { ProfessorSelfManagement } from './admin-panel/professor/professor';
 import { StudentSelfManagement } from './admin-panel/student/student';
-import { SubjectSelfManagement } from './admin-panel/subject/subject-self-management';
+import { SubjectSelfManagement } from './admin-panel/subject/subject';
 import { AddCareer } from './admin-panel/career/add-career/add-career';
 import {Login} from './login/login';
 export const routes: Routes = [{path:'', redirectTo:'/MainView', pathMatch:'full'},

@@ -49,8 +49,10 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   
-  <div *ngIf="dataSource.filteredData.length === 0" class="no-results">
+  <div class="no-results">
+    @if(dataSource.filteredData.length === 0){
     No se encontraron profesores que coincidan con la búsqueda.
+    }
   </div>
 <button mat-raised-button color="primary" (click)="addProfessor()">
       <mat-icon>add</mat-icon>

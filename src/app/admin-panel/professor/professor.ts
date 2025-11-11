@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button'; 
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 export interface Professor {
   id: number; 
@@ -24,10 +25,11 @@ export interface Professor {
     MatButtonModule,     
     MatIconModule,       
     MatFormFieldModule,  
-    MatInputModule
+    MatInputModule,
+    CommonModule
   ],
-  templateUrl: './professor-self-management.html',
-  styleUrl: './professor-self-management.css',
+  templateUrl: './professor.html',
+  styleUrl: './professor.css',
 })
 export class ProfessorSelfManagement implements OnInit {
   
