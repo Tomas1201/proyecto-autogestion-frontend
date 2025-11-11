@@ -96,7 +96,7 @@ export class CareerSelfManagement implements OnInit {
     if (!confirm('¿Estás seguro de que deseas eliminar esta carrera?')) {
       return; // Detiene la función si el usuario cancela
     }
-    
+      
     // 1. Filtrar el arreglo original (quitar el elemento)
     this.careerData = this.careerData.filter(career => career.id !== id);
 
