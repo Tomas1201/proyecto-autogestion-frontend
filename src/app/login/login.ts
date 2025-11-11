@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
-import {FormFieldErrorExample} from '../email-field/email-field';
+import {Form} from '../email-field/email-field';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -11,7 +11,7 @@ import {FormFieldErrorExample} from '../email-field/email-field';
     CommonModule,
     MatButtonModule,
     MatCardModule,
-    FormFieldErrorExample
+    Form
   ],
    changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.html',

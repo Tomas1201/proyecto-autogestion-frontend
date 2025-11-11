@@ -8,6 +8,7 @@
 
 /* Campos que deben ocupar el 100% del ancho */
 .full-width {
+  padding-top: 12px;
   width: 100%;
 }
 

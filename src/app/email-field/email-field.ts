@@ -4,16 +4,17 @@ import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {merge} from 'rxjs';
+import {MatIconModule} from '@angular/material/icon';
 
-/** @title Form field with error messages */
+
 @Component({
-  selector: 'form-field-error-example',
+  selector: 'forme',
   templateUrl: 'email-field.html',
   styleUrl: 'email-field.css',
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormFieldErrorExample {
+export class Form {
   readonly email = new FormControl('', [Validators.required, Validators.email]);
 
   errorMessage = signal('');
@@ -32,5 +33,13 @@ export class FormFieldErrorExample {
     } else {
       this.errorMessage.set('');
     }
+  }
+
+  hide = signal(true);
+  
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
+
   }
 }
