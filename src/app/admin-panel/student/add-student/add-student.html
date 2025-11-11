@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Agregar Nueva Carrera</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form class="career-form">
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre del alumno</mat-label>
+      <input matInput [(ngModel)]="newStudent.Name" name="nombre" required>
+      <mat-icon matSuffix>school</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Apellido del alumno</mat-label>
+      <input matInput type="text" [(ngModel)]="newStudent.lastName" name="lastName" required>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Carrera inscripto</mat-label>
+      <input matInput  [(ngModel)]="newStudent.carrera" name="carrera" required>
+      
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Materias inscripto</mat-label>
+      
+      <mat-select 
+        multiple 
+        [(ngModel)]="newStudent.state" 
+        name="materias">
+        
+        @for (student of studentsDisponibles; track student.id) {
+          <mat-option [value]="student.id">
+            {{ student.nombre }}
+          </mat-option>
+        }
+      </mat-select>
+      
+      <mat-icon matSuffix>list</mat-icon>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="!newStudent.Name || !newStudent.lastName" (click)="onGuardar()">Guardar</button>
+</mat-dialog-actions>
