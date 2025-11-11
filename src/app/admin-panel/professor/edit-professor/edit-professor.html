@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Editar Profesor</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form class="professor-form">
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre del Profesor</mat-label>
+      <input matInput [(ngModel)]="editProfessor.name" name="nombre" required>
+      <mat-icon matSuffix>school</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Apellido del Profesor</mat-label>
+      <input matInput [(ngModel)]="editProfessor.lastName" name="apellido" required>
+      <mat-icon matSuffix>school</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Carrera</mat-label>
+      <input matInput [(ngModel)]="editProfessor.career" name="carrera" required>
+      <mat-icon matSuffix>work</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="editProfessor.status" name="status" required>
+        <mat-option *ngFor="let s of status" [value]="s">{{ s }}</mat-option>
+      </mat-select>
+      <mat-icon matSuffix>list</mat-icon>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelar()">Cancelar</button>
+  <button mat-raised-button color="primary"
+    [disabled]="!editProfessor.name || !editProfessor.lastName || !editProfessor.career || !editProfessor.status"
+    (click)="onSave()">
+    Guardar Cambios
+  </button>
+</mat-dialog-actions>

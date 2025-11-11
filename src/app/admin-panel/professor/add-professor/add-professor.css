@@ -1,0 +1,33 @@
+/* Contenedor principal del formulario dentro del modal */
+.professor-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+/* Campos que ocupan todo el ancho disponible */
+.full-width {
+  width: 100%;
+}
+
+/* Campos con ancho adaptable */
+.half-width {
+  flex: 1 1 45%;
+  min-width: 180px;
+}
+
+/* Ajuste de espaciado dentro del modal */
+mat-dialog-content {
+  padding: 16px 24px 20px;
+}
+
+/* Estilos opcionales para botones */
+mat-dialog-actions {
+  padding: 12px 24px;
+}
+
+button[mat-raised-button] {
+  min-width: 100px;
+}
