@@ -38,7 +38,7 @@ export class ProfessorSelfManagement implements OnInit {
     {id: 2, name: 'María', lastName: 'Gómez', career: 'Arquitectura', status: 'Inactivo'},
     // Puedes añadir más datos aquí
   ];
-  displayedColumns: string[] = ['nombre', 'apellido', 'carrera', 'estado', 'acciones'];
+  displayedColumns: string[] = ['name', 'lastName', 'career', 'status', 'actions'];
 
   dataSource = new MatTableDataSource(this.professorData);
   

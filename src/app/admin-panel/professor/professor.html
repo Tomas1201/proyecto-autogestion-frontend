@@ -13,27 +13,27 @@
   
   <table mat-table [dataSource]="dataSource" matSort>
 
-    <ng-container matColumnDef="nombre">
+    <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="apellido">
+    <ng-container matColumnDef="lastName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
       <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
     </ng-container>
     
-    <ng-container matColumnDef="carrera">
+    <ng-container matColumnDef="career">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Carrera </th>
       <td mat-cell *matCellDef="let element"> {{element.career}} </td>
     </ng-container>
     
-    <ng-container matColumnDef="estado">
+    <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
       <td mat-cell *matCellDef="let element"> {{element.status}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="acciones">
+    <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button color="accent" (click)="editProfessor(element)">
