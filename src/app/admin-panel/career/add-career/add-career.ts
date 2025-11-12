@@ -19,19 +19,19 @@ export class AddCareer {
     { id: 'M004', nombre: 'Cálculo Avanzado' }
   ];
  
-  nuevaCarrera = { nombre: '', descripcion:'',duracion: 0 , materiasSeleccionadas: [] as string[]}; // Modelo de datos
+  newCareer = { name: '', description:'',duration: 0 , materiasSeleccionadas: [] as string[]}; // Modelo de datos
 
-  // 1. Inyecta MatDialogRef para poder controlar el cierre del modal
+  
   constructor(public dialogRef: MatDialogRef<AddCareer>, @Inject(MAT_DIALOG_DATA) public data: any) { } 
 
-  // Función para cerrar (Cancelar)
+  
   onCancelar(): void {
-    this.dialogRef.close(); // Cierra sin retornar datos
+    this.dialogRef.close(); 
   }
 
-  // Función para guardar (Aceptar)
+ 
   onGuardar(): void {
-    // 2. Cierra y retorna el objeto 'nuevaCarrera' al componente padre
-    this.dialogRef.close(this.nuevaCarrera); 
+  
+    this.dialogRef.close(this.newCareer); 
   }
 }

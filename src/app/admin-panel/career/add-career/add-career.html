@@ -5,30 +5,30 @@
     
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre de la Carrera</mat-label>
-      <input matInput [(ngModel)]="nuevaCarrera.nombre" name="nombre" required>
+      <input matInput [(ngModel)]="newCareer.name" name="nombre" required>
       <mat-icon matSuffix>school</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="half-width">
       <mat-label>Duración (años)</mat-label>
-      <input matInput type="number" [(ngModel)]="nuevaCarrera.duracion" name="duracion" required>
+      <input matInput type="number" [(ngModel)]="newCareer.duration" name="duracion" required>
     </mat-form-field>
     
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Descripción / Perfil</mat-label>
+      <mat-label>Descripción</mat-label>
       <textarea matInput 
-                [(ngModel)]="nuevaCarrera.descripcion" 
+                [(ngModel)]="newCareer.description" 
                 name="descripcion" 
                 rows="4" 
                 maxlength="500"></textarea>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Materias Obligatorias</mat-label>
+      <mat-label>Materias</mat-label>
       
       <mat-select 
         multiple 
-        [(ngModel)]="nuevaCarrera.materiasSeleccionadas" 
+        [(ngModel)]="newCareer.materiasSeleccionadas" 
         name="materias">
         
         @for (materia of materiasDisponibles; track materia.id) {
@@ -46,5 +46,5 @@
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="onCancelar()">Cancelar</button>
-  <button mat-raised-button color="primary" [disabled]="!nuevaCarrera.nombre || !nuevaCarrera.duracion" (click)="onGuardar()">Guardar</button>
+  <button mat-raised-button color="primary" [disabled]="!newCareer.name || !newCareer.duration" (click)="onGuardar()">Guardar</button>
 </mat-dialog-actions>
