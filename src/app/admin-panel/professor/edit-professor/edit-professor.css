@@ -3,34 +3,95 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #f7f9fc;
+  color: #2e2e2e;
   height: 100%;
+  border-radius: 12px;
+  padding: 20px;
 }
 
+/* --- TÍTULO --- */
+h2[mat-dialog-title] {
+  text-align: center;
+  font-weight: 600;
+  color: #1e88e5;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+/* --- CONTENIDO --- */
 mat-dialog-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  background: white;
+  border-radius: 12px;
+  padding: 20px 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .professor-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  max-width: 400px;
-  margin: 0 auto;
+  gap: 18px;
+  width: 90%;
+  max-width: 420px;
 }
 
-.full-width {
+mat-label {
+  color: #1e88e5 !important;
+  font-weight: 500;
+}
+
+mat-form-field {
   width: 100%;
-  margin-bottom: 15px;
 }
 
+mat-icon {
+  color: #1e88e5;
+}
+
+input[matInput],
+mat-select {
+  color: #2e2e2e !important;
+}
+
+/* --- BOTONES --- */
 mat-dialog-actions {
   display: flex;
-  justify-content: center !important;
-  margin-top: 15px;
+  justify-content: space-between;
+  padding-top: 12px;
+  gap: 12px;
+}
+
+button[mat-button] {
+  color: #1565c0;
+  background: white;
+  border: 1px solid #bbdefb;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  padding: 6px 18px;
+}
+
+button[mat-button]:hover {
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+button[mat-raised-button] {
+  background: linear-gradient(90deg, #1e88e5, #1565c0);
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 6px 18px;
+  transition: all 0.25s ease;
+}
+
+button[mat-raised-button]:hover {
+  background: linear-gradient(90deg, #42a5f5, #1e88e5);
+  box-shadow: 0 4px 10px rgba(30, 136, 229, 0.3);
+  transform: translateY(-1px);
 }
