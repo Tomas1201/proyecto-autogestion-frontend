@@ -2,12 +2,7 @@
 
   <div class="header-container">
     <h2>Materias</h2>
-    <button mat-raised-button color="primary" (click)="addSubject()">
-      <mat-icon>add</mat-icon>
-      Agregar Materia
-    </button>
   </div>
-
   <mat-form-field appearance="outline" class="search-field">
     <mat-label>Buscar materia</mat-label>
     <input
@@ -57,6 +52,13 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+  </div>
+
+  <div class="header-container">
+    <button mat-raised-button color="primary" (click)="addSubject()">
+      <mat-icon>add</mat-icon>
+      Agregar Materia
+    </button>
   </div>
 
   <div class="no-results" *ngIf="dataSource.filteredData.length === 0">

@@ -4,13 +4,10 @@
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  width: 90%;
   max-width: 1000px;
   margin: 40px auto;
   transition: all 0.3s;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
 }
 
 .subject-container:hover {
@@ -30,24 +27,30 @@ h2 {
   font-size: clamp(1.4rem, 3vw, 2rem);
   color: #1e88e5;
   font-weight: 700;
+  letter-spacing: 0.5px;
   margin: 0;
 }
 
-.search-field {
+mat-form-field {
   width: 100%;
   margin-bottom: 20px;
 }
 
-.table-wrapper {
-  overflow-x: auto;
-  border-radius: 8px;
-  background: #f7f9fc;
-  border: 1px solid #e0e0e0;
+input[matInput] {
+  color: #2e2e2e;
+}
+
+mat-icon {
+  color: #1e88e5;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  background: #f7f9fc;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  table-layout: auto;
 }
 
 th {
@@ -77,6 +80,7 @@ tr.mat-row:hover {
 }
 
 button[mat-raised-button] {
+  margin-top: 16px;
   background: linear-gradient(90deg, #1e88e5, #1565c0);
   color: white;
   font-weight: 600;
@@ -90,7 +94,7 @@ button[mat-raised-button]:hover {
 }
 
 button[mat-icon-button][color='accent'] {
-  color: #1565c0;
+  color: #ffb300;
   transition: transform 0.2s;
 }
 
@@ -99,7 +103,7 @@ button[mat-icon-button][color='accent']:hover {
 }
 
 button[mat-icon-button][color='warn'] {
-  color: #1565c0;
+  color: #e53935;
   transition: transform 0.2s;
 }
 
@@ -109,9 +113,12 @@ button[mat-icon-button][color='warn']:hover {
 
 @media (max-width: 992px) {
   .subject-container {
-    margin: 20px auto;
+    margin: 20px;
     padding: 20px;
-    width: 95%;
+  }
+
+  table {
+    font-size: 0.9rem;
   }
 }
 
@@ -119,6 +126,13 @@ button[mat-icon-button][color='warn']:hover {
   .header-container {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 6px;
   }
 
   button[mat-raised-button] {
