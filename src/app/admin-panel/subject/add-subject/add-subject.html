@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Agregar Materia</h2>
+
+<mat-dialog-content>
+  <form class="subject-form" [formGroup]="subjectForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre de la materia</mat-label>
+      <input matInput formControlName="name" placeholder="Ej. Programación I" />
+      <mat-icon matSuffix>book</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Código</mat-label>
+      <input matInput formControlName="code" placeholder="Ej. MAT101" />
+      <mat-icon matSuffix>confirmation_number</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Clases</mat-label>
+      <input matInput formControlName="classes" placeholder="Ej. Ingeniería en Sistemas" />
+      <mat-icon matSuffix>school</mat-icon>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()">Guardar</button>
+</mat-dialog-actions>

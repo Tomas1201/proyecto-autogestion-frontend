@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Agregar Nuevo Profesor</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form class="professor-form">
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre del Profesor</mat-label>
+      <input matInput [(ngModel)]="newProfessor.name" name="nombre" required>
+      <mat-icon matSuffix>school</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Apellido del Profesor</mat-label>
+      <input matInput [(ngModel)]="newProfessor.lastName" name="apellido" required>
+      <mat-icon matSuffix>school</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Carrera</mat-label>
+      <input matInput [(ngModel)]="newProfessor.career" name="carrera" required>
+      <mat-icon matSuffix>work</mat-icon>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelar()">Cancelar</button>
+  <button mat-raised-button color="primary"
+    [disabled]="!newProfessor.name || !newProfessor.lastName || !newProfessor.career"
+    (click)="onSave()">
+    Guardar
+  </button>
+</mat-dialog-actions>

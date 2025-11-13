@@ -1,78 +1,105 @@
-import { Component, OnInit, ViewChild } from '@angular/core'; 
-import { MatTableModule, MatTableDataSource } from '@angular/material/table'; 
-import { MatSort, MatSortModule } from '@angular/material/sort'; 
-import { MatIconModule } from '@angular/material/icon'; 
-import { MatButtonModule } from '@angular/material/button'; 
-import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { AddProfessor } from './add-professor/add-professor';
+import { EditProfessor } from './edit-professor/edit-professor';
 
 export interface Professor {
-  id: number; 
+  id: number;
   name: string;
-  lastName: string; 
+  lastName: string;
   career: string;
-  status: string; 
+  status: string;
 }
 
-
-
 @Component({
-  selector: 'app-career-self-management',
+  selector: 'app-professor-self-management',
+  standalone: true,
   imports: [
+    CommonModule,
     MatTableModule,
-    MatSortModule,       
-    MatButtonModule,     
-    MatIconModule,       
-    MatFormFieldModule,  
+    MatSortModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
     MatInputModule,
-    CommonModule
+    MatDialogModule,
   ],
   templateUrl: './professor.html',
-  styleUrl: './professor.css',
+  styleUrls: ['./professor.css'],
 })
 export class ProfessorSelfManagement implements OnInit {
-  
   private professorData: Professor[] = [
-    {id: 1, name: 'Juan', lastName: 'Pérez', career: 'Ing. Sistemas', status: 'Activo'},
-    {id: 2, name: 'María', lastName: 'Gómez', career: 'Arquitectura', status: 'Inactivo'},
-    // Puedes añadir más datos aquí
+    {
+      id: 1,
+      name: 'Carlos',
+      lastName: 'Pérez',
+      career: 'Ingeniería en Sistemas',
+      status: 'Activo',
+    },
+    { id: 2, name: 'Laura', lastName: 'Gómez', career: 'Arquitectura', status: 'Inactivo' },
   ];
-  displayedColumns: string[] = ['name', 'lastName', 'career', 'status', 'actions'];
 
+  displayedColumns: string[] = ['name', 'lastName', 'career', 'status', 'actions'];
   dataSource = new MatTableDataSource(this.professorData);
-  
+
   @ViewChild(MatSort) sort!: MatSort;
- 
+
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
   }
 
- 
-  aplyFilter(event: Event) {
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  
   addProfessor() {
-    console.log('Abrir formulario para agregar');
+    const dialogRef = this.dialog.open(AddProfessor, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const newId = this.professorData.length
+          ? Math.max(...this.professorData.map((p) => p.id)) + 1
+          : 1;
+        this.professorData.push({ id: newId, ...result });
+        this.dataSource.data = [...this.professorData];
+      }
+    });
   }
 
-  editProfessor(profesor: Professor) {
-    console.log('Editar:', profesor);
+  editProfessor(professor: Professor) {
+    const dialogRef = this.dialog.open(EditProfessor, {
+      width: '400px',
+      data: { ...professor },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const index = this.professorData.findIndex((p) => p.id === professor.id);
+        if (index !== -1) {
+          this.professorData[index] = { ...result, id: professor.id };
+          this.dataSource.data = [...this.professorData];
+        }
+      }
+    });
   }
 
-  
   deleteProfessor(id: number) {
-    if(!confirm('¿Estás seguro de que deseas eliminar este profesor?')) {
+    if (!confirm('¿Estás seguro de que deseas eliminar este profesor?')) {
       return;
     }
-
-    this.professorData = this.professorData.filter(prof => prof.id !== id);
-    this.dataSource.data = this.professorData;
-    console.log(`Profesor eliminado con ID ${id} eliminada`);
-    
+    this.professorData = this.professorData.filter((p) => p.id !== id);
+    this.dataSource.data = [...this.professorData];
   }
 }

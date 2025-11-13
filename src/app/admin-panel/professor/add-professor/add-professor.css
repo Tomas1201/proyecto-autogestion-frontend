@@ -32,7 +32,7 @@ mat-dialog-content {
   box-sizing: border-box;
 }
 
-.student-form {
+.professor-form {
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -52,16 +52,6 @@ mat-label {
 
 mat-icon {
   color: #1e88e5;
-}
-
-.full-width {
-  width: 100%;
-  padding-top: 8px;
-}
-
-.half-width {
-  flex-grow: 1;
-  min-width: 140px;
 }
 
 mat-dialog-actions {
@@ -107,6 +97,7 @@ button[mat-raised-button]:hover {
   transform: translateY(-1px);
 }
 
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   mat-dialog-content {
     padding: 16px;
@@ -114,7 +105,7 @@ button[mat-raised-button]:hover {
     background: transparent;
   }
 
-  .student-form {
+  .professor-form {
     width: 100%;
     max-width: 100%;
     gap: 14px;
@@ -143,7 +134,7 @@ button[mat-raised-button]:hover {
     font-size: 1.2rem;
   }
 
-  .student-form {
+  .professor-form {
     gap: 12px;
   }
 

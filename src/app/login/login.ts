@@ -8,21 +8,15 @@ import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule,
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    Form
-  ],
-   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, CommonModule, MatButtonModule, MatCardModule, Form],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
-
   credentials = {
     username: '',
-    password: ''
+    password: '',
   };
 constructor(private AuthService: AuthService) { }
   
