@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-/* --- TÍTULO --- */
+
 h2[mat-dialog-title] {
   text-align: center;
   font-weight: 600;
@@ -21,7 +21,7 @@ h2[mat-dialog-title] {
   font-size: clamp(1.2rem, 2.5vw, 1.6rem);
 }
 
-/* --- CONTENIDO --- */
+
 mat-dialog-content {
   display: flex;
   flex-direction: column;
@@ -66,7 +66,7 @@ mat-icon {
   color: #1e88e5;
 }
 
-/* --- BOTONES --- */
+
 mat-dialog-actions {
   display: flex;
   justify-content: space-between;
@@ -110,7 +110,7 @@ button[mat-raised-button]:hover {
   transform: translateY(-1px);
 }
 
-/* --- RESPONSIVE --- */
+
 @media (max-width: 768px) {
   mat-dialog-content {
     padding: 16px;

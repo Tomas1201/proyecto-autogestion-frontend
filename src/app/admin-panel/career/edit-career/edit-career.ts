@@ -32,7 +32,7 @@ export class EditCareer {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if (data) {
-      this.career = { ...data }; // carga la carrera existente
+      this.career = { ...data };
     }
   }
 
