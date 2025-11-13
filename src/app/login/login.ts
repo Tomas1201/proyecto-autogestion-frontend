@@ -1,34 +1,43 @@
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {Form} from '../email-field/email-field';
-import { AuthService } from '../auth.service';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+// Necesitas MatIconModule para usar los iconos
+import { MatIconModule } from '@angular/material/icon'; 
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatButtonModule, MatCardModule, Form],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule // 👈 IMPORTADO
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
   credentials = {
-    username: '',
+    email: '',
     password: '',
   };
-constructor(private AuthService: AuthService) { }
   
+  // 🔑 Variables de Control de Contraseña
+  hidePassword = true; // Por defecto, la contraseña está oculta
 
-  //
+  // 👁️ Método para alternar la visibilidad
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
   onSubmit(): void {
-    console.log('Formulario enviado');
-    console.log('Credenciales:', this.credentials);
-
-    this.AuthService.login(this.credentials, {});
-    // por ejemplo: this.authService.login(this.credentials).subscribe(response => { ... });
-    
-    // this.credentials = { username: '', password: '' }; 
+    console.log('Intentando iniciar sesión con:', this.credentials);
   }
 }
