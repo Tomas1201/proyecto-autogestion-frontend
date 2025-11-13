@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddCareer } from './add-career/add-career';
+import { EditCareer } from './edit-career/edit-career';
 
 export interface Career {
   id: number;
@@ -50,7 +51,13 @@ export class CareerSelfManagement implements OnInit {
     },
   ];
 
-  displayedColumns: string[] = ['name', 'subjects', 'description', 'duration', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'subjects',
+    'description',
+    'duration',
+    'actions',
+  ];
 
   dataSource = new MatTableDataSource(this.careerData);
 
@@ -61,9 +68,10 @@ export class CareerSelfManagement implements OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const value = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = value.trim().toLowerCase();
   }
+
   addCareer() {
     const dialogRef = this.dialog.open(AddCareer, {
       minWidth: '300px',
@@ -73,30 +81,42 @@ export class CareerSelfManagement implements OnInit {
 
     dialogRef.afterClosed().subscribe((newCareer) => {
       if (newCareer) {
-        console.log('Carrera recibida:', newCareer);
+        const maxId =
+          this.careerData.length > 0
+            ? Math.max(...this.careerData.map((c) => c.id))
+            : 0;
 
-        if (!('id' in newCareer) || newCareer.id == null) {
-          const maxId = this.careerData.length ? Math.max(...this.careerData.map((c) => c.id)) : 0;
-          newCareer.id = maxId + 1;
-        }
+        newCareer.id = maxId + 1;
+
         this.careerData.push(newCareer as Career);
-        this.dataSource.data = this.careerData;
+        this.dataSource.data = [...this.careerData];
       }
     });
   }
 
   editCareer(career: Career) {
-    console.log('Editar:', career);
+    const dialogRef = this.dialog.open(EditCareer, {
+      minWidth: '300px',
+      maxWidth: '600px',
+      width: '90%',
+      data: { ...career },
+    });
+
+    dialogRef.afterClosed().subscribe((updatedCareer) => {
+      if (updatedCareer) {
+        const idx = this.careerData.findIndex((c) => c.id === updatedCareer.id);
+        if (idx !== -1) {
+          this.careerData[idx] = updatedCareer;
+          this.dataSource.data = [...this.careerData];
+        }
+      }
+    });
   }
 
   deleteCareer(id: number) {
-    if (!confirm('¿Estás seguro de que deseas eliminar esta carrera?')) {
-      return;
-    }
-    this.careerData = this.careerData.filter((career) => career.id !== id);
+    if (!confirm('¿Estás seguro de que deseas eliminar esta carrera?')) return;
 
-    this.dataSource.data = this.careerData;
-
-    console.log(`Carrera con ID ${id} eliminada.`);
+    this.careerData = this.careerData.filter((c) => c.id !== id);
+    this.dataSource.data = [...this.careerData];
   }
 }

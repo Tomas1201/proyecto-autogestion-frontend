@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Editar Carrera</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form class="career-form">
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre de la Carrera</mat-label>
+      <input matInput [(ngModel)]="career.name" name="nombre" required>
+      <mat-icon matSuffix>school</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Duración (años)</mat-label>
+      <input matInput type="number" [(ngModel)]="career.duration" name="duracion" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descripción</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="career.description"
+        name="descripcion"
+        rows="4"
+        maxlength="500">
+      </textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Materias</mat-label>
+
+      <mat-select
+        multiple
+        [(ngModel)]="career.materiasSeleccionadas"
+        name="materias">
+
+        @for (materia of materiasDisponibles; track materia.id) {
+          <mat-option [value]="materia.id">
+            {{ materia.nombre }}
+          </mat-option>
+        }
+      </mat-select>
+
+      <mat-icon matSuffix>list</mat-icon>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelar()">Cancelar</button>
+  <button mat-raised-button color="primary"
+          [disabled]="!career.name || !career.duration"
+          (click)="onGuardar()">
+    Guardar Cambios
+  </button>
+</mat-dialog-actions>
