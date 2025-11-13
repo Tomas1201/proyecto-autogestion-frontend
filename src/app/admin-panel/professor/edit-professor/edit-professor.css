@@ -21,7 +21,6 @@ h2[mat-dialog-title] {
   font-size: clamp(1.2rem, 2.5vw, 1.6rem);
 }
 
-/* --- CONTENIDO --- */
 mat-dialog-content {
   display: flex;
   flex-direction: column;
@@ -56,7 +55,6 @@ mat-icon {
   color: #1e88e5;
 }
 
-/* --- BOTONES --- */
 mat-dialog-actions {
   display: flex;
   justify-content: space-between;

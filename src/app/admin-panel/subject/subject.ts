@@ -1,4 +1,4 @@
-// subject.ts (reemplazar)
+// subject.ts
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -9,9 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { EditSubjectComponent } from './edit-subject/edit-subject';
-
-// IMPORTA el componente del modal que creaste.
-// Ajusta la ruta si tu carpeta se llama diferente (ej: './add-subject/add-subject')
 import { AddSubjectComponent } from './add-subject/add-subject';
 
 export interface Subject {
@@ -32,7 +29,7 @@ export interface Subject {
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   templateUrl: './subject.html',
   styleUrls: ['./subject.css'],
@@ -64,19 +61,20 @@ export class SubjectSelfManagement implements OnInit {
     const dialogRef = this.dialog.open(AddSubjectComponent, {
       width: '420px',
       maxWidth: '95%',
-      disableClose: true, // opcional: evita cerrar tocando fuera
-      data: {} // si necesitás pasar algo al modal
+      disableClose: true,
+      data: {},
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // asegurar id único
-        const newId = this.subjectData.length ? Math.max(...this.subjectData.map(s => s.id)) + 1 : 1;
+        const newId = this.subjectData.length
+          ? Math.max(...this.subjectData.map((s) => s.id)) + 1
+          : 1;
         const newSubject: Subject = {
           id: newId,
           name: result.name,
           code: result.code,
-          classes: result.classes
+          classes: result.classes,
         };
         this.subjectData.push(newSubject);
         this.dataSource.data = [...this.subjectData];
@@ -85,29 +83,29 @@ export class SubjectSelfManagement implements OnInit {
   }
 
   editSubject(subject: Subject) {
-  const dialogRef = this.dialog.open(EditSubjectComponent, {
-    width: '420px',
-    maxWidth: '95%',
-    disableClose: true,
-    data: subject
-  });
+    const dialogRef = this.dialog.open(EditSubjectComponent, {
+      width: '420px',
+      maxWidth: '95%',
+      disableClose: true,
+      data: subject,
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      const index = this.subjectData.findIndex(s => s.id === subject.id);
-      if (index !== -1) {
-        this.subjectData[index] = { ...this.subjectData[index], ...result };
-        this.dataSource.data = [...this.subjectData];
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const index = this.subjectData.findIndex((s) => s.id === subject.id);
+        if (index !== -1) {
+          this.subjectData[index] = { ...this.subjectData[index], ...result };
+          this.dataSource.data = [...this.subjectData];
+        }
       }
-    }
-  });
-}
+    });
+  }
 
   deleteSubject(id: number) {
     if (!confirm('¿Estás seguro de que deseas eliminar esta materia?')) {
       return;
     }
-    this.subjectData = this.subjectData.filter(subject => subject.id !== id);
+    this.subjectData = this.subjectData.filter((subject) => subject.id !== id);
     this.dataSource.data = [...this.subjectData];
     console.log(`Materia eliminada con ID ${id}`);
   }

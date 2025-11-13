@@ -31,7 +31,6 @@ h2 {
   margin: 0;
 }
 
-/* --- Campo de búsqueda --- */
 mat-form-field {
   width: 100%;
   margin-bottom: 20px;
@@ -45,7 +44,6 @@ mat-icon {
   color: #1e88e5;
 }
 
-/* --- Tabla --- */
 table {
   width: 100%;
   background: #f7f9fc;
@@ -74,7 +72,6 @@ tr.mat-row:hover {
   transition: background 0.3s;
 }
 
-/* --- Mensaje sin resultados --- */
 .no-results {
   text-align: center;
   margin-top: 20px;
@@ -82,7 +79,6 @@ tr.mat-row:hover {
   font-style: italic;
 }
 
-/* --- Botón agregar --- */
 button[mat-raised-button] {
   margin-top: 16px;
   background: linear-gradient(90deg, #1e88e5, #1565c0);
@@ -100,25 +96,24 @@ button[mat-raised-button]:hover {
   box-shadow: 0 6px 12px rgba(30, 136, 229, 0.3);
 }
 
-button[mat-icon-button][color="accent"] {
+button[mat-icon-button][color='accent'] {
   color: #ffb300;
   transition: transform 0.2s;
 }
 
-button[mat-icon-button][color="accent"]:hover {
+button[mat-icon-button][color='accent']:hover {
   transform: scale(1.2);
 }
 
-button[mat-icon-button][color="warn"] {
+button[mat-icon-button][color='warn'] {
   color: #e53935;
   transition: transform 0.2s;
 }
 
-button[mat-icon-button][color="warn"]:hover {
+button[mat-icon-button][color='warn']:hover {
   transform: scale(1.2);
 }
 
-/* --- RESPONSIVE --- */
 @media (max-width: 992px) {
   .carreras-container {
     margin: 20px;

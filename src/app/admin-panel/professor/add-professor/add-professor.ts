@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./add-professor.css'],
 })
 export class AddProfessor {
-  // Por defecto el estado será siempre 'Activo'
   newProfessor = { name: '', lastName: '', career: '', status: 'Activo' };
 
   constructor(
@@ -26,7 +25,6 @@ export class AddProfessor {
   }
 
   onSave(): void {
-    // El estado siempre será 'Activo'
     this.newProfessor.status = 'Activo';
     this.dialogRef.close(this.newProfessor);
   }

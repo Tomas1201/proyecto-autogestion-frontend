@@ -17,7 +17,6 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* --- Encabezado --- */
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -34,13 +33,11 @@ h2 {
   margin: 0;
 }
 
-/* --- Campo de búsqueda --- */
 .search-field {
   width: 100%;
   margin-bottom: 20px;
 }
 
-/* --- Tabla --- */
 .table-wrapper {
   overflow-x: auto;
   border-radius: 8px;
@@ -72,7 +69,6 @@ tr.mat-row:hover {
   transition: background 0.3s;
 }
 
-/* --- Sin resultados --- */
 .no-results {
   text-align: center;
   margin-top: 20px;
@@ -80,7 +76,6 @@ tr.mat-row:hover {
   font-style: italic;
 }
 
-/* --- Botones --- */
 button[mat-raised-button] {
   background: linear-gradient(90deg, #1e88e5, #1565c0);
   color: white;
@@ -94,25 +89,24 @@ button[mat-raised-button]:hover {
   box-shadow: 0 6px 12px rgba(30, 136, 229, 0.3);
 }
 
-button[mat-icon-button][color="accent"] {
+button[mat-icon-button][color='accent'] {
   color: #1565c0;
   transition: transform 0.2s;
 }
 
-button[mat-icon-button][color="accent"]:hover {
+button[mat-icon-button][color='accent']:hover {
   transform: scale(1.2);
 }
 
-button[mat-icon-button][color="warn"] {
+button[mat-icon-button][color='warn'] {
   color: #1565c0;
   transition: transform 0.2s;
 }
 
-button[mat-icon-button][color="warn"]:hover {
+button[mat-icon-button][color='warn']:hover {
   transform: scale(1.2);
 }
 
-/* --- Responsive --- */
 @media (max-width: 992px) {
   .subject-container {
     margin: 20px auto;

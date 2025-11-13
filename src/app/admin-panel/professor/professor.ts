@@ -7,8 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-
-// Importamos los componentes de agregar y editar
 import { AddProfessor } from './add-professor/add-professor';
 import { EditProfessor } from './edit-professor/edit-professor';
 
@@ -38,7 +36,13 @@ export interface Professor {
 })
 export class ProfessorSelfManagement implements OnInit {
   private professorData: Professor[] = [
-    { id: 1, name: 'Carlos', lastName: 'Pérez', career: 'Ingeniería en Sistemas', status: 'Activo' },
+    {
+      id: 1,
+      name: 'Carlos',
+      lastName: 'Pérez',
+      career: 'Ingeniería en Sistemas',
+      status: 'Activo',
+    },
     { id: 2, name: 'Laura', lastName: 'Gómez', career: 'Arquitectura', status: 'Inactivo' },
   ];
 
@@ -58,7 +62,6 @@ export class ProfessorSelfManagement implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // 🟢 Abrir modal para agregar profesor
   addProfessor() {
     const dialogRef = this.dialog.open(AddProfessor, {
       width: '400px',
@@ -66,14 +69,15 @@ export class ProfessorSelfManagement implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const newId = this.professorData.length ? Math.max(...this.professorData.map(p => p.id)) + 1 : 1;
+        const newId = this.professorData.length
+          ? Math.max(...this.professorData.map((p) => p.id)) + 1
+          : 1;
         this.professorData.push({ id: newId, ...result });
         this.dataSource.data = [...this.professorData];
       }
     });
   }
 
-  // 🟡 Abrir modal para editar profesor
   editProfessor(professor: Professor) {
     const dialogRef = this.dialog.open(EditProfessor, {
       width: '400px',
@@ -82,7 +86,7 @@ export class ProfessorSelfManagement implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const index = this.professorData.findIndex(p => p.id === professor.id);
+        const index = this.professorData.findIndex((p) => p.id === professor.id);
         if (index !== -1) {
           this.professorData[index] = { ...result, id: professor.id };
           this.dataSource.data = [...this.professorData];
@@ -91,12 +95,11 @@ export class ProfessorSelfManagement implements OnInit {
     });
   }
 
-  // 🔴 Eliminar profesor
   deleteProfessor(id: number) {
     if (!confirm('¿Estás seguro de que deseas eliminar este profesor?')) {
       return;
     }
-    this.professorData = this.professorData.filter(p => p.id !== id);
+    this.professorData = this.professorData.filter((p) => p.id !== id);
     this.dataSource.data = [...this.professorData];
   }
 }

@@ -7,7 +7,6 @@
   background: linear-gradient(135deg, #eef2f3, #dfe9f3);
 }
 
-/* Tarjeta del menú */
 .menu-card {
   width: 100%;
   max-width: 420px;
@@ -23,7 +22,6 @@
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
 }
 
-/* Título */
 .card-title {
   font-size: 1.8rem;
   font-weight: 600;
@@ -33,7 +31,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Ítems de lista */
 .menu-item {
   cursor: pointer;
   transition: background 0.25s ease, transform 0.2s ease;
@@ -58,12 +55,10 @@
   color: #0078ff;
 }
 
-/* Divider */
 mat-divider {
   background: rgba(0, 0, 0, 0.08);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .menu-card {
     max-width: 90%;
