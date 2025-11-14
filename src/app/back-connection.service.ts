@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -57,13 +57,19 @@ export class BackConnection {
   }
 
   //Students
-  getStudents(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/student`);
-  }
-  updateStudents(id:number, data:any): Observable<any> {
+ getStudents(): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/student`).pipe(
+    
+    map(response => {
+      
+      return response.data; 
+    })
+  );
+}
+  updateStudent(id:number, data:any): Observable<any> {
     return this.http.put(`${this.apiUrl}/student/${id}:`,data);
   } 
-  getByIdStudents(id:number): Observable<any> {
+  getByIdStudent(id:number): Observable<any> {
     return this.http.get(`${this.apiUrl}/student/${id}`);
   }
   createStudent(data: any): Observable<any> {

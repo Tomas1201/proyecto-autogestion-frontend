@@ -1,0 +1,139 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f7f9fc;
+  color: #2e2e2e;
+  min-height: 100%;
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+h2[mat-dialog-title] {
+  text-align: center;
+  font-weight: 600;
+  color: #1e88e5;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+}
+
+
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  padding: 20px 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.student-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 18px;
+  width: 100%;
+  max-width: 480px;
+  justify-content: center;
+}
+
+.full-width {
+  flex: 1 1 100%;
+}
+
+.half-width {
+  flex: 1 1 calc(50% - 10px);
+  min-width: 140px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-label {
+  color: #1e88e5 !important;
+  font-weight: 500;
+}
+
+mat-icon {
+  color: #1e88e5;
+}
+
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+button[mat-button] {
+  color: #1565c0;
+  background: white;
+  border: 1px solid #bbdefb;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  padding: 8px 18px;
+  flex: 1;
+  min-width: 100px;
+}
+
+button[mat-button]:hover {
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+button[mat-raised-button] {
+  background: linear-gradient(90deg, #1e88e5, #1565c0);
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 8px 18px;
+  transition: all 0.25s ease;
+  flex: 1;
+  min-width: 100px;
+}
+
+button[mat-raised-button]:hover {
+  background: linear-gradient(90deg, #42a5f5, #1e88e5);
+  box-shadow: 0 4px 10px rgba(30, 136, 229, 0.3);
+  transform: translateY(-1px);
+}
+
+
+@media (max-width: 768px) {
+  mat-dialog-content {
+    padding: 16px;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .career-form {
+    flex-direction: column;
+    max-width: 100%;
+    gap: 14px;
+  }
+
+  mat-dialog-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  button[mat-button],
+  button[mat-raised-button] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+  }
+}

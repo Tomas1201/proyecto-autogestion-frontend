@@ -9,13 +9,14 @@ import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddStudent } from './add-student/add-student';
 import {BackConnection} from '../../back-connection.service';
+import { EditStudent } from './edit-student/edit-student';
 
 export interface Student {
   id: number;
   name: string;
   lastName: string;
   email: string;
-  file: string;
+  file: number;
   dni: string;
   career: string;
   status: string;
@@ -41,7 +42,7 @@ export class Student {
   constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
 
   private studentData: Student[] = [];
-  displayedColumns: string[] = ['name', 'lastName', 'career', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'lastName', 'email', 'file', 'dni','career', 'status', 'actions'];
 
   dataSource = new MatTableDataSource(this.studentData);
 
@@ -84,8 +85,9 @@ export class Student {
    
   
     dialogRef.afterClosed().subscribe((newStudent) => {
+      
+      newStudent.file = Number(newStudent.file) + 1 ;
       console.log('El diálogo se cerró. Datos recibidos:', newStudent);
-      newStudent.file= this.studentData.length + 1;
       if (newStudent) {
         
         
@@ -104,7 +106,34 @@ export class Student {
   }
 
   editStudent(student: Student) {
-    console.log('Editar:', student);
+      const dialogRef = this.dialog.open(EditStudent, {
+        minWidth: '300px',
+        maxWidth: '600px',
+        width: '90%',
+      });
+  
+  
+  
+    dialogRef.afterClosed().subscribe((updateStudent) => {
+      console.log('Diálogo cerrado. Datos recibidos:', updateStudent);
+
+      if (updateStudent) {
+        
+        this.backConnection.updateStudent(student.id, updateStudent).subscribe({
+          next: (response) => {
+            console.log(`Carrera ID ${updateStudent.id} actualizada con éxito:`, response);
+        
+            this.loadStudents(); 
+          },
+          error: (err) => {
+            console.error('Error al actualizar alumno (PUT):', err);
+        
+          }
+        });
+        
+        
+      }
+    });
   }
 
   deleteStudent(id: number) {

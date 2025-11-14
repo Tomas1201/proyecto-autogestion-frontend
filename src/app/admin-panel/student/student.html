@@ -20,6 +20,21 @@
       <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
     </ng-container>
 
+     <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+     <ng-container matColumnDef="file">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Legajo</th>
+      <td mat-cell *matCellDef="let element">{{ element.file }}</td>
+    </ng-container>
+
+     <ng-container matColumnDef="dni">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>DNI</th>
+      <td mat-cell *matCellDef="let element">{{ element.dni }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="career">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Carrera</th>
       <td mat-cell *matCellDef="let element">{{ element.career }}</td>
