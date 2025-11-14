@@ -10,6 +10,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { EditSubjectComponent } from './edit-subject/edit-subject';
 import { AddSubjectComponent } from './add-subject/add-subject';
+import {BackConnection} from '../../back-connection.service';
 
 export interface Subject {
   id: number;
@@ -36,8 +37,7 @@ export interface Subject {
 })
 export class SubjectSelfManagement implements OnInit {
   private subjectData: Subject[] = [
-    { id: 1, name: 'Análisis Matemático 1', code: 'MAT101', classes: 'Ing. Sistemas' },
-    { id: 2, name: 'Arquitectura de Computadoras', code: 'ARC202', classes: 'Arquitectura' },
+    
   ];
 
   displayedColumns: string[] = ['name', 'code', 'classes', 'actions'];
@@ -45,11 +45,27 @@ export class SubjectSelfManagement implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
 
-  ngOnInit() {
-    this.dataSource.sort = this.sort;
-  }
+ ngOnInit() {
+        this.loadSubjets();
+     }
+     loadSubjets() {
+     this.backConnection.getSubjects().subscribe({
+       next: (data: Subject[]) => {
+         console.log('Datos de carreras recibidos:', data);
+         this.subjectData = data; 
+         this.dataSource.data = this.subjectData; 
+         if (this.sort) { 
+           this.dataSource.sort = this.sort;
+         }
+         console.log('Datos de estudiantes cargados desde el backend.');
+       },
+       error: (err) => {
+         console.error('Error al cargar de estudentes desde el backend:', err);
+         
+       }
+     });}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

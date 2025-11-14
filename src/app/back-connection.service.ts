@@ -12,6 +12,7 @@ export class BackConnection {
  createCareer(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/career`, data);
   }
+
   getCareer(): Observable<any> {
     return this.http.get(`${this.apiUrl}/career`);
   }
@@ -36,6 +37,9 @@ export class BackConnection {
   getByIdSubjects(id:number): Observable<any> {
     return this.http.get(`${this.apiUrl}/Subject/${id}`);
   } 
+  createSubject(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/subject/`, data);
+  }
 
   //Professor
   getProfessor(): Observable<any> {
@@ -46,7 +50,11 @@ export class BackConnection {
   } 
   getByIdProfessor(id:number): Observable<any> {
     return this.http.get(`${this.apiUrl}/professor/${id}`);
+    
   }
+  createProfesor(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/professor/`, data);
+  }
 
   //Students
   getStudents(): Observable<any> {
@@ -58,6 +66,9 @@ export class BackConnection {
   getByIdStudents(id:number): Observable<any> {
     return this.http.get(`${this.apiUrl}/students/${id}`);
   }
+  createStudent(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/students/`, data);
+  }
 }
 
 

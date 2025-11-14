@@ -9,6 +9,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { AddProfessor } from './add-professor/add-professor';
 import { EditProfessor } from './edit-professor/edit-professor';
+import {BackConnection} from '../../back-connection.service';
 
 export interface Professor {
   id: number;
@@ -35,28 +36,34 @@ export interface Professor {
   styleUrls: ['./professor.css'],
 })
 export class ProfessorSelfManagement implements OnInit {
-  private professorData: Professor[] = [
-    {
-      id: 1,
-      name: 'Carlos',
-      lastName: 'Pérez',
-      career: 'Ingeniería en Sistemas',
-      status: 'Activo',
-    },
-    { id: 2, name: 'Laura', lastName: 'Gómez', career: 'Arquitectura', status: 'Inactivo' },
-  ];
+  private professorData: Professor[] = [];
 
   displayedColumns: string[] = ['name', 'lastName', 'career', 'status', 'actions'];
   dataSource = new MatTableDataSource(this.professorData);
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
-  }
-
+         this.loadProfessors();
+      }
+      loadProfessors() {
+      this.backConnection.getProfessor().subscribe({
+        next: (data: Professor[]) => {
+          console.log('Datos de carreras recibidos:', data);
+          this.professorData = data; 
+          this.dataSource.data = this.professorData; 
+          if (this.sort) { 
+            this.dataSource.sort = this.sort;
+          }
+          console.log('Datos de estudiantes cargados desde el backend.');
+        },
+        error: (err) => {
+          console.error('Error al cargar de estudentes desde el backend:', err);
+          
+        }
+      });}
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

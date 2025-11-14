@@ -55,6 +55,7 @@ export class CareerSelfManagement implements OnInit {
   loadCareers() {
   this.backConnection.getCareer().subscribe({
     next: (data: Career[]) => {
+      console.log('Datos de carreras recibidos:', data);
       this.careerData = data; // Almacena los datos
       this.dataSource.data = this.careerData; // Asigna al MatTableDataSource
       
@@ -86,6 +87,7 @@ export class CareerSelfManagement implements OnInit {
 
   dialogRef.afterClosed().subscribe((newCareer) => {
     if (newCareer) {
+      console.log('Nueva carrera recibida del diálogo:', newCareer);
       // LLAMADA AL SERVICIO CON EL MÉTODO POST (createCareer)
       this.backConnection.createCareer(newCareer).subscribe({
         next: (response) => {

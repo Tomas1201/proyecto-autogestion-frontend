@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddStudent } from './add-student/add-student';
+import {BackConnection} from '../../back-connection.service';
 
 export interface Student {
   id: number;
@@ -34,44 +35,65 @@ export interface Student {
   styleUrl: './student.css',
 })
 export class StudentSelfManagement {
-  constructor(private dialog: MatDialog) {}
-  private studentData: Student[] = [
-    { id: 1, name: 'Tomas', lastName: 'Gonzalez', career: 'Ing. Sistemas', status: 'Activo' },
-    { id: 2, name: 'Maria', lastName: 'Lopez', career: 'Arquitectura', status: 'Inactivo' },
-  ];
+  constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
+
+  private studentData: Student[] = [];
   displayedColumns: string[] = ['name', 'lastName', 'career', 'status', 'actions'];
 
   dataSource = new MatTableDataSource(this.studentData);
 
   @ViewChild(MatSort) sort!: MatSort;
 
+  
+
   ngOnInit() {
-    this.dataSource.sort = this.sort;
-  }
+       this.loadStudents();
+    }
+    loadStudents() {
+    this.backConnection.getStudents().subscribe({
+      next: (data: Student[]) => {
+        console.log('Datos de carreras recibidos:', data);
+        this.studentData = data; 
+        this.dataSource.data = this.studentData; 
+        if (this.sort) { 
+          this.dataSource.sort = this.sort;
+        }
+        console.log('Datos de estudiantes cargados desde el backend.');
+      },
+      error: (err) => {
+        console.error('Error al cargar de estudentes desde el backend:', err);
+        
+      }
+    });}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  addStudent() {
-    const dialogRef = this.dialog.open(AddStudent, {
-      minWidth: '300px',
-      maxWidth: '600px',
-      width: '90%',
-    });
-
-    dialogRef.afterClosed().subscribe((nuevaCarrera) => {
-      if (nuevaCarrera) {
-        console.log('Carrera recibida:', nuevaCarrera);
-        if (!('id' in nuevaCarrera) || nuevaCarrera.id == null) {
-          const maxId = this.studentData.length
-            ? Math.max(...this.studentData.map((c) => c.id))
-            : 0;
-          nuevaCarrera.id = maxId + 1;
-        }
-        this.studentData.push(nuevaCarrera as Student);
-        this.dataSource.data = this.studentData;
+  addCareer() {
+      const dialogRef = this.dialog.open(AddStudent, {
+        minWidth: '300px',
+        maxWidth: '600px',
+        width: '90%',
+      });
+  
+   
+  
+    dialogRef.afterClosed().subscribe((newStudent) => {
+      if (newStudent) {
+        console.log('Nueva carrera recibida del diálogo:', newStudent);
+        // LLAMADA AL SERVICIO CON EL MÉTODO POST (createCareer)
+        this.backConnection.createStudent(newStudent).subscribe({
+          next: (response) => {
+            console.log('Carrera creada exitosamente. Respuesta:', response);
+            this.loadStudents(); // Recargar la tabla para mostrar el nuevo registro del backend
+          },
+          error: (err) => {
+            console.error('Error al crear carrera mediante POST:', err);
+            // Manejo de errores (ej: si el nombre ya existe, etc.)
+          }
+        });
       }
     });
   }
