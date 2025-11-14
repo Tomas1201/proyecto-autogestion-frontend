@@ -18,7 +18,7 @@ export class AddCareer {
     { id: 'M004', nombre: 'Cálculo Avanzado' },
   ];
 
-  newCareer = { Name: '', Description: '', Duration: 0, materiasSeleccionadas: [] as string[] };
+  newCareer = { name: '', description: '', duration: 0, materiasSeleccionadas: [] as string[] };
 
   constructor(
     public dialogRef: MatDialogRef<AddCareer>,

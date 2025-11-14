@@ -31,7 +31,7 @@ export class BackConnection {
     return this.http.get(`${this.apiUrl}/Subject`);  }
   
   updateSubjects(id:number, data:any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/Subject/${id}:`,data);
+    return this.http.put(`${this.apiUrl}/Subject/${id}`,data);
   }
   
   getByIdSubjects(id:number): Observable<any> {
@@ -46,7 +46,7 @@ export class BackConnection {
     return this.http.get(`${this.apiUrl}/professor/`);
   }
   updateProfessor(id:number, data:any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/professor/${id}:`,data);
+    return this.http.put(`${this.apiUrl}/professor/${id}`,data);
   } 
   getByIdProfessor(id:number): Observable<any> {
     return this.http.get(`${this.apiUrl}/professor/${id}`);
@@ -67,7 +67,7 @@ export class BackConnection {
   );
 }
   updateStudent(id:number, data:any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/student/${id}:`,data);
+    return this.http.put(`${this.apiUrl}/student/${id}`,data);
   } 
   getByIdStudent(id:number): Observable<any> {
     return this.http.get(`${this.apiUrl}/student/${id}`);
