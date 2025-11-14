@@ -9,11 +9,14 @@ export class BackConnection {
 
   constructor(private http: HttpClient) { }
 
+ createCareer(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/career`, data);
+  }
   getCareer(): Observable<any> {
     return this.http.get(`${this.apiUrl}/career`);
   }
   updateCareer(id:number, data:any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/career/${id}:`,data);
+    return this.http.put(`${this.apiUrl}/career/${id}`,data);
   }
 
   getByIdCareer(id:number): Observable<any> {

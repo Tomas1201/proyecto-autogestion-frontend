@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddCareer } from './add-career/add-career';
 import { EditCareer } from './edit-career/edit-career';
+import {BackConnection} from '../../back-connection.service';
 
 export interface Career {
   id: number;
@@ -32,24 +33,9 @@ export interface Career {
   styleUrls: ['./career.css'],
 })
 export class CareerSelfManagement implements OnInit {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
 
-  private careerData: Career[] = [
-    {
-      id: 1,
-      name: 'Ing. Sistemas',
-      subjects: 'Ver Materias',
-      description: 'Análisis y desarrollo de software',
-      duration: 5,
-    },
-    {
-      id: 2,
-      name: 'Arquitectura',
-      subjects: 'Ver Materias',
-      description: 'Diseño y construcción de espacios',
-      duration: 4,
-    },
-  ];
+  private careerData: Career[] = [];
 
   displayedColumns: string[] = [
     'name',
@@ -64,8 +50,25 @@ export class CareerSelfManagement implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+     this.loadCareers();
   }
+  loadCareers() {
+  this.backConnection.getCareer().subscribe({
+    next: (data: Career[]) => {
+      this.careerData = data; // Almacena los datos
+      this.dataSource.data = this.careerData; // Asigna al MatTableDataSource
+      
+      // Asigna el sort después de cargar los datos
+      if (this.sort) { 
+        this.dataSource.sort = this.sort;
+      }
+      console.log('Datos de carreras cargados desde el backend.');
+    },
+    error: (err) => {
+      console.error('Error al cargar carreras desde el backend:', err);
+      // Opcional: Mostrar un mensaje al usuario (ej: un snackbar)
+    }
+  });}
 
   applyFilter(event: Event) {
     const value = (event.target as HTMLInputElement).value;
@@ -79,20 +82,24 @@ export class CareerSelfManagement implements OnInit {
       width: '90%',
     });
 
-    dialogRef.afterClosed().subscribe((newCareer) => {
-      if (newCareer) {
-        const maxId =
-          this.careerData.length > 0
-            ? Math.max(...this.careerData.map((c) => c.id))
-            : 0;
+ 
 
-        newCareer.id = maxId + 1;
-
-        this.careerData.push(newCareer as Career);
-        this.dataSource.data = [...this.careerData];
-      }
-    });
-  }
+  dialogRef.afterClosed().subscribe((newCareer) => {
+    if (newCareer) {
+      // LLAMADA AL SERVICIO CON EL MÉTODO POST (createCareer)
+      this.backConnection.createCareer(newCareer).subscribe({
+        next: (response) => {
+          console.log('Carrera creada exitosamente. Respuesta:', response);
+          this.loadCareers(); // Recargar la tabla para mostrar el nuevo registro del backend
+        },
+        error: (err) => {
+          console.error('Error al crear carrera mediante POST:', err);
+          // Manejo de errores (ej: si el nombre ya existe, etc.)
+        }
+      });
+    }
+  });
+}
 
   editCareer(career: Career) {
     const dialogRef = this.dialog.open(EditCareer, {
@@ -102,16 +109,28 @@ export class CareerSelfManagement implements OnInit {
       data: { ...career },
     });
 
-    dialogRef.afterClosed().subscribe((updatedCareer) => {
-      if (updatedCareer) {
-        const idx = this.careerData.findIndex((c) => c.id === updatedCareer.id);
-        if (idx !== -1) {
-          this.careerData[idx] = updatedCareer;
-          this.dataSource.data = [...this.careerData];
+
+
+  dialogRef.afterClosed().subscribe((updatedCareer) => {
+    if (updatedCareer) {
+      // 1. LLAMADA AL SERVICIO: Usamos el ID y los datos actualizados
+      this.backConnection.updateCareer(updatedCareer.id, updatedCareer).subscribe({
+        next: (response) => {
+          console.log(`Carrera ID ${updatedCareer.id} actualizada con éxito:`, response);
+          // 2. Recargar los datos de la tabla para reflejar el cambio del backend
+          this.loadCareers(); 
+        },
+        error: (err) => {
+          console.error('Error al actualizar carrera (PUT):', err);
+          // Opcional: Mostrar mensaje de error al usuario
         }
-      }
-    });
-  }
+      });
+      
+      // La lógica local de actualización (findIndex, this.careerData[idx] = ...) se ELIMINA
+    }
+  });
+}
+  
 
   deleteCareer(id: number) {
     if (!confirm('¿Estás seguro de que deseas eliminar esta carrera?')) return;
