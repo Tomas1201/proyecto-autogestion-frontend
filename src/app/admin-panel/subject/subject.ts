@@ -88,13 +88,13 @@ export class Subject implements OnInit {
         const newId = this.subjectData.length
           ? Math.max(...this.subjectData.map((s) => s.id)) + 1
           : 1;
-        const newSubject: Subject = {
+     /*   const newSubject: Subject = {
           id: newId,
           name: result.name,
           code: result.code
         
-        };
-        this.subjectData.push(newSubject);
+        }; 
+        this.subjectData.push(newSubject);*/
         this.dataSource.data = [...this.subjectData];
       }
     });

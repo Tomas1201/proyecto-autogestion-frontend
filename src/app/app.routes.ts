@@ -1,18 +1,18 @@
 import { Routes } from '@angular/router';
 import { MainView } from './admin-panel/main-view/main-view';
-import { CareerSelfManagement } from './admin-panel/career/career';
-import { ProfessorSelfManagement } from './admin-panel/professor/professor';
+import { Career } from './admin-panel/career/career';
+import { Professor } from './admin-panel/professor/professor';
 import { Student } from './admin-panel/student/student';
-import { SubjectSelfManagement } from './admin-panel/subject/subject';
+import { Subject } from './admin-panel/subject/subject';
 import { AddCareer } from './admin-panel/career/add-career/add-career';
 import {Login} from './login/login';
 export const routes: Routes = [{path:'', redirectTo:'/MainView', pathMatch:'full'},
 {path:'Login', component: Login},
 {path:'MainView', component: MainView},
-{ path: 'Career', component: CareerSelfManagement},
-{ path: 'Professor', component: ProfessorSelfManagement},
+{ path: 'Career', component: Career},
+{ path: 'Professor', component: Professor},
 { path: 'Student', component: Student},
-{ path: 'Subject', component: SubjectSelfManagement},
+{ path: 'Subject', component: Subject},
 {path:'AddCareer', component:AddCareer}
 
 
