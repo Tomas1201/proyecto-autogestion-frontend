@@ -11,13 +11,12 @@ import { EditCareer } from './edit-career/edit-career';
 import {BackConnection} from '../../back-connection.service';
 
 export interface Career {
-  id: number;
+  id: string;
   name: string;
   //subjects: string;
   description: string;
   duration: number;
-  qualification: string;
-  headOfCareerId: number; // puede ser nulo
+ 
 }
 
 @Component({
@@ -111,7 +110,6 @@ export class Career implements OnInit {
       minWidth: '300px',
       maxWidth: '600px',
       width: '90%',
-      data: { ...career },
     });
 
 
@@ -119,7 +117,7 @@ export class Career implements OnInit {
   dialogRef.afterClosed().subscribe((updatedCareer) => {
     if (updatedCareer) {
       
-      this.backConnection.updateCareer(updatedCareer.id, updatedCareer).subscribe({
+      this.backConnection.updateCareer(career.id, updatedCareer).subscribe({
         next: (response) => {
           console.log(`Carrera ID ${updatedCareer.id} actualizada con éxito:`, response);
       
@@ -138,9 +136,10 @@ export class Career implements OnInit {
   
 
   deleteCareer(id: number) {
-    if (!confirm('¿Estás seguro de que deseas eliminar esta carrera?')) return;
+   /* if (!confirm('¿Estás seguro de que deseas eliminar esta carrera?')) return;
 
     this.careerData = this.careerData.filter((c) => c.id !== id);
-    this.dataSource.data = [...this.careerData];
+    this.dataSource.data = [...this.careerData]; */
   }
+    
 }

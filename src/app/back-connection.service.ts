@@ -16,7 +16,7 @@ export class BackConnection {
   getCareer(): Observable<any> {
     return this.http.get(`${this.apiUrl}/career`);
   }
-  updateCareer(id:number, data:any): Observable<any> {
+  updateCareer(id:string, data:any): Observable<any> {
     return this.http.put(`${this.apiUrl}/career/${id}`,data);
   }
 
