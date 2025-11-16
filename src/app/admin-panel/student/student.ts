@@ -50,6 +50,7 @@ export class Student {
   constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
 
   private studentData: Student[] = [];
+
   public columns: StudentColumn[] = [
   { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
   { def: 'lastName', header: 'Apellido', cellKey: 'lastName', sortable: true },
@@ -58,10 +59,10 @@ export class Student {
   { def: 'dni', header: 'DNI', cellKey: 'dni', sortable: true },
   { def: 'career', header: 'Carrera', cellKey: 'career', sortable: true },
   { def: 'status', header: 'Estado', cellKey: 'status', sortable: true },
-  // Las 'actions' las dejaremos aparte ya que no usan una 'cellKey' simple
+
 ];
 
-// Asegúrate de que tu 'displayedColumns' incluya los 'def' de la lista, más 'actions'
+
 public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
   //displayedColumns: string[] = ['name', 'lastName', 'email', 'file', 'dni','career', 'status', 'actions'];
 

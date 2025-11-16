@@ -20,7 +20,6 @@ export class EditStudent {
     name: '',
     lastName: '',
     email: '',
-    file: 1,
     dni: 1,
     career: '',
     state: [] as string[]
