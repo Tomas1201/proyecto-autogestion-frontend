@@ -108,7 +108,7 @@ public displayedColumns: string[] = this.columns.map(c => c.def).concat(['action
   
     dialogRef.afterClosed().subscribe((newStudent) => {
       
-      newStudent.file = Number(newStudent.file) + 1 ;
+      
       const careerArray: string[] = [];
       careerArray.push(newStudent.career);
       newStudent.career = careerArray;
