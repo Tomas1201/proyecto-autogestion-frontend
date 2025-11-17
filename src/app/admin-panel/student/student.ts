@@ -22,13 +22,13 @@ export interface Student {
   status: string;
 }
 interface StudentColumn {
-  def: string;      // El nombre de la columna (matColumnDef)
-  header: string;   // El texto del encabezado
-  cellKey: string;  // La clave del objeto 'element' a mostrar (ej: 'name', 'lastName')
-  sortable: boolean; // Indica si la columna es ordenable
+  def: string;      
+  header: string;   
+  cellKey: string;  
+  sortable: boolean; 
 }
 
-// Array que reemplazará las múltiples <ng-container>
+
 
 @Component({
   selector: 'app-student',
@@ -64,7 +64,7 @@ export class Student {
 
 
 public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
-  //displayedColumns: string[] = ['name', 'lastName', 'email', 'file', 'dni','career', 'status', 'actions'];
+  
 
   dataSource = new MatTableDataSource(this.studentData);
 
@@ -75,6 +75,12 @@ public displayedColumns: string[] = this.columns.map(c => c.def).concat(['action
   ngOnInit() {
        this.loadStudents();
     }
+
+ngAfterViewInit() {
+    
+    this.dataSource.sort = this.sort;
+  }
+
     loadStudents() {
     this.backConnection.getStudents().subscribe({
       next: (data: Student[]) => {
@@ -119,7 +125,7 @@ public displayedColumns: string[] = this.columns.map(c => c.def).concat(['action
         this.backConnection.createStudent(newStudent).subscribe({
           next: (response) => {
             console.log('Carrera creada exitosamente. Respuesta:', response);
-            this.loadStudents(); // Recargar la tabla para mostrar el nuevo registro del backend
+            this.loadStudents(); 
           },
           error: (err) => {
             console.error('Error al crear carrera mediante POST:', err);

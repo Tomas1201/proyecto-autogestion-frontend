@@ -21,6 +21,12 @@ export interface Subject {
   classroom: string; //nulo
 }
 
+interface SubjectColumn {
+  def: string;      // El nombre de la columna (matColumnDef)
+  header: string;   // El texto del encabezado
+  cellKey: string;  // La clave del objeto 'element' a mostrar (ej: 'name', 'lastName')
+  sortable: boolean; // Indica si la columna es ordenable
+}
 @Component({
   selector: 'app-subject-self-management',
   standalone: true,
@@ -38,11 +44,20 @@ export interface Subject {
   styleUrls: ['./subject.css'],
 })
 export class Subject implements OnInit {
-  private subjectData: Subject[] = [
-    
-  ];
+  private subjectData: Subject[] = [];
 
-  displayedColumns: string[] = ['name', 'code', 'classes', 'actions'];
+ public columns: SubjectColumn[] = [
+  { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
+  { def: 'code', header: 'Codigo', cellKey: 'code', sortable: true },
+  { def: 'hours', header: 'Horas', cellKey: 'hours', sortable: true },
+  { def: 'classroom', header: 'Aula', cellKey: 'classroom', sortable: true },
+  { def: 'dni', header: 'DNI', cellKey: 'dni', sortable: true },
+
+];
+
+
+public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
+
   dataSource = new MatTableDataSource(this.subjectData);
 
   @ViewChild(MatSort) sort!: MatSort;

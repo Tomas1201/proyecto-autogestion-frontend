@@ -25,6 +25,13 @@ export interface Professor {
   status: string;
 }
 
+interface ProfessorColumn {
+  def: string;      // El nombre de la columna (matColumnDef)
+  header: string;   // El texto del encabezado
+  cellKey: string;  // La clave del objeto 'element' a mostrar (ej: 'name', 'lastName')
+  sortable: boolean; // Indica si la columna es ordenable
+}
+ 
 @Component({
   selector: 'app-professor-self-management',
   standalone: true,
@@ -43,8 +50,17 @@ export interface Professor {
 })
 export class Professor implements OnInit {
   private professorData: Professor[] = [];
+ public columns: ProfessorColumn[] = [
+  { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
+  { def: 'lastName', header: 'Apellido', cellKey: 'lastName', sortable: true },
+  { def: 'career', header: 'Carerra', cellKey: 'career', sortable: true },
+  { def: 'file', header: 'Legajo', cellKey: 'file', sortable: true },
+  { def: 'dni', header: 'DNI', cellKey: 'dni', sortable: true },
+  { def: 'career', header: 'Carrera', cellKey: 'career', sortable: true },
+  { def: 'status', header: 'Estado', cellKey: 'status', sortable: true },
 
-  displayedColumns: string[] = ['name', 'lastName', 'career', 'status', 'actions'];
+];
+  public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
   dataSource = new MatTableDataSource(this.professorData);
 
   @ViewChild(MatSort) sort!: MatSort;

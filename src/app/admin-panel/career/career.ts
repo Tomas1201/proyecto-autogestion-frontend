@@ -19,6 +19,12 @@ export interface Career {
  
 }
 
+interface CareerColumn {
+  def: string;      
+  header: string;   
+  cellKey: string;  
+  sortable: boolean; 
+}
 @Component({
   selector: 'app-career-self-management',
   imports: [
@@ -38,13 +44,15 @@ export class Career implements OnInit {
 
   private careerData: Career[] = [];
 
-  displayedColumns: string[] = [
-    'name',
-    'subjects',
-    'description',
-    'duration',
-    'actions',
-  ];
+public columns: CareerColumn[] = [
+  { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
+  { def: 'subject', header: 'Asignatura', cellKey: 'subject', sortable: true },
+  { def: 'description', header: 'Descripcion', cellKey: 'description', sortable: true },
+  { def: 'duration', header: 'Duracion', cellKey: 'duration', sortable: true },
+];
+
+  public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
+ 
 
   dataSource = new MatTableDataSource(this.careerData);
 
