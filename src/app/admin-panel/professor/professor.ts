@@ -49,7 +49,10 @@ interface ProfessorColumn {
   styleUrls: ['./professor.css'],
 })
 export class Professor implements OnInit {
+constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
+
   private professorData: Professor[] = [];
+
  public columns: ProfessorColumn[] = [
   { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
   { def: 'lastName', header: 'Apellido', cellKey: 'lastName', sortable: true },
@@ -61,11 +64,12 @@ export class Professor implements OnInit {
 
 ];
   public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
+  
   dataSource = new MatTableDataSource(this.professorData);
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
+  
 
   ngOnInit() {
          this.loadProfessors();

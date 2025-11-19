@@ -61,6 +61,7 @@ public columns: CareerColumn[] = [
   ngOnInit() {
      this.loadCareers();
   }
+  
   loadCareers() {
   this.backConnection.getCareer().subscribe({
     next: (data: Career[]) => {

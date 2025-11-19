@@ -10,8 +10,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddStudent } from './add-student/add-student';
 import {BackConnection} from '../../back-connection.service';
 import { EditStudent } from './edit-student/edit-student';
+import { Observable } from 'rxjs';
 
-export interface Student {
+export interface StudentI {
   id: number;
   name: string;
   lastName: string;
@@ -46,9 +47,12 @@ interface StudentColumn {
   templateUrl: './student.html',
   styleUrl: './student.css',
 })
-export class Student {
-  constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
-
+export class Student implements OnInit {
+  public students$: Observable<StudentI[]>; 
+  constructor(private dialog: MatDialog, private backConnection: BackConnection) {
+    this.students$ = this.backConnection.students$;  
+  }
+  
   private studentData: Student[] = [];
 
   public columns: StudentColumn[] = [
@@ -70,10 +74,14 @@ public displayedColumns: string[] = this.columns.map(c => c.def).concat(['action
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  
+
 
   ngOnInit() {
-       this.loadStudents();
+       //this.loadStudents();
+       this.backConnection.loadStudents().subscribe({
+      error: (err) => console.error('Fallo al cargar estudiantes', err)
+      // Éxito: No hacemos nada aquí, ya que el 'tap' del servicio guardó los datos
+    });
     }
 
 ngAfterViewInit() {
@@ -81,7 +89,7 @@ ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 
-    loadStudents() {
+   /* loadStudents() {
     this.backConnection.getStudents().subscribe({
       next: (data: Student[]) => {
         console.log('Datos de estudiantes recibidos:', data);
@@ -96,14 +104,14 @@ ngAfterViewInit() {
         console.error('Error al cargar de estudentes desde el backend:', err);
         
       }
-    });}
+    });}*/
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  addStudent() {
+/*  addStudent() {
       const dialogRef = this.dialog.open(AddStudent, {
         minWidth: '300px',
         maxWidth: '600px',
@@ -177,5 +185,5 @@ ngAfterViewInit() {
     this.studentData = this.studentData.filter((student) => student.id !== id);
     this.dataSource.data = this.studentData;
     console.log(`Alumno eliminado con ID ${id} eliminada`);
-  }
+  }*/
 }

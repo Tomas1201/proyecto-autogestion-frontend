@@ -35,8 +35,13 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+  </div> 
+  
+<div class="no-results" >
+    @if(dataSource.filteredData.length === 0){
+    <p>No se encontraron materias que coincidan con la búsqueda.</p>
+    }
   </div>
-
   <div class="header-container">
     <button mat-raised-button color="primary" (click)="addSubject()">
       <mat-icon>add</mat-icon>
@@ -44,9 +49,5 @@
     </button>
   </div>
 
-  <div class="no-results" >
-    @if(dataSource.filteredData.length === 0){
-    <p>No se encontraron materias que coincidan con la búsqueda.</p>
-    }
-  </div>
+  
 </div>
