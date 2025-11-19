@@ -35,7 +35,8 @@ export class AddSubjectComponent {
     this.subjectForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       code: ['', [Validators.required, Validators.minLength(2)]],
-      classes: ['', [Validators.required]],
+      hours: [null, [Validators.required, Validators.min(1)]], 
+      classroom: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
 
@@ -45,9 +46,14 @@ export class AddSubjectComponent {
 
   onSave(): void {
     if (this.subjectForm.valid) {
-      const subjectData = this.subjectForm.value;
-      console.log('Materia guardada:', subjectData);
-      this.dialogRef.close(subjectData);
+        
+        const subjectData = this.subjectForm.value; 
+        
+        
+        this.dialogRef.close(subjectData); 
+    } else {
+       
+        this.subjectForm.markAllAsTouched(); 
     }
   }
 }
