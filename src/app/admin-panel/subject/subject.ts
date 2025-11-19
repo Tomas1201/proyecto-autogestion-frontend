@@ -51,7 +51,7 @@ export class Subject implements OnInit {
   { def: 'code', header: 'Codigo', cellKey: 'code', sortable: true },
   { def: 'hours', header: 'Horas', cellKey: 'hours', sortable: true },
   { def: 'classroom', header: 'Aula', cellKey: 'classroom', sortable: true },
-  { def: 'dni', header: 'DNI', cellKey: 'dni', sortable: true },
+  
 
 ];
 
@@ -70,16 +70,16 @@ public displayedColumns: string[] = this.columns.map(c => c.def).concat(['action
      loadSubjets() {
      this.backConnection.getSubjects().subscribe({
        next: (data: Subject[]) => {
-         console.log('Datos de carreras recibidos:', data);
+         console.log('Datos de materias recibidos:', data);
          this.subjectData = data; 
          this.dataSource.data = this.subjectData; 
          if (this.sort) { 
            this.dataSource.sort = this.sort;
          }
-         console.log('Datos de estudiantes cargados desde el backend.');
+         console.log('Datos de materias cargados desde el backend.');
        },
        error: (err) => {
-         console.error('Error al cargar de estudiantes desde el backend:', err);
+         console.error('Error al cargar materias desde el backend:', err);
          
        }
      });}
@@ -98,22 +98,26 @@ public displayedColumns: string[] = this.columns.map(c => c.def).concat(['action
       data: {},
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        const newId = this.subjectData.length
-          ? Math.max(...this.subjectData.map((s) => s.id)) + 1
-          : 1;
-     /*   const newSubject: Subject = {
-          id: newId,
-          name: result.name,
-          code: result.code
-        
-        }; 
-        this.subjectData.push(newSubject);*/
-        this.dataSource.data = [...this.subjectData];
-      }
-    });
-  }
+    dialogRef.afterClosed().subscribe((newSubject) => {
+    console.log('Diálogo cerrado. Datos recibidos:', newSubject);
+    if (newSubject) {
+      console.log('Nueva carrera recibida del diálogo:', newSubject);
+      
+      this.backConnection.createSubject(newSubject).subscribe({
+        next: (response) => {
+          console.log('Carrera creada exitosamente. Respuesta:', response);
+          this.loadSubjets(); 
+        },
+        error: (err) => {
+          console.error('Error al crear carrera mediante POST:', err);
+          
+        }
+      });
+    }
+  });
+}
+  
+  
 
   editSubject(subject: Subject) {
     const dialogRef = this.dialog.open(EditSubjectComponent, {

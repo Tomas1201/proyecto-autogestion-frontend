@@ -35,7 +35,8 @@ export class AddSubjectComponent {
     this.subjectForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       code: ['', [Validators.required, Validators.minLength(2)]],
-      classes: ['', [Validators.required]],
+      hours: [null, [Validators.required, Validators.min(1)]], 
+      classroom: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
 
@@ -45,9 +46,14 @@ export class AddSubjectComponent {
 
   onSave(): void {
     if (this.subjectForm.valid) {
-      const subjectData = this.subjectForm.value;
-      console.log('Materia guardada:', subjectData);
-      this.dialogRef.close(subjectData);
+        // 1. Obtiene los valores del formulario ({name: '...', code: '...', classes: '...'})
+        const subjectData = this.subjectForm.value; 
+        
+        // 2. Cierra el modal y DEVUELVE el objeto subjectData.
+        this.dialogRef.close(subjectData); 
+    } else {
+        // Opcional: Marca todos los campos como "tocados" para mostrar los mensajes de error de validación
+        this.subjectForm.markAllAsTouched(); 
     }
   }
 }
