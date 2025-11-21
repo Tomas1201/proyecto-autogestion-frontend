@@ -27,7 +27,7 @@ export interface StudentI {
   email: string;
   file: number;
   dni: string;
-  career: string;
+  career: string[];
   status: string;
 }
 
@@ -94,30 +94,24 @@ private readonly endpoints = {
     );
   }
 
-  public loadSubjects(): Observable<Subject[]> {
+ public loadSubject(): Observable<Subject[]> {
     
-    const apiResponse$ = this.http.get<{ data: Subject[] }>(this.endpoints.subjects); 
+    const apiResponse$: Observable<Subject[]> = this.http.get<Subject[]>(this.endpoints.subjects); 
     
     return apiResponse$.pipe(
       
-      map(response => response.data), 
-    
-      tap(subjectsData => {
-        this._subjects.next(subjectsData); 
+      tap(subjectData => {
+        this._subjects.next(subjectData); 
         console.log('Asignaturas cargadas y guardadas en el estado.');
       }),
       catchError(this.handleError)
     );
   }
 
-  public loadCareers(): Observable<Career[]> {
+ public loadCareers(): Observable<Career[]> {
     
-    const apiResponse$ = this.http.get<{ data: Career[] }>(this.endpoints.careers); 
-    
+    const apiResponse$: Observable<Career[]> = this.http.get<Career[]>(this.endpoints.careers); 
     return apiResponse$.pipe(
-      
-      map(response => response.data), 
-    
       tap(careersData => {
         this._careers.next(careersData); 
         console.log('Carerras cargadas y guardadas en el estado.');
@@ -125,6 +119,7 @@ private readonly endpoints = {
       catchError(this.handleError)
     );
   }
+
 
  createCareer(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/career`, data);
@@ -174,15 +169,7 @@ private readonly endpoints = {
   }
 
   //Students
- getStudents(): Observable<any> {
-  return this.http.get<any>(`${this.apiUrl}/student`).pipe(
-    
-    map(response => {
-      
-      return response.data; 
-    })
-  );
-}
+ 
   updateStudent(id:number, data:any): Observable<any> {
     return this.http.put(`${this.apiUrl}/student/${id}`,data);
   } 
@@ -190,7 +177,20 @@ private readonly endpoints = {
     return this.http.get(`${this.apiUrl}/student/${id}`);
   }
   createStudent(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/student/`, data);
+
+const apiResponse$= this.http.post<{ data: StudentI[] }>(`${this.apiUrl}/student/`, data);
+
+
+ return apiResponse$.pipe(
+      
+      map(response => response.data), 
+    
+      tap(studentsData => {
+        this._students.next(studentsData); 
+        console.log('Alumnos cargados y guardados en el estado.:'+this._students.value);
+      }),
+      catchError(this.handleError)
+    );
   }
 }
 

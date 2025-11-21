@@ -19,7 +19,7 @@ export interface StudentI {
   email: string;
   file: number;
   dni: string;
-  career: string;
+  career: string[];
   status: string;
 }
 interface StudentColumn {
@@ -53,7 +53,7 @@ export class Student implements OnInit {
     this.students$ = this.backConnection.students$;  
   }
   
-  private studentData: Student[] = [];
+  private studentData: StudentI[] = [];
 
   public columns: StudentColumn[] = [
   { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
@@ -77,10 +77,10 @@ public displayedColumns: string[] = this.columns.map(c => c.def).concat(['action
 
 
   ngOnInit() {
-       //this.loadStudents();
+      
        this.backConnection.loadStudents().subscribe({
       error: (err) => console.error('Fallo al cargar estudiantes', err)
-      // Éxito: No hacemos nada aquí, ya que el 'tap' del servicio guardó los datos
+      
     });
     }
 
@@ -89,29 +89,24 @@ ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 
-   /* loadStudents() {
-    this.backConnection.getStudents().subscribe({
-      next: (data: Student[]) => {
-        console.log('Datos de estudiantes recibidos:', data);
-        this.studentData = data; 
-        this.dataSource.data = this.studentData; 
-        if (this.sort) { 
-          this.dataSource.sort = this.sort;
-        }
-        console.log('Datos de estudiantes cargados desde el backend.');
-      },
-      error: (err) => {
-        console.error('Error al cargar de estudentes desde el backend:', err);
-        
-      }
-    });}*/
+  public getCellValue(element: StudentI, cellKey: string): string {
+  const key = cellKey as keyof StudentI;
+  const value = element[key];
+    
+    // Lógica de formateo...
+    if (cellKey === 'career' && Array.isArray(value)) {
+      return value.join(', ');
+    }
+    
+    return value !== null && value !== undefined ? String(value) : '';
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-/*  addStudent() {
+  addStudent() {
       const dialogRef = this.dialog.open(AddStudent, {
         minWidth: '300px',
         maxWidth: '600px',
@@ -127,13 +122,13 @@ ngAfterViewInit() {
       careerArray.push(newStudent.career);
       newStudent.career = careerArray;
       console.log('El diálogo se cerró. Datos recibidos:', newStudent);
+
       if (newStudent) {
-        
-        
+
         this.backConnection.createStudent(newStudent).subscribe({
           next: (response) => {
-            console.log('Carrera creada exitosamente. Respuesta:', response);
-            this.loadStudents(); 
+            console.log('Alumnos creada exitosamente. Respuesta:', response);
+            
           },
           error: (err) => {
             console.error('Error al crear carrera mediante POST:', err);
@@ -144,7 +139,7 @@ ngAfterViewInit() {
     });
   }
 
-  editStudent(student: Student) {
+  editStudent(student: StudentI) {
       const dialogRef = this.dialog.open(EditStudent, {
         minWidth: '300px',
         maxWidth: '600px',
@@ -165,7 +160,7 @@ ngAfterViewInit() {
           next: (response) => {
             console.log(`Carrera ID ${updateStudent.id} actualizada con éxito:`, response);
         
-            this.loadStudents(); 
+            
           },
           error: (err) => {
             console.error('Error al actualizar alumno (PUT):', err);
@@ -185,5 +180,5 @@ ngAfterViewInit() {
     this.studentData = this.studentData.filter((student) => student.id !== id);
     this.dataSource.data = this.studentData;
     console.log(`Alumno eliminado con ID ${id} eliminada`);
-  }*/
+  }
 }
