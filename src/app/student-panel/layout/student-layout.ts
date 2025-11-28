@@ -1,14 +1,17 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
+import { BackConnection, Career } from '../../back-connection.service';
 
 @Component({
   selector: 'app-student-layout',
@@ -22,18 +25,44 @@ import { map } from 'rxjs/operators';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
   templateUrl: './student-layout.html',
   styleUrl: './student-layout.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StudentLayout {
-  private breakpointObserver = inject(BreakpointObserver);
+export class StudentLayout implements OnInit {
+  private readonly breakpointObserver = inject(BreakpointObserver);
+  private readonly backConnection = inject(BackConnection);
 
   isHandset = toSignal(
     this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(map(result => result.matches)),
     { initialValue: false }
   );
+
+  careers = signal<Career[]>([]);
+  selectedCareer = signal<Career | null>(null);
+
+  ngOnInit() {
+    this.loadCareers();
+  }
+
+  loadCareers() {
+    // Hardcoded student ID for now
+    this.backConnection.getStudentCareers(1).subscribe(data => {
+      this.careers.set(data);
+      if (data.length > 0) {
+        this.selectedCareer.set(data[0]);
+      }
+    });
+  }
+
+  onCareerChange(career: Career) {
+    this.selectedCareer.set(career);
+    // Here you might want to trigger a global state update or reload data
+    console.log('Selected career:', career);
+  }
 }

@@ -1,0 +1,32 @@
+.container {
+    padding: 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    min-width: 600px;
+}
+
+.error-text {
+    color: red;
+    font-size: 12px;
+    margin-left: 10px;
+    display: block;
+    /* Ensure it breaks line on small screens if needed, or stays inline */
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .error-text {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+}

@@ -1,0 +1,38 @@
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Inscripción a Cursada</mat-card-title>
+            <mat-card-subtitle>Solo se muestran materias de 2do año en adelante</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="table-container">
+                <table mat-table [dataSource]="subjects()" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Asignatura </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="year">
+                        <th mat-header-cell *matHeaderCellDef> Año </th>
+                        <td mat-cell *matCellDef="let element"> {{element.year}}° Año </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Acción </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-raised-button color="primary" [disabled]="element.registered"
+                                (click)="register(element)">
+                                {{ element.registered ? 'Inscripto' : 'Inscribirse' }}
+                            </button>
+                            <span *ngIf="!element.prerequisitesMet" class="error-text">Faltan correlativas</span>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -8,7 +8,7 @@ import { AddCareer } from './admin-panel/career/add-career/add-career';
 import { Login } from './login/login';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/MainView', pathMatch: 'full' },
+    { path: '', redirectTo: '/Login', pathMatch: 'full' },
     { path: 'Login', component: Login },
     { path: 'MainView', component: MainView },
     { path: 'Career', component: Career },
