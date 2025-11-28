@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +21,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./edit-professor.css'],
 })
 export class EditProfessor {
+  readonly dialogRef = inject(MatDialogRef<EditProfessor>);
+  readonly data = inject(MAT_DIALOG_DATA);
+
   status = ['Activo', 'Inactivo'];
   editProfessor = {
     name: '',
@@ -34,12 +37,9 @@ export class EditProfessor {
     status: '',
   };
 
-  constructor(
-    public dialogRef: MatDialogRef<EditProfessor>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    if (data) {
-      this.editProfessor = { ...data };
+  constructor() {
+    if (this.data) {
+      this.editProfessor = { ...this.data };
     }
   }
 

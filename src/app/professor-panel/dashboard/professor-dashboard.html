@@ -1,0 +1,51 @@
+<div class="dashboard-container" *ngIf="professor()">
+  <h2>Bienvenido, {{ professor()?.academicTitle }} {{ professor()?.lastName }}</h2>
+  <div class="cards-grid">
+    <!-- Card 1: Mis Asignaturas -->
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Mis Asignaturas</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="big-number">{{ subjects().length }}</p>
+        <p>Materias activas</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/professor-panel/my-subjects">Ver Todas</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Card 2: Disponibilidad -->
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Disponibilidad</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="icon-text">
+          <mat-icon>schedule</mat-icon>
+          <p>{{ professor()?.scheduleAvailability }}</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" routerLink="/professor-panel/availability">Editar</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Card 3: Legajo/Estado -->
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Legajo/Estado</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Legajo:</strong> {{ professor()?.file }}</p>
+        <div class="status-badge" [class.active]="professor()?.state">
+          {{ professor()?.state ? 'Activo' : 'Inactivo' }}
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <!-- No specific action requested, but could link to profile -->
+        <button mat-button color="primary" routerLink="/professor-panel/availability">Ver Perfil</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

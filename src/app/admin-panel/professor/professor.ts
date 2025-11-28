@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,7 +9,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { AddProfessor } from './add-professor/add-professor';
 import { EditProfessor } from './edit-professor/edit-professor';
-import {BackConnection} from '../../back-connection.service';
+import { BackConnection } from '../../back-connection.service';
 
 export interface Professor {
   id: number;
@@ -24,13 +24,6 @@ export interface Professor {
   state: string;
 }
 
-interface ProfessorColumn {
-  def: string;      // El nombre de la columna (matColumnDef)
-  header: string;   // El texto del encabezado
-  cellKey: string;  // La clave del objeto 'element' a mostrar (ej: 'name', 'lastName')
-  sortable: boolean; // Indica si la columna es ordenable
-}
- 
 @Component({
   selector: 'app-professor-self-management',
   standalone: true,
@@ -48,34 +41,49 @@ interface ProfessorColumn {
   styleUrls: ['./professor.css'],
 })
 export class Professor implements OnInit {
+  private dialog = inject(MatDialog);
+  private backConnection = inject(BackConnection);
+
   private professorData: Professor[] = [];
 
-  displayedColumns: string[] = ['name', 'lastName', 'dni', 'file', 'academicTitle', 'email', 'phone', 'scheduleAvailability', 'state', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'lastName',
+    'dni',
+    'file',
+    'academicTitle',
+    'email',
+    'phone',
+    'scheduleAvailability',
+    'state',
+    'actions'
+  ];
+
   dataSource = new MatTableDataSource(this.professorData);
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
-
   ngOnInit() {
-         this.loadProfessors();
-      }
-      loadProfessors() {
-      this.backConnection.getProfessor().subscribe({
-        next: (data: Professor[]) => {
-          console.log('Datos de carreras recibidos:', data);
-          this.professorData = data; 
-          this.dataSource.data = this.professorData; 
-          if (this.sort) { 
-            this.dataSource.sort = this.sort;
-          }
-          console.log('Datos de estudiantes cargados desde el backend.');
-        },
-        error: (err) => {
-          console.error('Error al cargar de estudentes desde el backend:', err);
-          
+    this.loadProfessors();
+  }
+
+  loadProfessors() {
+    this.backConnection.getProfessor().subscribe({
+      next: (data: Professor[]) => {
+        console.log('Datos de profesores recibidos:', data);
+        this.professorData = data;
+        this.dataSource.data = this.professorData;
+        if (this.sort) {
+          this.dataSource.sort = this.sort;
         }
-      });}
+        console.log('Datos de profesores cargados desde el backend.');
+      },
+      error: (err) => {
+        console.error('Error al cargar profesores desde el backend:', err);
+      },
+    });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
