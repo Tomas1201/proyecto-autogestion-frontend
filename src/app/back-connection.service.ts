@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, throwError, BehaviorSubject, tap, catchError } from 'rxjs';
+import { Observable, map, throwError, BehaviorSubject, tap, catchError, of } from 'rxjs';
 
 export interface Career {
   id: number;
@@ -63,7 +63,7 @@ export class BackConnection {
 
   public loadStudents(): Observable<StudentI[]> {
 
-    const apiResponse$ = this.http.get<{ data: StudentI[] }>(this.endpoints.students);
+    const apiResponse$ = this.http.get<{ data: StudentI[] }>(this.endpoints.students, { withCredentials: true });
 
     return apiResponse$.pipe(
 
@@ -80,7 +80,7 @@ export class BackConnection {
 
   public loadProfessors(): Observable<Professor[]> {
 
-    const apiResponse$ = this.http.get<{ data: Professor[] }>(this.endpoints.professors);
+    const apiResponse$ = this.http.get<{ data: Professor[] }>(this.endpoints.professors, { withCredentials: true });
 
     return apiResponse$.pipe(
 
@@ -96,7 +96,7 @@ export class BackConnection {
 
   public loadSubject(): Observable<Subject[]> {
 
-    const apiResponse$: Observable<Subject[]> = this.http.get<Subject[]>(this.endpoints.subjects);
+    const apiResponse$: Observable<Subject[]> = this.http.get<Subject[]>(this.endpoints.subjects, { withCredentials: true });
 
     return apiResponse$.pipe(
 
@@ -110,7 +110,7 @@ export class BackConnection {
 
   public loadCareers(): Observable<Career[]> {
 
-    const apiResponse$: Observable<Career[]> = this.http.get<Career[]>(this.endpoints.careers);
+    const apiResponse$: Observable<Career[]> = this.http.get<Career[]>(this.endpoints.careers, { withCredentials: true });
     return apiResponse$.pipe(
       tap(careersData => {
         this._careers.next(careersData);
@@ -195,47 +195,47 @@ export class BackConnection {
   }
   // Student Panel Methods
 
-  // Mock data for development since backend might not have these endpoints yet
-  getStudentSubjects(studentId: number): Observable<any[]> {
-    // In a real scenario: return this.http.get<any[]>(`${this.apiUrl}/student/${studentId}/subjects`);
-    // Mocking for now based on existing subjects
-    return this.subjects$.pipe(
-      map(subjects => subjects.slice(0, 3)) // Return first 3 subjects as "enrolled"
-    );
+  getStudentCareers(studentId: string): Observable<Career[]> {
+    return this.http.get<{ status: string, data: Career[] }>(`${this.apiUrl}/student-panel/careers`, { withCredentials: true })
+      .pipe(map(res => res.data));
   }
 
-  getStudentExams(studentId: number): Observable<any[]> {
-    // Mocking exams
-    return this.subjects$.pipe(
-      map(subjects => subjects.map(s => ({
-        ...s,
-        examDate: new Date(new Date().setDate(new Date().getDate() + Math.floor(Math.random() * 30))),
-        registered: false
-      })))
-    );
+  getAvailableSubjectsForRegistration(studentId: string, careerId: string): Observable<any[]> {
+    // Backend infers student from token and active career
+    return this.http.get<{ status: string, data: any[] }>(`${this.apiUrl}/student-panel/available-subjects`, { withCredentials: true })
+      .pipe(map(res => res.data));
   }
 
-  registerForExam(studentId: number, examId: number): Observable<any> {
-    // return this.http.post(`${this.apiUrl}/student/${studentId}/exams/${examId}`, {});
-    return new Observable(observer => {
-      setTimeout(() => {
-        observer.next({ success: true });
-        observer.complete();
-      }, 1000);
-    });
+  registerForSubject(studentId: string, subjectId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/student-panel/register-subject`, { subjectId }, { withCredentials: true });
+  }
+
+  getStudentAttendance(studentId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/student-panel/attendance`, { withCredentials: true });
   }
 
   getStudentGrades(studentId: number): Observable<any[]> {
-    return this.subjects$.pipe(
-      map(subjects => subjects.map(s => ({
-        subject: s.name,
-        firstPartial: Math.floor(Math.random() * 10) + 1,
-        secondPartial: Math.floor(Math.random() * 10) + 1,
-      })))
-    );
+    return this.http.get<any[]>(`${this.apiUrl}/student-panel/grades`, { withCredentials: true });
   }
 
-  getStudentAcademicStatus(studentId: number): Observable<any> {
+  getStudentExams(studentId: number): Observable<any[]> {
+    // This maps to available final exams
+    return this.http.get<any[]>(`${this.apiUrl}/student-panel/final-exams`, { withCredentials: true });
+  }
+
+  registerForExam(studentId: number, finalExamId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/student-panel/register-final-exam`, { finalExamId }, { withCredentials: true });
+  }
+
+  // Keep these as mocks or implement if backend has them
+  getStudentSubjects(studentId: number): Observable<any[]> {
+    // If we don't have a specific endpoint for "my subjects" yet, we can leave it or use available subjects as a placeholder
+    // For now, let's leave the mock or return empty if not critical
+    return of([]);
+  }
+
+  getStudentAcademicStatus(studentId: string): Observable<any> {
+    // Backend doesn't have this yet
     return new Observable(observer => {
       observer.next({
         average: 8.5,
@@ -247,55 +247,8 @@ export class BackConnection {
     });
   }
 
-  getStudentAttendance(studentId: number): Observable<any[]> {
-    return this.subjects$.pipe(
-      map(subjects => subjects.map(s => ({
-        subject: s.name,
-        attendance: Math.floor(Math.random() * 30) + 70 + '%'
-      })))
-    );
-  }
-
   getStudyPlan(careerId: number): Observable<any[]> {
-    return this.subjects$; // Assuming all subjects are part of the plan for now
-  }
-
-  // New methods for improvements
-
-  getStudentCareers(studentId: number): Observable<Career[]> {
-    // Mocking multiple careers
-    return new Observable(observer => {
-      observer.next([
-        { id: 1, name: 'Ingeniería en Sistemas' },
-        { id: 2, name: 'Tecnicatura en Programación' }
-      ]);
-      observer.complete();
-    });
-  }
-
-  getAvailableSubjectsForRegistration(studentId: number, careerId: number): Observable<any[]> {
-    // Mocking subjects available for registration (2nd year+)
-    return this.subjects$.pipe(
-      map(subjects => subjects.map((s, index) => ({
-        ...s,
-        year: (index % 3) + 1, // Mock year 1, 2, 3
-        prerequisitesMet: Math.random() > 0.3 // Randomly fail prerequisites
-      })).filter(s => s.year >= 2))
-    );
-  }
-
-  registerForSubject(studentId: number, subjectId: number): Observable<any> {
-    return new Observable(observer => {
-      setTimeout(() => {
-        // Simulate backend check
-        if (Math.random() > 0.2) {
-          observer.next({ success: true });
-        } else {
-          observer.error({ message: 'No cumples con las correlativas: Matemática I, Programación I' });
-        }
-        observer.complete();
-      }, 1000);
-    });
+    return this.subjects$;
   }
 }
 

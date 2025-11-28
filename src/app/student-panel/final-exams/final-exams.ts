@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BackConnection, Subject } from '../../back-connection.service';
+import { AuthService } from '../../auth.service';
 
 export interface Exam extends Subject {
   examDate: Date;
@@ -21,6 +22,7 @@ export interface Exam extends Subject {
 export class FinalExams implements OnInit {
   private readonly backConnection = inject(BackConnection);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly authService = inject(AuthService);
 
   // We use a signal to hold the exams data. 
   exams = signal<Exam[]>([]);
@@ -32,18 +34,22 @@ export class FinalExams implements OnInit {
   }
 
   loadExams() {
-    // Ensure subjects are loaded first as our mock depends on them
-    this.backConnection.loadSubject().subscribe(() => {
-      this.backConnection.getStudentExams(1).subscribe(data => {
-        // Cast the data to Exam[] since the service returns any[]
-        this.exams.set(data as Exam[]);
-      });
+    const studentId = this.authService.currentUser()?.id || 0;
+    this.backConnection.getStudentExams(studentId).subscribe(data => {
+      const mappedExams: Exam[] = data.map((item: any) => ({
+        id: item.id, // finalExamId
+        name: item.Subject ? item.Subject.name : 'Unknown',
+        examDate: new Date(item.date),
+        registered: false // Default to false as backend doesn't return this yet
+      }));
+      this.exams.set(mappedExams);
     });
   }
 
   register(exam: Exam) {
     if (confirm(`¿Confirmar inscripción a ${exam.name}?`)) {
-      this.backConnection.registerForExam(1, exam.id).subscribe({
+      const studentId = this.authService.currentUser()?.id || 0;
+      this.backConnection.registerForExam(studentId, exam.id).subscribe({
         next: () => {
           this.snackBar.open('Inscripción exitosa', 'Cerrar', { duration: 3000 });
           // Update local state
@@ -51,8 +57,8 @@ export class FinalExams implements OnInit {
             currentExams.map(e => e.id === exam.id ? { ...e, registered: true } : e)
           );
         },
-        error: () => {
-          this.snackBar.open('Error al inscribirse', 'Cerrar', { duration: 3000 });
+        error: (err) => {
+          this.snackBar.open(err.error?.message || 'Error al inscribirse', 'Cerrar', { duration: 3000 });
         }
       });
     }

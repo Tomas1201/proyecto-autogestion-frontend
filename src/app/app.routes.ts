@@ -8,8 +8,9 @@ import { AddCareer } from './admin-panel/career/add-career/add-career';
 import { Login } from './login/login';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/Login', pathMatch: 'full' },
-    { path: 'Login', component: Login },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: Login },
+    { path: 'register', loadComponent: () => import('./register/register').then(m => m.RegisterComponent) },
     { path: 'MainView', component: MainView },
     { path: 'Career', component: Career },
     { path: 'Professor', component: Professor },

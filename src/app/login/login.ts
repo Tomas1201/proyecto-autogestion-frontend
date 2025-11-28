@@ -53,6 +53,7 @@ export class Login {
     this.authService.login(identifier!, password!).subscribe({
       next: () => {
         const role = this.authService.userRole();
+       console.log(role);
         if (role === UserRole.Admin) {
           this.router.navigate(['/MainView']);
         } else if (role === UserRole.Student) {

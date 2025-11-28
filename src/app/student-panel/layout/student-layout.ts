@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, OnInit, computed } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -12,6 +12,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { BackConnection, Career } from '../../back-connection.service';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-student-layout',
@@ -37,6 +38,10 @@ export class StudentLayout implements OnInit {
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly backConnection = inject(BackConnection);
 
+  private authService = inject(AuthService);
+  private fileNumber = computed(() => this.authService.currentUser()?.fileNumber);
+  private fileNumber1 = this.fileNumber.toString();
+
   isHandset = toSignal(
     this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(map(result => result.matches)),
@@ -52,7 +57,7 @@ export class StudentLayout implements OnInit {
 
   loadCareers() {
     // Hardcoded student ID for now
-    this.backConnection.getStudentCareers(1).subscribe(data => {
+    this.backConnection.getStudentCareers(this.fileNumber1).subscribe(data => {
       this.careers.set(data);
       if (data.length > 0) {
         this.selectedCareer.set(data[0]);

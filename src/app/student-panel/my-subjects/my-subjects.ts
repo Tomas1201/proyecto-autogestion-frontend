@@ -4,6 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { BackConnection } from '../../back-connection.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-my-subjects',
@@ -15,10 +16,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class MySubjects implements OnInit {
   private backConnection = inject(BackConnection);
+  private authService = inject(AuthService);
 
   // Using toSignal to convert Observable to Signal
   // We pass an initial value or requireSync if we are sure it emits synchronously (which it doesn't here)
-  subjects = toSignal(this.backConnection.getStudentSubjects(1), { initialValue: [] });
+  subjects = toSignal(this.backConnection.getStudentSubjects(this.authService.currentUser()?.id || 0), { initialValue: [] });
 
   displayedColumns: string[] = ['id', 'name', 'status'];
 

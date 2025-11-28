@@ -4,6 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { BackConnection } from '../../back-connection.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-study-plan',
@@ -15,8 +16,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class StudyPlan implements OnInit {
   private backConnection = inject(BackConnection);
+  private authService = inject(AuthService);
 
-  subjects = toSignal(this.backConnection.getStudyPlan(1), { initialValue: [] });
+  subjects = toSignal(this.backConnection.getStudyPlan(this.authService.currentUser()?.id || 0), { initialValue: [] });
 
   displayedColumns: string[] = ['id', 'name', 'year'];
 
