@@ -5,19 +5,19 @@
     
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre de la Carrera</mat-label>
-      <input matInput [(ngModel)]="newCareer.Name" name="nombre" required>
+      <input matInput [(ngModel)]="newCareer.name" name="nombre" required>
       <mat-icon matSuffix>school</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="half-width">
       <mat-label>Duración (años)</mat-label>
-      <input matInput type="number" [(ngModel)]="newCareer.Duration" name="duracion" required>
+      <input matInput type="number" [(ngModel)]="newCareer.duration" name="duracion" required>
     </mat-form-field>
     
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Descripción</mat-label>
       <textarea matInput 
-                [(ngModel)]="newCareer.Description" 
+                [(ngModel)]="newCareer.description" 
                 name="descripcion" 
                 rows="4" 
                 maxlength="500"></textarea>
@@ -46,5 +46,5 @@
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="onCancelar()">Cancelar</button>
-  <button mat-raised-button color="primary" [disabled]="!newCareer.Name || !newCareer.Duration" (click)="onGuardar()">Guardar</button>
+  <button mat-raised-button color="primary" [disabled]="!newCareer.name || !newCareer.duration" (click)="onGuardar()">Guardar</button>
 </mat-dialog-actions>

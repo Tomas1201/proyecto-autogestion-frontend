@@ -6,11 +6,17 @@
 
     <mat-card-content>
       <mat-list>
-        <ng-container *ngFor="let item of menuItems; last as isLast">
-          <mat-list-item class="menu-item" (click)="navegarA(item.route)">
+        <ng-container >
+          @for( item of menuItems; track item.name) {
+            <mat-list-item class="menu-item" (click)="navegarA(item.route)">
             <span class="self-management-item">{{ item.name }}</span>
           </mat-list-item>
-          <mat-divider *ngIf="!isLast"></mat-divider>
+          
+          <mat-divider >
+            @if(!item.name){}
+          </mat-divider>
+          }
+          
         </ng-container>
       </mat-list>
     </mat-card-content>

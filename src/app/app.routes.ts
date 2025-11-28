@@ -5,15 +5,19 @@ import { Professor } from './admin-panel/professor/professor';
 import { Student } from './admin-panel/student/student';
 import { Subject } from './admin-panel/subject/subject';
 import { AddCareer } from './admin-panel/career/add-career/add-career';
-import {Login} from './login/login';
-export const routes: Routes = [{path:'', redirectTo:'/MainView', pathMatch:'full'},
-{path:'Login', component: Login},
-{path:'MainView', component: MainView},
-{ path: 'Career', component: Career},
-{ path: 'Professor', component: Professor},
-{ path: 'Student', component: Student},
-{ path: 'Subject', component: Subject},
-{path:'AddCareer', component:AddCareer}
+import { Login } from './login/login';
 
-
+export const routes: Routes = [
+    { path: '', redirectTo: '/MainView', pathMatch: 'full' },
+    { path: 'Login', component: Login },
+    { path: 'MainView', component: MainView },
+    { path: 'Career', component: Career },
+    { path: 'Professor', component: Professor },
+    { path: 'Student', component: Student },
+    { path: 'Subject', component: Subject },
+    { path: 'AddCareer', component: AddCareer },
+    {
+        path: 'student-panel',
+        loadChildren: () => import('./student-panel/student.routes').then(m => m.STUDENT_ROUTES)
+    }
 ];

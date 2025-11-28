@@ -1,0 +1,54 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset() ? 'dialog' : 'navigation')"
+      [mode]="(isHandset() ? 'over' : 'side')"
+      [opened]="!isHandset()">
+    <mat-toolbar>Menu Estudiante</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/student-panel/dashboard" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Inicio</span>
+      </a>
+      <a mat-list-item routerLink="/student-panel/my-subjects" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>book</mat-icon>
+        <span matListItemTitle>Mis Asignaturas</span>
+      </a>
+      <a mat-list-item routerLink="/student-panel/final-exams" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>event_note</mat-icon>
+        <span matListItemTitle>Inscripción a Finales</span>
+      </a>
+      <a mat-list-item routerLink="/student-panel/grades" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>grade</mat-icon>
+        <span matListItemTitle>Notas Parciales</span>
+      </a>
+      <a mat-list-item routerLink="/student-panel/academic-status" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>school</mat-icon>
+        <span matListItemTitle>Estado Académico</span>
+      </a>
+      <a mat-list-item routerLink="/student-panel/attendance" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>schedule</mat-icon>
+        <span matListItemTitle>Asistencias</span>
+      </a>
+      <a mat-list-item routerLink="/student-panel/study-plan" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>map</mat-icon>
+        <span matListItemTitle>Plan de Estudios</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Panel de Estudiante</span>
+    </mat-toolbar>
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -4,32 +4,41 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-@Component({
-  selector: 'app-add-career',
-  imports: [MatDialogModule, MatIconModule, FormsModule, MatInputModule, MatSelectModule],
-  templateUrl: './add-career.html',
-  styleUrl: './add-career.css',
-})
-export class AddCareer {
-  materiasDisponibles = [
-    { id: 'M001', nombre: 'Algoritmos y Estructuras' },
-    { id: 'M002', nombre: 'Bases de Datos I' },
-    { id: 'M003', nombre: 'Programación Web' },
-    { id: 'M004', nombre: 'Cálculo Avanzado' },
-  ];
+import { last } from 'rxjs';
 
-  newCareer = { name: '', description: '', duration: 0, materiasSeleccionadas: [] as string[] };
+@Component({
+  selector: 'app-edit-student',
+  imports: [MatDialogModule, MatIconModule, FormsModule, MatInputModule, MatSelectModule],
+  templateUrl: './edit-student.html',
+  styleUrl: './edit-student.css',
+})
+export class EditStudent {
+
+
+
+  student = {
+    name: '',
+    lastName: '',
+    email: '',
+    dni: 1,
+    career: [] as string[],
+    status: ''
+  };
 
   constructor(
-    public dialogRef: MatDialogRef<AddCareer>,
+    public dialogRef: MatDialogRef<EditStudent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+    if (data) {
+      this.student = { ...data };
+    }
+  }
 
   onCancelar(): void {
     this.dialogRef.close();
   }
 
   onGuardar(): void {
-    this.dialogRef.close(this.newCareer);
+    this.dialogRef.close(this.student);
   }
 }

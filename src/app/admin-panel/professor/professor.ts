@@ -24,6 +24,13 @@ export interface Professor {
   state: string;
 }
 
+interface ProfessorColumn {
+  def: string;      // El nombre de la columna (matColumnDef)
+  header: string;   // El texto del encabezado
+  cellKey: string;  // La clave del objeto 'element' a mostrar (ej: 'name', 'lastName')
+  sortable: boolean; // Indica si la columna es ordenable
+}
+ 
 @Component({
   selector: 'app-professor-self-management',
   standalone: true,

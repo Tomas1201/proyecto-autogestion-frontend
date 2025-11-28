@@ -22,7 +22,7 @@ export class AddStudent {
     { id: 'M004', nombre: 'Cálculo Avanzado' },
   ];
 
-  newStudent = { name: '', lastName: '', email: '',file: '', dni: '', carrera: '', state: [] as string[] };
+  newStudent = { name: '', lastName: '', email: '', dni: '', career: [] as string[]  };
 
   constructor(
     public dialogRef: MatDialogRef<AddStudent>,

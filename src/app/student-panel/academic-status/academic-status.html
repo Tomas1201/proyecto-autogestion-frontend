@@ -1,0 +1,25 @@
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Estado Académico</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list>
+                <mat-list-item>
+                    <span matListItemTitle>Promedio General</span>
+                    <span matListItemLine>{{ status()?.average }}</span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <span matListItemTitle>Materias Aprobadas</span>
+                    <span matListItemLine>{{ status()?.approvedSubjects }} / {{ status()?.totalSubjects }}</span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <span matListItemTitle>Condición</span>
+                    <span matListItemLine>{{ status()?.status }}</span>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+</div>

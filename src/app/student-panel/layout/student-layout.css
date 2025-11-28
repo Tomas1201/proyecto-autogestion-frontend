@@ -1,0 +1,13 @@
+.sidenav-container {
+  height: 100%;
+}
+.sidenav {
+  width: 250px;
+}
+.content {
+  padding: 20px;
+}
+.active-link {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #3f51b5; /* Primary color */
+}

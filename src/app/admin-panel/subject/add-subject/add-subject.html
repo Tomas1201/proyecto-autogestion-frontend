@@ -1,28 +1,70 @@
-<h2 mat-dialog-title>Agregar Materia</h2>
+<h2 mat-dialog-title>Agregar Nueva Materia</h2>
 
 <mat-dialog-content>
-  <form class="subject-form" [formGroup]="subjectForm">
-    <mat-form-field appearance="outline">
+  <div class="subject-form" [formGroup]="subjectForm">
+    
+    <mat-form-field appearance="outline" class="w-full">
       <mat-label>Nombre de la materia</mat-label>
       <input matInput formControlName="name" placeholder="Ej. Programación I" />
       <mat-icon matSuffix>book</mat-icon>
+      
+      @if (subjectForm.get('name')?.hasError('required') && subjectForm.get('name')?.touched) {
+        <mat-error>El nombre es obligatorio.</mat-error>
+      } @else if (subjectForm.get('name')?.hasError('minlength') && subjectForm.get('name')?.touched) {
+        <mat-error>El nombre debe tener al menos 3 caracteres.</mat-error>
+      }
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="w-full">
       <mat-label>Código</mat-label>
       <input matInput formControlName="code" placeholder="Ej. MAT101" />
       <mat-icon matSuffix>confirmation_number</mat-icon>
+      
+      @if (subjectForm.get('code')?.hasError('required') && subjectForm.get('code')?.touched) {
+        <mat-error>El código es obligatorio.</mat-error>
+      } @else if (subjectForm.get('code')?.hasError('minlength') && subjectForm.get('code')?.touched) {
+        <mat-error>El código debe tener al menos 2 caracteres.</mat-error>
+      }
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Horas de clase</mat-label>
+      <input matInput type="number" formControlName="hours" placeholder="Ej. 60" min="1" />
+      <mat-icon matSuffix>schedule</mat-icon>
+      
+      @if (subjectForm.get('hours')?.hasError('required') && subjectForm.get('hours')?.touched) {
+        <mat-error>El número de horas es obligatorio.</mat-error>
+      } @else if (subjectForm.get('hours')?.hasError('min') && subjectForm.get('hours')?.touched) {
+        <mat-error>Las horas deben ser un número positivo.</mat-error>
+      }
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Clases</mat-label>
-      <input matInput formControlName="classes" placeholder="Ej. Ingeniería en Sistemas" />
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Aula (Clase)</mat-label>
+      <input matInput formControlName="classroom" placeholder="Ej. A302" />
       <mat-icon matSuffix>school</mat-icon>
+      
+      @if (subjectForm.get('classroom')?.hasError('required') && subjectForm.get('classroom')?.touched) {
+        <mat-error>El aula es obligatoria.</mat-error>
+      } @else if (subjectForm.get('classroom')?.hasError('minlength') && subjectForm.get('classroom')?.touched) {
+        <mat-error>El aula debe tener al menos 2 caracteres.</mat-error>
+      }
     </mat-form-field>
-  </form>
+
+  </div>
 </mat-dialog-content>
 
-<mat-dialog-actions>
+<mat-dialog-actions align="end">
   <button mat-button (click)="onCancel()">Cancelar</button>
-  <button mat-raised-button color="primary" (click)="onSave()">Guardar</button>
+  
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="onSave()" 
+    [disabled]="subjectForm.invalid"
+  >
+    <mat-icon>save</mat-icon>
+    Guardar Materia
+  </button>
 </mat-dialog-actions>
+

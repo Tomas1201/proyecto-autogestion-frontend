@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Agregar Alumno</h2>
+<h2 mat-dialog-title>Agregar Nueva Carrera</h2>
 
 <mat-dialog-content class="mat-typography">
   <form class="career-form">
@@ -21,13 +21,13 @@
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>DNI del alumno</mat-label>
-      <input matInput  [(ngModel)]="newStudent.dni" name="dni" required>
+      <input matInput  type="number" [(ngModel)]="newStudent.dni" name="dni" required>
       
     </mat-form-field>
     
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Carrera inscripto</mat-label>
-      <input matInput  [(ngModel)]="newStudent.carrera" name="carrera" required>
+      <input matInput  [(ngModel)]="newStudent.career" name="career" required>
       
     </mat-form-field>
 
