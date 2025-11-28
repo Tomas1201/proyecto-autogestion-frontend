@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
+import { defineInjectable } from '@angular/core/primitives/di';
 
 @Component({
   selector: 'app-add-professor',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./add-professor.css'],
 })
 export class AddProfessor {
-  newProfessor = { name: '', lastName: '', career: '', status: 'Activo' };
+  newProfessor = { name: '', lastName: '', dni: '', file: '', academicTitle: '', email: '', phone: '', scheduleAvailability: '', status: 'Activo' };
 
   constructor(
     public dialogRef: MatDialogRef<AddProfessor>,

@@ -15,14 +15,13 @@ export interface Professor {
   id: number;
   name: string;
   lastName: string;
-  career: string;
-  Dni: string;
-  File: string;
-  titulo_academico: string;
-  Email: string;
-  Phone: string;
-  disponibilidad_horaria: string;
-  status: string;
+  dni: string;
+  file: string;
+  academicTitle: string;
+  email: string;
+  phone: string;
+  scheduleAvailability: string;
+  state: string;
 }
 
 @Component({
@@ -44,7 +43,7 @@ export interface Professor {
 export class Professor implements OnInit {
   private professorData: Professor[] = [];
 
-  displayedColumns: string[] = ['name', 'lastName', 'career', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'lastName', 'dni', 'file', 'academicTitle', 'email', 'phone', 'scheduleAvailability', 'state', 'actions'];
   dataSource = new MatTableDataSource(this.professorData);
 
   @ViewChild(MatSort) sort!: MatSort;

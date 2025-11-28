@@ -22,7 +22,17 @@ import { CommonModule } from '@angular/common';
 })
 export class EditProfessor {
   status = ['Activo', 'Inactivo'];
-  editProfessor = { name: '', lastName: '', career: '', status: '' };
+  editProfessor = {
+    name: '',
+    lastName: '',
+    dni: '',
+    file: '',
+    academicTitle: '',
+    email: '',
+    phone: '',
+    scheduleAvailability: '',
+    status: '',
+  };
 
   constructor(
     public dialogRef: MatDialogRef<EditProfessor>,

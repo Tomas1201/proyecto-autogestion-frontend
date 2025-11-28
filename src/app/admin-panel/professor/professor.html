@@ -23,14 +23,29 @@
       <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
     </ng-container>
     
-    <ng-container matColumnDef="career">
+    <ng-container matColumnDef="dni">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Carrera </th>
-      <td mat-cell *matCellDef="let element"> {{element.career}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.dni}} </td>
     </ng-container>
+
+    <ng-container matColumnDef="file">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> DNI </th>
+      <td mat-cell *matCellDef="let element"> {{element.file}} </td>
+      </ng-container>
+
+    <ng-container matColumnDef="academicTitle">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> DNI </th>
+      <td mat-cell *matCellDef="let element"> {{element.academicTitle}} </td>
+      </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> DNI </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
     
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="state">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.state}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
@@ -47,14 +62,18 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+
+
+  </table> 
+
   
   <div class="no-results">
     @if(dataSource.filteredData.length === 0){
     No se encontraron profesores que coincidan con la búsqueda.
     }
   </div>
-<button mat-raised-button color="primary" (click)="addProfessor()">
+
+    <button mat-raised-button color="primary" (click)="addProfessor()">
       <mat-icon>add</mat-icon>
       Agregar Profesor
     </button>
