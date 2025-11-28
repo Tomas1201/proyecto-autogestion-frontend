@@ -18,6 +18,10 @@ export const STUDENT_ROUTES: Routes = [
                 loadComponent: () => import('./final-exams/final-exams').then(m => m.FinalExams)
             },
             {
+                path: 'subject-registration',
+                loadComponent: () => import('./subject-registration/subject-registration').then(m => m.SubjectRegistration)
+            },
+            {
                 path: 'grades',
                 loadComponent: () => import('./grades/grades').then(m => m.Grades)
             },

@@ -1,13 +1,65 @@
 .sidenav-container {
   height: 100%;
 }
+
 .sidenav {
   width: 250px;
 }
+
 .content {
   padding: 20px;
+  overflow-x: auto;
+  /* Ensure content doesn't overflow horizontally on small screens */
 }
+
 .active-link {
   background-color: rgba(0, 0, 0, 0.05);
-  border-left: 4px solid #3f51b5; /* Primary color */
+  border-left: 4px solid #3f51b5;
+  /* Primary color */
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbar-start {
+  display: flex;
+  align-items: center;
+}
+
+.career-selector {
+  font-size: 14px;
+}
+
+.dense-form-field {
+  width: 200px;
+}
+
+/* Override Material Form Field styles for toolbar integration */
+::ng-deep .dense-form-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+::ng-deep .dense-form-field .mat-mdc-text-field-wrapper {
+  background-color: white;
+  border-radius: 4px;
+  padding: 0 8px;
+  height: 40px;
+}
+
+::ng-deep .dense-form-field .mat-mdc-form-field-flex {
+  height: 40px;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .content {
+    padding: 10px;
+  }
+
+  .dense-form-field {
+    width: 150px;
+  }
 }

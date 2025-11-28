@@ -1,29 +1,29 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { BackConnection } from '../../back-connection.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { BackConnection, Subject } from '../../back-connection.service';
+
+export interface Exam extends Subject {
+  examDate: Date;
+  registered: boolean;
+}
 
 @Component({
   selector: 'app-final-exams',
-  standalone: true,
-  imports: [CommonModule, MatTableModule, MatCardModule, MatButtonModule, MatSnackBarModule],
+  imports: [MatTableModule, MatCardModule, MatButtonModule, MatSnackBarModule, DatePipe],
   templateUrl: './final-exams.html',
   styleUrl: './final-exams.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FinalExams implements OnInit {
-  private backConnection = inject(BackConnection);
-  private snackBar = inject(MatSnackBar);
+  private readonly backConnection = inject(BackConnection);
+  private readonly snackBar = inject(MatSnackBar);
 
   // We use a signal to hold the exams data. 
-  // Since we need to update the local state (mark as registered), we might want a writable signal 
-  // initialized from the service, or just handle the registration logic carefully.
-  // For simplicity, I'll subscribe and set a local signal.
-  exams = signal<any[]>([]);
+  exams = signal<Exam[]>([]);
 
   displayedColumns: string[] = ['subject', 'date', 'action'];
 
@@ -35,12 +35,13 @@ export class FinalExams implements OnInit {
     // Ensure subjects are loaded first as our mock depends on them
     this.backConnection.loadSubject().subscribe(() => {
       this.backConnection.getStudentExams(1).subscribe(data => {
-        this.exams.set(data);
+        // Cast the data to Exam[] since the service returns any[]
+        this.exams.set(data as Exam[]);
       });
     });
   }
 
-  register(exam: any) {
+  register(exam: Exam) {
     if (confirm(`¿Confirmar inscripción a ${exam.name}?`)) {
       this.backConnection.registerForExam(1, exam.id).subscribe({
         next: () => {
