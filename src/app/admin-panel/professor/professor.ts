@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,29 +9,21 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { AddProfessor } from './add-professor/add-professor';
 import { EditProfessor } from './edit-professor/edit-professor';
-import {BackConnection} from '../../back-connection.service';
+import { BackConnection } from '../../back-connection.service';
 
 export interface Professor {
   id: number;
   name: string;
   lastName: string;
-  career: string;
-  Dni: string;
-  File: string;
-  titulo_academico: string;
-  Email: string;
-  Phone: string;
-  disponibilidad_horaria: string;
-  status: string;
+  dni: string;
+  file: string;
+  academicTitle: string;
+  email: string;
+  phone: string;
+  scheduleAvailability: string;
+  state: string;
 }
 
-interface ProfessorColumn {
-  def: string;      // El nombre de la columna (matColumnDef)
-  header: string;   // El texto del encabezado
-  cellKey: string;  // La clave del objeto 'element' a mostrar (ej: 'name', 'lastName')
-  sortable: boolean; // Indica si la columna es ordenable
-}
- 
 @Component({
   selector: 'app-professor-self-management',
   standalone: true,
@@ -49,47 +41,49 @@ interface ProfessorColumn {
   styleUrls: ['./professor.css'],
 })
 export class Professor implements OnInit {
-constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
+  private dialog = inject(MatDialog);
+  private backConnection = inject(BackConnection);
 
   private professorData: Professor[] = [];
 
- public columns: ProfessorColumn[] = [
-  { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
-  { def: 'lastName', header: 'Apellido', cellKey: 'lastName', sortable: true },
-  { def: 'career', header: 'Carerra', cellKey: 'career', sortable: true },
-  { def: 'file', header: 'Legajo', cellKey: 'file', sortable: true },
-  { def: 'dni', header: 'DNI', cellKey: 'dni', sortable: true },
-  { def: 'career', header: 'Carrera', cellKey: 'career', sortable: true },
-  { def: 'status', header: 'Estado', cellKey: 'status', sortable: true },
+  displayedColumns: string[] = [
+    'name',
+    'lastName',
+    'dni',
+    'file',
+    'academicTitle',
+    'email',
+    'phone',
+    'scheduleAvailability',
+    'state',
+    'actions'
+  ];
 
-];
-  public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
-  
   dataSource = new MatTableDataSource(this.professorData);
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  
-
   ngOnInit() {
-         this.loadProfessors();
-      }
-      loadProfessors() {
-      this.backConnection.getProfessor().subscribe({
-        next: (data: Professor[]) => {
-          console.log('Datos de carreras recibidos:', data);
-          this.professorData = data; 
-          this.dataSource.data = this.professorData; 
-          if (this.sort) { 
-            this.dataSource.sort = this.sort;
-          }
-          console.log('Datos de estudiantes cargados desde el backend.');
-        },
-        error: (err) => {
-          console.error('Error al cargar de estudentes desde el backend:', err);
-          
+    this.loadProfessors();
+  }
+
+  loadProfessors() {
+    this.backConnection.getProfessor().subscribe({
+      next: (data: Professor[]) => {
+        console.log('Datos de profesores recibidos:', data);
+        this.professorData = data;
+        this.dataSource.data = this.professorData;
+        if (this.sort) {
+          this.dataSource.sort = this.sort;
         }
-      });}
+        console.log('Datos de profesores cargados desde el backend.');
+      },
+      error: (err) => {
+        console.error('Error al cargar profesores desde el backend:', err);
+      },
+    });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

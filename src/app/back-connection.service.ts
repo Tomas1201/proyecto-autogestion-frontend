@@ -165,7 +165,7 @@ export class BackConnection {
     return this.http.get(`${this.apiUrl}/professor/${id}`);
 
   }
-  createProfesor(data: any): Observable<any> {
+  createProfessor(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/professor/`, data);
   }
 

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -13,12 +13,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./add-professor.css'],
 })
 export class AddProfessor {
-  newProfessor = { name: '', lastName: '', career: '', status: 'Activo' };
+  readonly dialogRef = inject(MatDialogRef<AddProfessor>);
+  readonly data = inject(MAT_DIALOG_DATA);
 
-  constructor(
-    public dialogRef: MatDialogRef<AddProfessor>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  newProfessor = { name: '', lastName: '', dni: '', file: '', academicTitle: '', email: '', phone: '', scheduleAvailability: '', status: 'Activo' };
 
   onCancelar(): void {
     this.dialogRef.close();

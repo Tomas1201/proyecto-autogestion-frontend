@@ -1,0 +1,45 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset() ? 'dialog' : 'navigation')"
+    [mode]="(isHandset() ? 'over' : 'side')" [opened]="!isHandset()">
+    <mat-toolbar>Menu Profesor</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/professor-panel/dashboard" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Inicio</span>
+      </a>
+      <a mat-list-item routerLink="/professor-panel/my-subjects" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>book</mat-icon>
+        <span matListItemTitle>Mis Materias</span>
+      </a>
+      <a mat-list-item routerLink="/professor-panel/grades" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>grade</mat-icon>
+        <span matListItemTitle>Cargar Notas</span>
+      </a>
+      <a mat-list-item routerLink="/professor-panel/availability" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>schedule</mat-icon>
+        <span matListItemTitle>Mi Disponibilidad</span>
+      </a>
+      <a mat-list-item routerLink="/professor-panel/attendance" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>how_to_reg</mat-icon>
+        <span matListItemTitle>Asistencias</span>
+      </a>
+      <a mat-list-item routerLink="/professor-panel/exams" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>assignment</mat-icon>
+        <span matListItemTitle>Exámenes Finales</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="toolbar">
+      <div class="toolbar-start">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>Panel de Profesor</span>
+      </div>
+    </mat-toolbar>
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

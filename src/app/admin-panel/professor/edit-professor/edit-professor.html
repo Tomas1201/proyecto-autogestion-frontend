@@ -2,25 +2,48 @@
 
 <mat-dialog-content class="mat-typography">
   <form class="professor-form">
-
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nombre del Profesor</mat-label>
-      <input matInput [(ngModel)]="editProfessor.name" name="nombre" required>
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="editProfessor.name" name="nombre" required />
       <mat-icon matSuffix>school</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Apellido del Profesor</mat-label>
-      <input matInput [(ngModel)]="editProfessor.lastName" name="apellido" required>
+      <mat-label>Apellido</mat-label>
+      <input matInput [(ngModel)]="editProfessor.lastName" name="apellido" required />
       <mat-icon matSuffix>school</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Carrera</mat-label>
-      <input matInput [(ngModel)]="editProfessor.career" name="carrera" required>
+      <mat-label>DNI</mat-label>
+      <input matInput [(ngModel)]="editProfessor.dni" name="dni" required />
       <mat-icon matSuffix>work</mat-icon>
     </mat-form-field>
 
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Legajo</mat-label>
+      <input matInput [(ngModel)]="editProfessor.file" name="file" required />
+      <mat-icon matSuffix>work</mat-icon>
+
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Titulo</mat-label>
+      <input matInput [(ngModel)]="editProfessor.academicTitle" name="academicTitle" required />
+      <mat-icon matSuffix>work</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="editProfessor.email" name="email" required />
+      <mat-icon matSuffix>work</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Celular</mat-label>
+      <input matInput [(ngModel)]="editProfessor.phone" name="phone" required />
+      <mat-icon matSuffix>work</mat-icon>
+    </mat-form-field>
+    
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Estado</mat-label>
       <mat-select [(ngModel)]="editProfessor.status" name="status" required>
@@ -28,15 +51,26 @@
       </mat-select>
       <mat-icon matSuffix>list</mat-icon>
     </mat-form-field>
-
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="onCancelar()">Cancelar</button>
-  <button mat-raised-button color="primary"
-    [disabled]="!editProfessor.name || !editProfessor.lastName || !editProfessor.career || !editProfessor.status"
-    (click)="onSave()">
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="
+      !editProfessor.name ||
+      !editProfessor.lastName ||
+      !editProfessor.dni ||
+      !editProfessor.file ||
+      !editProfessor.academicTitle ||
+      !editProfessor.email ||
+      !editProfessor.phone ||
+      !editProfessor.status
+    "
+    (click)="onSave()"
+  >
     Guardar Cambios
   </button>
 </mat-dialog-actions>
