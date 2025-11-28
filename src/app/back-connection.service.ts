@@ -35,9 +35,9 @@ export interface StudentI {
   providedIn: 'root',
 })
 export class BackConnection {
-  private apiUrl = 'http://localhost:3000/api/v1'; 
+  private apiUrl = 'http://localhost:3000/api/v1';
 
-private readonly endpoints = {
+  private readonly endpoints = {
     careers: `${this.apiUrl}/career`,
     subjects: `${this.apiUrl}/subject`,
     professors: `${this.apiUrl}/professor`,
@@ -62,15 +62,15 @@ private readonly endpoints = {
   public readonly careers$: Observable<Career[]> = this._careers.asObservable();
 
   public loadStudents(): Observable<StudentI[]> {
-    
-    const apiResponse$ = this.http.get<{ data: StudentI[] }>(this.endpoints.students); 
-    
+
+    const apiResponse$ = this.http.get<{ data: StudentI[] }>(this.endpoints.students);
+
     return apiResponse$.pipe(
-      
-      map(response => response.data), 
-    
+
+      map(response => response.data),
+
       tap(studentsData => {
-        this._students.next(studentsData); 
+        this._students.next(studentsData);
         console.log(studentsData)
         console.log('Estudiantes cargados y guardados en el estado.');
       }),
@@ -79,41 +79,41 @@ private readonly endpoints = {
   }
 
   public loadProfessors(): Observable<Professor[]> {
-    
-    const apiResponse$ = this.http.get<{ data: Professor[] }>(this.endpoints.professors); 
-    
+
+    const apiResponse$ = this.http.get<{ data: Professor[] }>(this.endpoints.professors);
+
     return apiResponse$.pipe(
-      
-      map(response => response.data), 
-    
+
+      map(response => response.data),
+
       tap(professorsData => {
-        this._professors.next(professorsData); 
+        this._professors.next(professorsData);
         console.log('Profesores cargados y guardados en el estado.');
       }),
       catchError(this.handleError)
     );
   }
 
- public loadSubject(): Observable<Subject[]> {
-    
-    const apiResponse$: Observable<Subject[]> = this.http.get<Subject[]>(this.endpoints.subjects); 
-    
+  public loadSubject(): Observable<Subject[]> {
+
+    const apiResponse$: Observable<Subject[]> = this.http.get<Subject[]>(this.endpoints.subjects);
+
     return apiResponse$.pipe(
-      
+
       tap(subjectData => {
-        this._subjects.next(subjectData); 
+        this._subjects.next(subjectData);
         console.log('Asignaturas cargadas y guardadas en el estado.');
       }),
       catchError(this.handleError)
     );
   }
 
- public loadCareers(): Observable<Career[]> {
-    
-    const apiResponse$: Observable<Career[]> = this.http.get<Career[]>(this.endpoints.careers); 
+  public loadCareers(): Observable<Career[]> {
+
+    const apiResponse$: Observable<Career[]> = this.http.get<Career[]>(this.endpoints.careers);
     return apiResponse$.pipe(
       tap(careersData => {
-        this._careers.next(careersData); 
+        this._careers.next(careersData);
         console.log('Carerras cargadas y guardadas en el estado.');
       }),
       catchError(this.handleError)
@@ -121,18 +121,18 @@ private readonly endpoints = {
   }
 
 
- createCareer(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/career`, data);
-  }
+  createCareer(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/career`, data);
+  }
 
   getCareer(): Observable<any> {
     return this.http.get(`${this.apiUrl}/career`);
   }
-  updateCareer(id:string, data:any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/career/${id}`,data);
+  updateCareer(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/career/${id}`, data);
   }
 
-  getByIdCareer(id:number): Observable<any> {
+  getByIdCareer(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/career/${id}`);
   }
 
@@ -140,58 +140,125 @@ private readonly endpoints = {
 
   //Subjects
   getSubjects(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/Subject`);  }
-  
-  updateSubjects(id:number, data:any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/Subject/${id}`,data);
+    return this.http.get(`${this.apiUrl}/Subject`);
   }
-  
-  getByIdSubjects(id:number): Observable<any> {
+
+  updateSubjects(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/Subject/${id}`, data);
+  }
+
+  getByIdSubjects(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/Subject/${id}`);
-  } 
+  }
   createSubject(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/subject/`, data);
-  }
+    return this.http.post(`${this.apiUrl}/subject/`, data);
+  }
 
   //Professor
   getProfessor(): Observable<any> {
     return this.http.get(`${this.apiUrl}/professor/`);
   }
-  updateProfessor(id:number, data:any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/professor/${id}`,data);
-  } 
-  getByIdProfessor(id:number): Observable<any> {
+  updateProfessor(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/professor/${id}`, data);
+  }
+  getByIdProfessor(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/professor/${id}`);
-    
+
   }
   createProfesor(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/professor/`, data);
-  }
+    return this.http.post(`${this.apiUrl}/professor/`, data);
+  }
 
   //Students
- 
-  updateStudent(id:number, data:any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/student/${id}`,data);
-  } 
-  getByIdStudent(id:number): Observable<any> {
+
+  updateStudent(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/student/${id}`, data);
+  }
+  getByIdStudent(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/student/${id}`);
   }
   createStudent(data: any): Observable<any> {
 
-const apiResponse$= this.http.post<{ data: StudentI[] }>(`${this.apiUrl}/student/`, data);
+    const apiResponse$ = this.http.post<{ data: StudentI[] }>(`${this.apiUrl}/student/`, data);
 
 
- return apiResponse$.pipe(
-      
-      map(response => response.data), 
-    
+    return apiResponse$.pipe(
+
+      map(response => response.data),
+
       tap(studentsData => {
-        this._students.next(studentsData); 
-        console.log('Alumnos cargados y guardados en el estado.:'+this._students.value);
+        this._students.next(studentsData);
+        console.log('Alumnos cargados y guardados en el estado.:' + this._students.value);
       }),
       catchError(this.handleError)
     );
-  }
+  }
+  // Student Panel Methods
+
+  // Mock data for development since backend might not have these endpoints yet
+  getStudentSubjects(studentId: number): Observable<any[]> {
+    // In a real scenario: return this.http.get<any[]>(`${this.apiUrl}/student/${studentId}/subjects`);
+    // Mocking for now based on existing subjects
+    return this.subjects$.pipe(
+      map(subjects => subjects.slice(0, 3)) // Return first 3 subjects as "enrolled"
+    );
+  }
+
+  getStudentExams(studentId: number): Observable<any[]> {
+    // Mocking exams
+    return this.subjects$.pipe(
+      map(subjects => subjects.map(s => ({
+        ...s,
+        examDate: new Date(new Date().setDate(new Date().getDate() + Math.floor(Math.random() * 30))),
+        registered: false
+      })))
+    );
+  }
+
+  registerForExam(studentId: number, examId: number): Observable<any> {
+    // return this.http.post(`${this.apiUrl}/student/${studentId}/exams/${examId}`, {});
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next({ success: true });
+        observer.complete();
+      }, 1000);
+    });
+  }
+
+  getStudentGrades(studentId: number): Observable<any[]> {
+    return this.subjects$.pipe(
+      map(subjects => subjects.map(s => ({
+        subject: s.name,
+        firstPartial: Math.floor(Math.random() * 10) + 1,
+        secondPartial: Math.floor(Math.random() * 10) + 1,
+      })))
+    );
+  }
+
+  getStudentAcademicStatus(studentId: number): Observable<any> {
+    return new Observable(observer => {
+      observer.next({
+        average: 8.5,
+        approvedSubjects: 12,
+        totalSubjects: 40,
+        status: 'Regular'
+      });
+      observer.complete();
+    });
+  }
+
+  getStudentAttendance(studentId: number): Observable<any[]> {
+    return this.subjects$.pipe(
+      map(subjects => subjects.map(s => ({
+        subject: s.name,
+        attendance: Math.floor(Math.random() * 30) + 70 + '%'
+      })))
+    );
+  }
+
+  getStudyPlan(careerId: number): Observable<any[]> {
+    return this.subjects$; // Assuming all subjects are part of the plan for now
+  }
 }
 
 
