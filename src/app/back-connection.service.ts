@@ -227,15 +227,11 @@ export class BackConnection {
     return this.http.post(`${this.apiUrl}/student-panel/register-final-exam/${studentId}/finalExamId/${finalExamId}`, { withCredentials: true });
   }
 
-  // Keep these as mocks or implement if backend has them
   getStudentSubjects(studentId: string): Observable<any[]> {
-    // If we don't have a specific endpoint for "my subjects" yet, we can leave it or use available subjects as a placeholder
-    // For now, let's leave the mock or return empty if not critical
-    return of([]);
+    return this.http.get<any[]>(`${this.apiUrl}/student-panel/subjects/${studentId}`, { withCredentials: true });
   }
 
   getStudentAcademicStatus(studentId: string): Observable<any> {
-    // Backend doesn't have this yet
     return new Observable(observer => {
       observer.next({
         average: 8.5,

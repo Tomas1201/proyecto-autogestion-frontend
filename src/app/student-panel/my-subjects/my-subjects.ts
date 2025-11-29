@@ -18,17 +18,11 @@ export class MySubjects implements OnInit {
   private backConnection = inject(BackConnection);
   private authService = inject(AuthService);
 
-  // Using toSignal to convert Observable to Signal
-  // We pass an initial value or requireSync if we are sure it emits synchronously (which it doesn't here)
   subjects = toSignal(this.backConnection.getStudentSubjects(this.authService.currentUser()?.id || "1"), { initialValue: [] });
 
   displayedColumns: string[] = ['id', 'name', 'status'];
 
   ngOnInit() {
-    // Trigger load if necessary, but getStudentSubjects returns an observable derived from subjects$
-    // We might need to ensure subjects are loaded in the service.
-    // The service has loadSubject() method but it's not called automatically.
-    // We should call it.
     this.backConnection.loadSubject().subscribe();
   }
 }
