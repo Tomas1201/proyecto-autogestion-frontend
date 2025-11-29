@@ -9,6 +9,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddCareer } from './add-career/add-career';
 import { EditCareer } from './edit-career/edit-career';
 import {BackConnection} from '../../back-connection.service';
+import { CommonModule } from '@angular/common';
 
 export interface Career {
   id: string;
