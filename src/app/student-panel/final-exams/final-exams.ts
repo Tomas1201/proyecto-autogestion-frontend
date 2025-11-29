@@ -34,7 +34,7 @@ export class FinalExams implements OnInit {
   }
 
   loadExams() {
-    const studentId = this.authService.currentUser()?.id || 0;
+    const studentId = this.authService.currentUser()?.id || "1";
     this.backConnection.getStudentExams(studentId).subscribe(data => {
       const mappedExams: Exam[] = data.map((item: any) => ({
         id: item.id, // finalExamId
@@ -48,7 +48,7 @@ export class FinalExams implements OnInit {
 
   register(exam: Exam) {
     if (confirm(`¿Confirmar inscripción a ${exam.name}?`)) {
-      const studentId = this.authService.currentUser()?.id || 0;
+      const studentId = this.authService.currentUser()?.id || "1";
       this.backConnection.registerForExam(studentId, exam.id).subscribe({
         next: () => {
           this.snackBar.open('Inscripción exitosa', 'Cerrar', { duration: 3000 });

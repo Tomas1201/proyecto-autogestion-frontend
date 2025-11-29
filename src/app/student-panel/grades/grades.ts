@@ -20,7 +20,7 @@ export class Grades implements OnInit {
   private authService = inject(AuthService);
 
   // Map backend data to flat structure
-  grades = toSignal(this.backConnection.getStudentGrades(this.authService.currentUser()?.id || 0).pipe(
+  grades = toSignal(this.backConnection.getStudentGrades(this.authService.currentUser()?.id || "1").pipe(
     map((data: any[]) => data.map(item => ({
       subject: item.Exam?.AcademicPosition?.Subject?.name || 'Unknown',
       exam: item.Exam?.description || 'Exam',

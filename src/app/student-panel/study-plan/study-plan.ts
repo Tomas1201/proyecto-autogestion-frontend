@@ -18,7 +18,7 @@ export class StudyPlan implements OnInit {
   private backConnection = inject(BackConnection);
   private authService = inject(AuthService);
 
-  subjects = toSignal(this.backConnection.getStudyPlan(this.authService.currentUser()?.id || 0), { initialValue: [] });
+  subjects = toSignal(this.backConnection.getStudyPlan(this.authService.currentUser()?.id || "1"), { initialValue: [] });
 
   displayedColumns: string[] = ['id', 'name', 'year'];
 

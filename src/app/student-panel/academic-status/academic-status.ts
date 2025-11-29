@@ -21,7 +21,7 @@ export class AcademicStatus {
   private authService = inject(AuthService);
   
   private fileNumber = computed(() => this.authService.currentUser()?.fileNumber) || '1';
-  private fileNumber1 = this.fileNumber.toString();
+  private fileNumber1 = this.authService.currentUser()?.id || "1";
 
   status = toSignal(this.backConnection.getStudentAcademicStatus(this.fileNumber1));
 }

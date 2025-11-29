@@ -13,11 +13,11 @@ import { EditStudent } from './edit-student/edit-student';
 import { Observable } from 'rxjs';
 
 export interface StudentI {
-  id: number;
+  id: string;
   name: string;
   lastName: string;
   email: string;
-  file: number;
+  file: string;
   dni: string;
   career: string[];
   status: string;
@@ -173,7 +173,7 @@ ngAfterViewInit() {
     });
   }
 
-  deleteStudent(id: number) {
+  deleteStudent(id: string) {
     if (!confirm('¿Estás seguro de que deseas eliminar este alumno?')) {
       return;
     }
