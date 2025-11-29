@@ -25,7 +25,7 @@ interface BackendSubject {
 })
 export class AddCareer {
  materiasDisponibles: MateriaDisplay[] = [];
-
+ private allBackendSubjects: BackendSubject[] = [];
   newCareer = { name: '', description: '', duration: 0, materiasSeleccionadas: [] as any };
 
   constructor(
@@ -36,22 +36,24 @@ export class AddCareer {
   ngOnInit(): void {
     this.loadAvailableSubjects();
   }
-  loadAvailableSubjects(): void {
-    this.backConnection.getSubjects().subscribe({
-      next: (subjects: BackendSubject[]) => {
-       
-        setTimeout(() => {
-            this.materiasDisponibles = subjects.map(subject => ({
-                id: subject.id,
-                nombre: subject.name
-            }));
-        }, 0); 
-       
-      },
-      error: (err) => {
-        console.error('Error al cargar las materias:', err);
-      }
-    });
+  loadAvailableSubjects(): void {this.backConnection.getSubjects().subscribe({
+      next: (subjects: BackendSubject[]) => {
+        
+     
+        this.allBackendSubjects = subjects; 
+        
+        
+        this.materiasDisponibles = subjects.map(subject => ({
+            id: subject.id,
+            nombre: subject.name 
+        }));
+       
+      },
+      error: (err) => {
+        
+        console.error('Error al cargar las materias:', err);
+      }
+    });
   }
 
   onCancelar(): void {
@@ -60,11 +62,29 @@ export class AddCareer {
 
 onGuardar(): void {
     
+    if (!this.newCareer.name || !this.newCareer.duration || this.newCareer.duration < 1) {
+        console.error("Formulario inválido o incompleto.");
+        return; 
+    }
+    
+    
+    const selectedSubjectsObjects: BackendSubject[] = this.newCareer.materiasSeleccionadas
+        .map((selectedId: any) => {
+            const subject = this.allBackendSubjects.find(s => s.id === selectedId);
+            return subject ? { id: subject.id, name: subject.name } : null;
+        })
+        .filter((subject: BackendSubject | null): subject is BackendSubject => subject !== null);
+
+   
     const { materiasSeleccionadas, ...rest } = this.newCareer;
+    
+   
     const careerData = {
-        ...rest,
-        subjects: materiasSeleccionadas 
+        ...rest, 
+        duration: Number(rest.duration), 
+        subjects: selectedSubjectsObjects 
     };
+    
     
     this.dialogRef.close(careerData);
   }
