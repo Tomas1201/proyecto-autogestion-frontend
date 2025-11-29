@@ -25,7 +25,7 @@ export class SubjectRegistration implements OnInit {
     private readonly snackBar = inject(MatSnackBar);
     private authService = inject(AuthService);
     private fileNumber = computed(() => this.authService.currentUser()?.fileNumber);
-    private fileNumber1 = this.fileNumber.toString();
+    private fileNumber1 = this.authService.currentUser()?.id || "1";
 
     subjects = signal<RegistrationSubject[]>([]);
     displayedColumns: string[] = ['name', 'year', 'action'];

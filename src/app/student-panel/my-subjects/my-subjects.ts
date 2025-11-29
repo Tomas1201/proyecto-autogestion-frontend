@@ -20,7 +20,7 @@ export class MySubjects implements OnInit {
 
   // Using toSignal to convert Observable to Signal
   // We pass an initial value or requireSync if we are sure it emits synchronously (which it doesn't here)
-  subjects = toSignal(this.backConnection.getStudentSubjects(this.authService.currentUser()?.id || 0), { initialValue: [] });
+  subjects = toSignal(this.backConnection.getStudentSubjects(this.authService.currentUser()?.id || "1"), { initialValue: [] });
 
   displayedColumns: string[] = ['id', 'name', 'status'];
 

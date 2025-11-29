@@ -40,7 +40,7 @@ export class StudentLayout implements OnInit {
 
   private authService = inject(AuthService);
   private fileNumber = computed(() => this.authService.currentUser()?.fileNumber);
-  private fileNumber1 = this.fileNumber.toString();
+  private fileNumber1 = this.authService.currentUser()?.id || "1";
 
   isHandset = toSignal(
     this.breakpointObserver.observe(Breakpoints.Handset)

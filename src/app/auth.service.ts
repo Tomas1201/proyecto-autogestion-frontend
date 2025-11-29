@@ -4,13 +4,13 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 export enum UserRole {
-  Admin = 'admin',
-  Student = 'student',
-  Professor = 'professor'
+  Admin = 'ADMIN',
+  Student = 'STUDENT',
+  Professor = 'PROFESSOR'
 }
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   role: UserRole;
   email?: string;
@@ -69,9 +69,9 @@ export class AuthService {
       const payload = this.decodeJwtPayload(token);
 
       let role = UserRole.Student;
-      if (payload.role === 'admin') role = UserRole.Admin;
-      else if (payload.role === 'professor') role = UserRole.Professor;
-      else if (payload.role === 'student') role = UserRole.Student;
+      if (payload.role === 'ADMIN') role = UserRole.Admin;
+      else if (payload.role === 'PROFESSOR') role = UserRole.Professor;
+      else if (payload.role === 'STUDENT') role = UserRole.Student;
 
       this.currentUser.set({
         id: payload.userid,

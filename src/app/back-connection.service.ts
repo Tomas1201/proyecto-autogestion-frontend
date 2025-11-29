@@ -3,29 +3,29 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map, throwError, BehaviorSubject, tap, catchError, of } from 'rxjs';
 
 export interface Career {
-  id: number;
+  id: string;
   name: string;
   // Otros campos
 }
 
 export interface Subject {
-  id: number;
+  id: string;
   name: string;
   // Otros campos
 }
 
 export interface Professor {
-  id: number;
+  id: string;
   name: string;
   // Otros campos
 }
 
 export interface StudentI {
-  id: number;
+  id: string;
   name: string;
   lastName: string;
   email: string;
-  file: number;
+  file: string;
   dni: string;
   career: string[];
   status: string;
@@ -171,10 +171,10 @@ export class BackConnection {
 
   //Students
 
-  updateStudent(id: number, data: any): Observable<any> {
+  updateStudent(id: string, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/student/${id}`, data);
   }
-  getByIdStudent(id: number): Observable<any> {
+  getByIdStudent(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/student/${id}`);
   }
   createStudent(data: any): Observable<any> {
@@ -196,7 +196,7 @@ export class BackConnection {
   // Student Panel Methods
 
   getStudentCareers(studentId: string): Observable<Career[]> {
-    return this.http.get<{ status: string, data: Career[] }>(`${this.apiUrl}/student-panel/careers`, { withCredentials: true })
+    return this.http.get<{ status: string, data: Career[] }>(`${this.apiUrl}/student-panel/careers/${studentId}`, { withCredentials: true })
       .pipe(map(res => res.data));
   }
 
@@ -207,28 +207,28 @@ export class BackConnection {
   }
 
   registerForSubject(studentId: string, subjectId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/student-panel/register-subject`, { subjectId }, { withCredentials: true });
+    return this.http.post(`${this.apiUrl}/student-panel/register-subject/${studentId}/subjectId/${subjectId}`, { withCredentials: true });
   }
 
   getStudentAttendance(studentId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/student-panel/attendance`, { withCredentials: true });
+    return this.http.get<any[]>(`${this.apiUrl}/student-panel/attendance/${studentId}`, { withCredentials: true });
   }
 
-  getStudentGrades(studentId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/student-panel/grades`, { withCredentials: true });
+  getStudentGrades(studentId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/student-panel/grades/${studentId}`, { withCredentials: true });
   }
 
-  getStudentExams(studentId: number): Observable<any[]> {
+  getStudentExams(studentId: string): Observable<any[]> {
     // This maps to available final exams
-    return this.http.get<any[]>(`${this.apiUrl}/student-panel/final-exams`, { withCredentials: true });
+    return this.http.get<any[]>(`${this.apiUrl}/student-panel/final-exams/${studentId}`, { withCredentials: true });
   }
 
-  registerForExam(studentId: number, finalExamId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/student-panel/register-final-exam`, { finalExamId }, { withCredentials: true });
+  registerForExam(studentId: string, finalExamId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/student-panel/register-final-exam/${studentId}/finalExamId/${finalExamId}`, { withCredentials: true });
   }
 
   // Keep these as mocks or implement if backend has them
-  getStudentSubjects(studentId: number): Observable<any[]> {
+  getStudentSubjects(studentId: string): Observable<any[]> {
     // If we don't have a specific endpoint for "my subjects" yet, we can leave it or use available subjects as a placeholder
     // For now, let's leave the mock or return empty if not critical
     return of([]);
@@ -247,7 +247,7 @@ export class BackConnection {
     });
   }
 
-  getStudyPlan(careerId: number): Observable<any[]> {
+  getStudyPlan(careerId: string): Observable<any[]> {
     return this.subjects$;
   }
 }

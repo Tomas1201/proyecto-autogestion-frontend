@@ -21,7 +21,7 @@ export class Attendance implements OnInit {
   private fileNumber = computed(() => this.authService.currentUser()?.fileNumber);
   private userId = computed(() => this.authService.currentUser()?.id);
 
-  attendance = toSignal(this.backConnection.getStudentAttendance((this.userId() || 0).toString()).pipe(
+  attendance = toSignal(this.backConnection.getStudentAttendance((this.userId() || "1")).pipe(
     map((data: any[]) => {
       // Group by subject
       const grouped = data.reduce((acc, curr) => {
