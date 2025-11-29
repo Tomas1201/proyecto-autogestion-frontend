@@ -169,6 +169,10 @@ export class BackConnection {
     return this.http.post(`${this.apiUrl}/professor/`, data);
   }
 
+  assignProfessorToSubject(professorId: string, data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/professor/registerToSubject/${professorId}`, data);
+  }
+
   //Students
 
   updateStudent(id: string, data: any): Observable<any> {

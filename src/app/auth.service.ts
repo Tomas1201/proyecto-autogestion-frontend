@@ -15,6 +15,7 @@ export interface User {
   role: UserRole;
   email?: string;
   fileNumber?: string; // Legajo
+  entityId?: string;
 }
 
 @Injectable({
@@ -78,7 +79,8 @@ export class AuthService {
         id: payload.userid,
         name: 'User',
         role: role,
-        fileNumber: payload.file
+        fileNumber: payload.file,
+        entityId: payload.entityId // Add entityId
       });
 
       console.log('User set from token:', this.currentUser());

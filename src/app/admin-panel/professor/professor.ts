@@ -7,8 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddProfessor } from './add-professor/add-professor';
 import { EditProfessor } from './edit-professor/edit-professor';
+import { AssignSubject } from './assign-subject/assign-subject';
 import { BackConnection } from '../../back-connection.service';
 
 export interface Professor {
@@ -42,6 +44,7 @@ interface ProfessorColumn {
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    MatTooltipModule
   ],
   templateUrl: './professor.html',
   styleUrls: ['./professor.css'],
@@ -55,7 +58,7 @@ export class Professor implements OnInit {
 
   dataSource = new MatTableDataSource(this.professorData);
 
-   public columns: ProfessorColumn[] = [
+  public columns: ProfessorColumn[] = [
     { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
     { def: 'lastName', header: 'Apellido', cellKey: 'lastName', sortable: true },
     { def: 'phone', header: 'Telefono', cellKey: 'phone', sortable: true },
@@ -136,6 +139,28 @@ export class Professor implements OnInit {
           this.professorData[index] = { ...result, id: professor.id };
           this.dataSource.data = [...this.professorData];
         }
+      }
+    });
+  }
+
+  assignSubject(professor: Professor) {
+    const dialogRef = this.dialog.open(AssignSubject, {
+      width: '400px',
+      data: { professorId: professor.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.backConnection.assignProfessorToSubject(professor.id.toString(), result).subscribe({
+          next: (response) => {
+            console.log('Materia asignada exitosamente:', response);
+            alert('Materia asignada exitosamente');
+          },
+          error: (err) => {
+            console.error('Error al asignar materia:', err);
+            alert('Error al asignar materia: ' + (err.error?.message || err.message));
+          }
+        });
       }
     });
   }

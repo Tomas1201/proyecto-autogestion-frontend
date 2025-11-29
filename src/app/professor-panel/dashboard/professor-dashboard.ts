@@ -23,7 +23,10 @@ export class ProfessorDashboard implements OnInit {
   subjects = signal<ProfessorSubject[]>([]);
 
   ngOnInit() {
-    this.professorService.getCurrentProfessor().subscribe((p) => this.professor.set(p));
+    this.professorService.getCurrentProfessor().subscribe((p) => this.professor.set(p.data));
     this.professorService.getProfessorSubjects().subscribe((s) => this.subjects.set(s));
+    console.log(this.professor());
+    console.log(this.subjects());
+    console.log(this.professor()?.academicTitle);
   }
 }

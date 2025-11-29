@@ -3,13 +3,13 @@
   <div class="header-container">
     <h2>Profesores</h2>
   </div>
-  
-  <mat-form-field appearance="outline"> 
+
+  <mat-form-field appearance="outline">
     <mat-label>Buscar</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Juan" #input>
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
-  
+
   <table mat-table [dataSource]="dataSource" matSort>
     @for(col of columns; track col.def) {
     <ng-container matColumnDef="{{ col.def }}">
@@ -30,16 +30,19 @@
         <button mat-icon-button color="warn" (click)="deleteProfessor(element.id)">
           <mat-icon>delete</mat-icon>
         </button>
+        <button mat-icon-button color="primary" (click)="assignSubject(element)" matTooltip="Asignar Materia">
+          <mat-icon>class</mat-icon>
+        </button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  
+
   <div class="no-results">
     @if(dataSource.filteredData.length === 0){
-      No se encontraron profesores que coincidan con la búsqueda.
+    No se encontraron profesores que coincidan con la búsqueda.
     }
   </div>
 

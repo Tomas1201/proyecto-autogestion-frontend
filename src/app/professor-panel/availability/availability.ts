@@ -47,7 +47,7 @@ export class ProfessorAvailability implements OnInit {
 
   ngOnInit() {
     this.professorService.getCurrentProfessor().subscribe(p => {
-      this.availability = p.scheduleAvailability;
+      this.availability = p.data.scheduleAvailability;
     });
   }
 
