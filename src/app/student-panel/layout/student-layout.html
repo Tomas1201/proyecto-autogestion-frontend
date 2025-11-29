@@ -55,6 +55,10 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <span class="spacer" style="flex: 1 1 auto;"></span>
+      <button mat-icon-button (click)="logout()" aria-label="Cerrar sesión">
+        <mat-icon>logout</mat-icon>
+      </button>
     </mat-toolbar>
     <main class="content">
       <router-outlet></router-outlet>

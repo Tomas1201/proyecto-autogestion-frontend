@@ -16,7 +16,9 @@ export class AddProfessor {
   readonly dialogRef = inject(MatDialogRef<AddProfessor>);
   readonly data = inject(MAT_DIALOG_DATA);
 
-  newProfessor = { name: '', lastName: '', dni: '', file: '', academicTitle: '', email: '', phone: '', scheduleAvailability: '', status: 'Activo' };
+  newProfessor = { name: '', lastName: '', dni: '', file: '', email: '', academicTitle: '', phone: '', scheduleAvailability: '', status: 'Activo' };
+  startTime: string = '';
+  endTime: string = '';
 
   onCancelar(): void {
     this.dialogRef.close();
@@ -24,6 +26,9 @@ export class AddProfessor {
 
   onSave(): void {
     this.newProfessor.status = 'Activo';
+    if (this.startTime && this.endTime) {
+      this.newProfessor.scheduleAvailability = `${this.startTime} - ${this.endTime}`;
+    }
     this.dialogRef.close(this.newProfessor);
   }
 }

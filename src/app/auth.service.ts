@@ -60,7 +60,8 @@ export class AuthService {
 
   logout() {
     this.currentUser.set(null);
-    this.deleteCookie('auth_token');
+    this.deleteCookie('jwt_auth');
+    window.location.href = '/login';
   }
 
   // Helper to decode JWT
@@ -108,24 +109,24 @@ export class AuthService {
   }
 
   // Cookie helpers
-private getCookie(key: string): string | null {
-  const cookies = document.cookie
-    .split(";")
-    .map(cookie => cookie.trim());
+  private getCookie(key: string): string | null {
+    const cookies = document.cookie
+      .split(";")
+      .map(cookie => cookie.trim());
     console.log('Cookies found:', cookies);
 
-  for (const cookie of cookies) {
-    const [name, ...rest] = cookie.split("=");
-    console.log('Cookie found:', name, rest.join("="));
-    if (name === key) {
+    for (const cookie of cookies) {
+      const [name, ...rest] = cookie.split("=");
       console.log('Cookie found:', name, rest.join("="));
-      // Las cookies pueden tener '=' en el valor, por eso usamos rest.join("=")
-      return decodeURIComponent(rest.join("="));
+      if (name === key) {
+        console.log('Cookie found:', name, rest.join("="));
+        // Las cookies pueden tener '=' en el valor, por eso usamos rest.join("=")
+        return decodeURIComponent(rest.join("="));
+      }
     }
-  }
 
-  return null;
-}
+    return null;
+  }
 
   private deleteCookie(name: string) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';

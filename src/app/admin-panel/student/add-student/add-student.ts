@@ -15,12 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrl: './add-student.css',
 })
 export class AddStudent {
-  studentsDisponibles = [
-    { id: 'M001', nombre: 'Algoritmos y Estructuras' },
-    { id: 'M002', nombre: 'Bases de Datos I' },
-    { id: 'M003', nombre: 'Programación Web' },
-    { id: 'M004', nombre: 'Cálculo Avanzado' },
-  ];
+
 
   newStudent = { name: '', lastName: '', email: '', dni: '', career: [] as string[]  };
 

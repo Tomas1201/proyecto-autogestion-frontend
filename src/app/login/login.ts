@@ -59,8 +59,7 @@ export class Login {
         } else if (role === UserRole.Student) {
           this.router.navigate(['/student-panel']);
         } else if (role === UserRole.Professor) {
-          // Placeholder for professor panel
-          console.log('Redirect to Professor Panel');
+          this.router.navigate(['/professor-panel']);
         }
       },
       error: (err) => {

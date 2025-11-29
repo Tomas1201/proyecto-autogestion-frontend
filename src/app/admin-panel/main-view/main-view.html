@@ -1,3 +1,10 @@
+<mat-toolbar color="primary">
+  <span>Panel de Administración</span>
+  <span style="flex: 1 1 auto;"></span>
+  <button mat-icon-button (click)="logout()" aria-label="Cerrar sesión">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
 <div class="menu-container-wrapper">
   <mat-card class="menu-card mat-elevation-z4">
     <mat-card-header>
@@ -6,17 +13,17 @@
 
     <mat-card-content>
       <mat-list>
-        <ng-container >
+        <ng-container>
           @for( item of menuItems; track item.name) {
-            <mat-list-item class="menu-item" (click)="navegarA(item.route)">
+          <mat-list-item class="menu-item" (click)="navegarA(item.route)">
             <span class="self-management-item">{{ item.name }}</span>
           </mat-list-item>
-          
-          <mat-divider >
+
+          <mat-divider>
             @if(!item.name){}
           </mat-divider>
           }
-          
+
         </ng-container>
       </mat-list>
     </mat-card-content>

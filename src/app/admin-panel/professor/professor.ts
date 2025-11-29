@@ -23,6 +23,12 @@ export interface Professor {
   scheduleAvailability: string;
   state: string;
 }
+interface ProfessorColumn {
+  def: string;
+  header: string;
+  cellKey: string;
+  sortable: boolean;
+}
 
 @Component({
   selector: 'app-professor-self-management',
@@ -46,20 +52,25 @@ export class Professor implements OnInit {
 
   private professorData: Professor[] = [];
 
-  displayedColumns: string[] = [
-    'name',
-    'lastName',
-    'dni',
-    'file',
-    'academicTitle',
-    'email',
-    'phone',
-    'scheduleAvailability',
-    'state',
-    'actions'
-  ];
 
   dataSource = new MatTableDataSource(this.professorData);
+
+   public columns: ProfessorColumn[] = [
+    { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
+    { def: 'lastName', header: 'Apellido', cellKey: 'lastName', sortable: true },
+    { def: 'phone', header: 'Telefono', cellKey: 'phone', sortable: true },
+    { def: 'scheduleAvailability', header: 'Disponibilidad', cellKey: 'scheduleAvailability', sortable: true },
+    { def: 'academicTitle', header: 'Titulo', cellKey: 'academicTitle', sortable: true },
+    { def: 'email', header: 'Email', cellKey: 'email', sortable: true },
+    { def: 'file', header: 'Legajo', cellKey: 'file', sortable: true },
+    { def: 'dni', header: 'DNI', cellKey: 'dni', sortable: true },
+    { def: 'state', header: 'Estado', cellKey: 'state', sortable: true },
+
+  ];
+
+
+  public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
+
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -69,9 +80,10 @@ export class Professor implements OnInit {
 
   loadProfessors() {
     this.backConnection.getProfessor().subscribe({
-      next: (data: Professor[]) => {
+      next: (data: any) => {
         console.log('Datos de profesores recibidos:', data);
-        this.professorData = data;
+        this.professorData = data.data;
+        console.log('Datos de profesores cargados:', this.professorData);
         this.dataSource.data = this.professorData;
         if (this.sort) {
           this.dataSource.sort = this.sort;
@@ -96,11 +108,17 @@ export class Professor implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const newId = this.professorData.length
-          ? Math.max(...this.professorData.map((p) => p.id)) + 1
-          : 1;
-        this.professorData.push({ id: newId, ...result });
-        this.dataSource.data = [...this.professorData];
+        this.backConnection.createProfessor(result).subscribe({
+          next: (response) => {
+            console.log('Profesor creado exitosamente. Respuesta:', response);
+            this.loadProfessors();
+          },
+          error: (err) => {
+            console.error('Error al crear profesor mediante POST:', err);
+
+          }
+        });
+
       }
     });
   }

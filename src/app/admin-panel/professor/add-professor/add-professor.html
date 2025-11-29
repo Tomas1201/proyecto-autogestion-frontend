@@ -28,16 +28,18 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="newProfessor.email" name="email" required>
+      <mat-icon matSuffix>work</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Titulo</mat-label>
       <input matInput [(ngModel)]="newProfessor.academicTitle" name="academicTitle" required>
       <mat-icon matSuffix>work</mat-icon>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Email</mat-label>
-      <input matInput [(ngModel)]="newProfessor.email" name="email" required>
-      <mat-icon matSuffix>work</mat-icon>
-    </mat-form-field>
+
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Celular</mat-label>
@@ -45,13 +47,27 @@
       <mat-icon matSuffix>work</mat-icon>
     </mat-form-field>
 
+    <div style="display: flex; gap: 16px;">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Hora Inicio</mat-label>
+        <input matInput type="time" [(ngModel)]="startTime" name="startTime" required>
+        <mat-icon matSuffix>schedule</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Hora Fin</mat-label>
+        <input matInput type="time" [(ngModel)]="endTime" name="endTime" required>
+        <mat-icon matSuffix>schedule</mat-icon>
+      </mat-form-field>
+    </div>
+
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="onCancelar()">Cancelar</button>
   <button mat-raised-button color="primary"
-    [disabled]="!newProfessor.name || !newProfessor.lastName || !newProfessor.dni || !newProfessor.file || !newProfessor.academicTitle || !newProfessor.email || !newProfessor.phone"
+    [disabled]="!newProfessor.name || !newProfessor.lastName || !newProfessor.dni || !newProfessor.file || !newProfessor.academicTitle || !newProfessor.email || !newProfessor.phone || !startTime || !endTime"
     (click)="onSave()">
     Guardar
   </button>

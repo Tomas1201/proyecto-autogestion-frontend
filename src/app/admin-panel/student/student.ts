@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddStudent } from './add-student/add-student';
-import {BackConnection} from '../../back-connection.service';
+import { BackConnection } from '../../back-connection.service';
 import { EditStudent } from './edit-student/edit-student';
 import { Observable } from 'rxjs';
 
@@ -23,10 +23,10 @@ export interface StudentI {
   status: string;
 }
 interface StudentColumn {
-  def: string;      
-  header: string;   
-  cellKey: string;  
-  sortable: boolean; 
+  def: string;
+  header: string;
+  cellKey: string;
+  sortable: boolean;
 }
 
 
@@ -42,33 +42,33 @@ interface StudentColumn {
     MatInputModule,
     CommonModule,
     MatDialogModule,
-    
+
   ],
   templateUrl: './student.html',
   styleUrl: './student.css',
 })
 export class Student implements OnInit {
-  public students$: Observable<StudentI[]>; 
+  public students$: Observable<StudentI[]>;
   constructor(private dialog: MatDialog, private backConnection: BackConnection) {
-    this.students$ = this.backConnection.students$;  
+    
+    this.students$ = this.backConnection.students$;
   }
-  
+
   private studentData: StudentI[] = [];
 
   public columns: StudentColumn[] = [
-  { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
-  { def: 'lastName', header: 'Apellido', cellKey: 'lastName', sortable: true },
-  { def: 'email', header: 'Email', cellKey: 'email', sortable: true },
-  { def: 'file', header: 'Legajo', cellKey: 'file', sortable: true },
-  { def: 'dni', header: 'DNI', cellKey: 'dni', sortable: true },
-  { def: 'career', header: 'Carrera', cellKey: 'career', sortable: true },
-  { def: 'status', header: 'Estado', cellKey: 'status', sortable: true },
+    { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
+    { def: 'lastName', header: 'Apellido', cellKey: 'lastName', sortable: true },
+    { def: 'email', header: 'Email', cellKey: 'email', sortable: true },
+    { def: 'file', header: 'Legajo', cellKey: 'file', sortable: true },
+    { def: 'dni', header: 'DNI', cellKey: 'dni', sortable: true },
+    { def: 'status', header: 'Estado', cellKey: 'status', sortable: true },
 
-];
+  ];
 
 
-public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
-  
+  public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
+
 
   dataSource = new MatTableDataSource(this.studentData);
 
@@ -77,27 +77,33 @@ public displayedColumns: string[] = this.columns.map(c => c.def).concat(['action
 
 
   ngOnInit() {
-      
-       this.backConnection.loadStudents().subscribe({
+    this.backConnection.loadStudents().subscribe({
+      next: (data) => {
+        console.log('Estudiantes cargados en el componente:', data);
+        this.studentData = data;
+        this.dataSource.data = this.studentData;
+        if (this.sort) {
+          this.dataSource.sort = this.sort;
+        }
+      },
       error: (err) => console.error('Fallo al cargar estudiantes', err)
-      
     });
-    }
+  }
 
-ngAfterViewInit() {
-    
+  ngAfterViewInit() {
+
     this.dataSource.sort = this.sort;
   }
 
   public getCellValue(element: StudentI, cellKey: string): string {
-  const key = cellKey as keyof StudentI;
-  const value = element[key];
-    
+    const key = cellKey as keyof StudentI;
+    const value = element[key];
+
     // Lógica de formateo...
     if (cellKey === 'career' && Array.isArray(value)) {
       return value.join(', ');
     }
-    
+
     return value !== null && value !== undefined ? String(value) : '';
   }
 
@@ -107,17 +113,17 @@ ngAfterViewInit() {
   }
 
   addStudent() {
-      const dialogRef = this.dialog.open(AddStudent, {
-        minWidth: '300px',
-        maxWidth: '600px',
-        width: '90%',
-      });
-  
-   
-  
+    const dialogRef = this.dialog.open(AddStudent, {
+      minWidth: '300px',
+      maxWidth: '600px',
+      width: '90%',
+    });
+
+
+
     dialogRef.afterClosed().subscribe((newStudent) => {
-      
-      
+
+
       const careerArray: string[] = [];
       careerArray.push(newStudent.career);
       newStudent.career = careerArray;
@@ -128,11 +134,11 @@ ngAfterViewInit() {
         this.backConnection.createStudent(newStudent).subscribe({
           next: (response) => {
             console.log('Alumnos creada exitosamente. Respuesta:', response);
-            
+
           },
           error: (err) => {
             console.error('Error al crear carrera mediante POST:', err);
-        
+
           }
         });
       }
@@ -140,14 +146,14 @@ ngAfterViewInit() {
   }
 
   editStudent(student: StudentI) {
-      const dialogRef = this.dialog.open(EditStudent, {
-        minWidth: '300px',
-        maxWidth: '600px',
-        width: '90%',
-      });
-  
-  
-  
+    const dialogRef = this.dialog.open(EditStudent, {
+      minWidth: '300px',
+      maxWidth: '600px',
+      width: '90%',
+    });
+
+
+
     dialogRef.afterClosed().subscribe((updateStudent) => {
       const careerArray: string[] = [];
       careerArray.push(updateStudent.career);
@@ -155,20 +161,20 @@ ngAfterViewInit() {
       console.log('Diálogo cerrado. Datos recibidos:', updateStudent);
 
       if (updateStudent) {
-        
+
         this.backConnection.updateStudent(student.id, updateStudent).subscribe({
           next: (response) => {
             console.log(`Carrera ID ${updateStudent.id} actualizada con éxito:`, response);
-        
-            
+
+
           },
           error: (err) => {
             console.error('Error al actualizar alumno (PUT):', err);
-        
+
           }
         });
-        
-        
+
+
       }
     });
   }
