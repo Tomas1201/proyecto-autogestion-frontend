@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Asignar Materia a Estudiante</h2>
+<mat-dialog-content [formGroup]="assignForm">
+    <div class="form-container">
+        <mat-form-field appearance="outline">
+            <mat-label>Materia</mat-label>
+            <mat-select formControlName="subjectId">
+                <mat-option *ngFor="let subject of subjects" [value]="subject.id">
+                    {{ subject.name }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="assignForm.get('subjectId')?.hasError('required')">
+                La materia es requerida
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="status">
+                <mat-option *ngFor="let status of statuses" [value]="status">
+                    {{ status }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="assignForm.get('status')?.hasError('required')">
+                El estado es requerido
+            </mat-error>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="onSave()" [disabled]="assignForm.invalid">Asignar</button>
+</mat-dialog-actions>

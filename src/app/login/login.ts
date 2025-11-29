@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,7 +19,8 @@ import { AuthService, UserRole } from '../auth.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    RouterLink
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -53,7 +54,7 @@ export class Login {
     this.authService.login(identifier!, password!).subscribe({
       next: () => {
         const role = this.authService.userRole();
-       console.log(role);
+        console.log(role);
         if (role === UserRole.Admin) {
           this.router.navigate(['/MainView']);
         } else if (role === UserRole.Student) {

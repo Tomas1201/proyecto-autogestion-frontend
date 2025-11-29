@@ -44,6 +44,10 @@
         <button class="button-submit" [disabled]="loginForm.invalid || isLoading()">
           {{ isLoading() ? 'Ingresando...' : 'Ingresar' }}
         </button>
+
+        <div class="register-link">
+          <p>¿No tienes cuenta? <a routerLink="/register">Registrarse</a></p>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>
