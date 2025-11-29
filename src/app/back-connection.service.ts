@@ -197,6 +197,11 @@ export class BackConnection {
       catchError(this.handleError)
     );
   }
+
+  assignStudentToSubject(studentId: string, data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/student/registerToSubject/${studentId}`, data);
+  }
+
   // Student Panel Methods
 
   getStudentCareers(studentId: string): Observable<Career[]> {
@@ -251,21 +256,3 @@ export class BackConnection {
     return this.subjects$;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

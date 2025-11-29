@@ -11,6 +11,7 @@ import { AddStudent } from './add-student/add-student';
 import { BackConnection } from '../../back-connection.service';
 import { EditStudent } from './edit-student/edit-student';
 import { Observable } from 'rxjs';
+import { AssignStudentSubject } from './assign-subject/assign-subject';
 
 export interface StudentI {
   id: string;
@@ -50,7 +51,7 @@ interface StudentColumn {
 export class Student implements OnInit {
   public students$: Observable<StudentI[]>;
   constructor(private dialog: MatDialog, private backConnection: BackConnection) {
-    
+
     this.students$ = this.backConnection.students$;
   }
 
@@ -175,6 +176,30 @@ export class Student implements OnInit {
         });
 
 
+      }
+    });
+  }
+
+  assignSubject(student: StudentI) {
+    const dialogRef = this.dialog.open(AssignStudentSubject, {
+      minWidth: '300px',
+      maxWidth: '600px',
+      width: '90%',
+      data: { studentId: student.id }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.backConnection.assignStudentToSubject(student.id, result).subscribe({
+          next: (response) => {
+            console.log('Asignación exitosa:', response);
+            alert('Estudiante asignado correctamente');
+          },
+          error: (err) => {
+            console.error('Error al asignar estudiante:', err);
+            alert('Error al asignar estudiante: ' + (err.error?.error || 'Error desconocido'));
+          }
+        });
       }
     });
   }
