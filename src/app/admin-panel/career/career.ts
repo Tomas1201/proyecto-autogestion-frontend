@@ -8,26 +8,36 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddCareer } from './add-career/add-career';
 import { EditCareer } from './edit-career/edit-career';
-import {BackConnection} from '../../back-connection.service';
+import { BackConnection } from '../../back-connection.service';
 import { CommonModule } from '@angular/common';
+import { SubjectDisplayModal } from '../career/subject-display-modal/subject-display-modal'; // Asegúrate de que esta ruta sea correcta
+
+// Reutilizamos la interfaz de asignaturas configuradas para los datos de la carrera
+export interface ConfiguredSubject {
+    subjectId: string;
+    name: string;
+    year: number | null;
+    correlativeId: string | null;
+}
 
 export interface Career {
   id: string;
   name: string;
-  //subjects: string;
   description: string;
   duration: number;
- 
+  subjects?: ConfiguredSubject[]; // Array de asignaturas configuradas
 }
 
 interface CareerColumn {
-  def: string;      
-  header: string;   
-  cellKey: string;  
+  def: string; 
+  header: string; 
+  cellKey: string;
   sortable: boolean; 
 }
+
 @Component({
   selector: 'app-career-self-management',
+  standalone: true,
   imports: [
     MatTableModule,
     MatSortModule,
@@ -36,51 +46,72 @@ interface CareerColumn {
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    CommonModule, 
   ],
   templateUrl: './career.html',
   styleUrls: ['./career.css'],
 })
-export class Career implements OnInit {
+export class CareerComponent implements OnInit {
   constructor(private dialog: MatDialog, private backConnection: BackConnection) {}
 
   private careerData: Career[] = [];
 
-public columns: CareerColumn[] = [
-  { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
-  { def: 'subject', header: 'Asignatura', cellKey: 'subject', sortable: true },
-  { def: 'description', header: 'Descripcion', cellKey: 'description', sortable: true },
-  { def: 'duration', header: 'Duracion', cellKey: 'duration', sortable: true },
-];
+  public columns: CareerColumn[] = [
+    { def: 'name', header: 'Nombre', cellKey: 'name', sortable: true },
+   
+    { def: 'subjectsCount', header: 'Asignaturas', cellKey: 'subjectsCount', sortable: false }, 
+    { def: 'description', header: 'Descripcion', cellKey: 'description', sortable: true },
+    { def: 'duration', header: 'Duracion', cellKey: 'duration', sortable: true },
+  ];
 
+  
   public displayedColumns: string[] = this.columns.map(c => c.def).concat(['actions']);
- 
-
-  dataSource = new MatTableDataSource(this.careerData);
+  
+  
+  dataSource = new MatTableDataSource<Career & { subjectsCount: number }>([]);
 
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit() {
-     this.loadCareers();
+      this.loadCareers();
   }
-  
+
   loadCareers() {
-  this.backConnection.getCareer().subscribe({
-    next: (data: Career[]) => {
-      console.log('Datos de carreras recibidos:', data);
-      this.careerData = data; // Almacena los datos
-      this.dataSource.data = this.careerData; // Asigna al MatTableDataSource
+    this.backConnection.getCareer().subscribe({
+      next: (data: Career[]) => {
+        console.log('Datos de carreras recibidos:', data);
+        
       
-      // Asigna el sort después de cargar los datos
-      if (this.sort) { 
-        this.dataSource.sort = this.sort;
+        const mappedData = data.map(career => ({
+            ...career,
+            subjectsCount: career.subjects ? career.subjects.length : 0 
+        }));
+
+        this.careerData = data; 
+        this.dataSource.data = mappedData;
+        
+        if (this.sort) { 
+          this.dataSource.sort = this.sort;
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar carreras desde el backend:', err);
       }
-      console.log('Datos de carreras cargados desde el backend.');
-    },
-    error: (err) => {
-      console.error('Error al cargar carreras desde el backend:', err);
-      // Opcional: Mostrar un mensaje al usuario (ej: un snackbar)
-    }
-  });}
+    });
+  }
+
+  
+  showSubjects(career: Career): void {
+    this.dialog.open(SubjectDisplayModal, {
+        minWidth: '300px',
+        maxWidth: '800px',
+        width: '90%',
+        data: {
+            careerName: career.name,
+            subjects: career.subjects || []
+        }
+    });
+  }
 
   applyFilter(event: Event) {
     const value = (event.target as HTMLInputElement).value;
@@ -89,67 +120,48 @@ public columns: CareerColumn[] = [
 
   addCareer() {
     const dialogRef = this.dialog.open(AddCareer, {
-      minWidth: '300px',
-      maxWidth: '600px',
-      width: '90%',
+        minWidth: '300px',
+        maxWidth: '600px',
+        width: '90%',
     });
 
- 
-
-  dialogRef.afterClosed().subscribe((newCareer) => {
-    console.log('Diálogo cerrado. Datos recibidos:', newCareer);
-    if (newCareer) {
-      console.log('Nueva carrera recibida del diálogo:', newCareer);
-      
-      this.backConnection.createCareer(newCareer).subscribe({
-        next: (response) => {
-          console.log('Carrera creada exitosamente. Respuesta:', response);
-          this.loadCareers(); 
-        },
-        error: (err) => {
-          console.error('Error al crear carrera mediante POST:', err);
-          
+    dialogRef.afterClosed().subscribe((newCareer) => {
+        if (newCareer) {
+            this.backConnection.createCareer(newCareer).subscribe({
+                next: (response) => {
+                    this.loadCareers(); 
+                },
+                error: (err) => {
+                    console.error('Error al crear carrera mediante POST:', err);
+                }
+            });
         }
-      });
-    }
-  });
-}
+    });
+  }
 
   editCareer(career: Career) {
     const dialogRef = this.dialog.open(EditCareer, {
-      minWidth: '300px',
-      maxWidth: '600px',
-      width: '90%',
+        minWidth: '300px',
+        maxWidth: '600px',
+        width: '90%',
+        data: career 
     });
 
-
-
-  dialogRef.afterClosed().subscribe((updatedCareer) => {
-    if (updatedCareer) {
-      
-      this.backConnection.updateCareer(career.id, updatedCareer).subscribe({
-        next: (response) => {
-          console.log(`Carrera ID ${updatedCareer.id} actualizada con éxito:`, response);
-      
-          this.loadCareers(); 
-        },
-        error: (err) => {
-          console.error('Error al actualizar carrera (PUT):', err);
-      
+    dialogRef.afterClosed().subscribe((updatedCareer) => {
+        if (updatedCareer) {
+            this.backConnection.updateCareer(career.id, updatedCareer).subscribe({
+                next: (response) => {
+                    this.loadCareers(); 
+                },
+                error: (err) => {
+                    console.error('Error al actualizar carrera (PUT):', err);
+                }
+            });
         }
-      });
-      
-      
-    }
-  });
-}
-  
-
-  deleteCareer(id: number) {
-   /* if (!confirm('¿Estás seguro de que deseas eliminar esta carrera?')) return;
-
-    this.careerData = this.careerData.filter((c) => c.id !== id);
-    this.dataSource.data = [...this.careerData]; */
+    });
   }
+
+  deleteCareer(id: string) {
     
+  }
 }

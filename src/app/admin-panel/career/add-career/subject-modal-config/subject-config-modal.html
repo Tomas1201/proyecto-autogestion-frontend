@@ -6,7 +6,7 @@
     <mat-form-field appearance="outline" class="flex-grow">
       <mat-label>Asignatura para Agregar</mat-label>
       <mat-select [(ngModel)]="selectedSubjectToAdd">
-        <!-- Muestra las asignaturas disponibles del backend que no están en la tabla -->
+        
         <mat-option *ngFor="let subject of availableForAddition" [value]="subject.id">
           {{ subject.name }}
         </mat-option>
@@ -26,13 +26,13 @@
   <div class="table-container mat-elevation-z2 mt-4">
     <table mat-table [dataSource]="dataSource" class="w-full">
 
-      <!-- Columna de Nombre -->
+    
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Asignatura </th>
         <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
       </ng-container>
 
-      <!-- Columna de Año -->
+  
       <ng-container matColumnDef="year">
         <th mat-header-cell *matHeaderCellDef> Año </th>
         <td mat-cell *matCellDef="let element"> 
@@ -45,7 +45,7 @@
         </td>
       </ng-container>
 
-      <!-- Columna de Correlatividad -->
+      
       <ng-container matColumnDef="correlative">
         <th mat-header-cell *matHeaderCellDef> Correlatividad Requerida </th>
         <td mat-cell *matCellDef="let element">
@@ -55,10 +55,10 @@
               [compareWith]="compareSubjectIds"
               [disabled]="getCorrelativeOptions(element.subjectId).length === 0">
               
-              <!-- CAMBIO CRÍTICO: Usamos una cadena única en lugar de [value]="null" -->
+              
               <mat-option [value]="'NO_CORRELATIVE'">No se necesita correlatividad</mat-option>
               
-              <!-- Muestra el resto de las materias configuradas en la tabla -->
+              
               <mat-option *ngFor="let corr of getCorrelativeOptions(element.subjectId)" [value]="corr.subjectId">
                 {{ corr.name }} (Año {{ corr.year }})
               </mat-option>
@@ -70,7 +70,7 @@
         </td>
       </ng-container>
 
-      <!-- Columna de Acciones -->
+      
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Eliminar </th>
         <td mat-cell *matCellDef="let element">
@@ -83,7 +83,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       
-      <!-- Fila de No Resultados -->
+    
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell text-center py-4 text-gray-500" [attr.colspan]="displayedColumns.length">
           Aún no ha agregado asignaturas. Use el selector superior para comenzar.

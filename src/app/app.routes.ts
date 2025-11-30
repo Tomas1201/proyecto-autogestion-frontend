@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainView } from './admin-panel/main-view/main-view';
-import { Career } from './admin-panel/career/career';
+import { Career, CareerComponent } from './admin-panel/career/career';
 import { Professor } from './admin-panel/professor/professor';
 import { Student } from './admin-panel/student/student';
 import { Subject } from './admin-panel/subject/subject';
@@ -12,7 +12,7 @@ export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'register', loadComponent: () => import('./register/register').then(m => m.RegisterComponent) },
     { path: 'MainView', component: MainView },
-    { path: 'Career', component: Career },
+    { path: 'Career', component: CareerComponent },
     { path: 'Professor', component: Professor },
     { path: 'Student', component: Student },
     { path: 'Subject', component: Subject },

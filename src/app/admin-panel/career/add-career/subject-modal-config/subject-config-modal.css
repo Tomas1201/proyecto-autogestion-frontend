@@ -1,4 +1,4 @@
-/* Estilos específicos para el modal de configuración de asignaturas */
+
 
 .selection-area {
   display: flex;
@@ -20,7 +20,7 @@
 }
 
 table {
-  min-width: 600px; /* Asegura legibilidad en pantallas pequeñas */
+  min-width: 600px; 
   border-collapse: collapse;
 }
 
@@ -40,22 +40,22 @@ td {
   color: #424242;
 }
 
-/* Campos de formulario dentro de la tabla */
+
 td mat-form-field {
-  margin: -8px 0; /* Ajuste para que se vea bien dentro de la celda */
+  margin: -8px 0; 
   font-size: 0.85rem;
 }
 
 .w-20 {
-  width: 80px; /* Ancho fijo para el campo de Año */
+  width: 80px; 
 }
 
-/* Mejorar el ancho del selector de correlatividad */
+
 mat-select {
   min-width: 150px;
 }
 
-/* Asegurar que los botones tengan un buen aspecto */
+
 .subject-config-button {
   background-color: #ffb300;
   color: white;
@@ -65,7 +65,7 @@ mat-select {
   background-color: #ffc107;
 }
 
-/* Responsividad para botones de acción del modal */
+
 mat-dialog-actions {
   display: flex;
   justify-content: flex-end;
@@ -83,7 +83,7 @@ mat-dialog-actions {
   }
   
   .table-container {
-    /* Permitir scroll en la tabla en móvil */
+   
     overflow-x: auto;
   }
 }
