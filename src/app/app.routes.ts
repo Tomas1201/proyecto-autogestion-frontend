@@ -17,6 +17,7 @@ export const routes: Routes = [
     { path: 'Student', component: Student },
     { path: 'Subject', component: Subject },
     { path: 'AddCareer', component: AddCareer },
+    { path: 'AcademicManagement', loadComponent: () => import('./admin-panel/academic-management/academic-management.component').then(m => m.AcademicManagementComponent) },
     {
         path: 'student-panel',
         loadChildren: () => import('./student-panel/student.routes').then(m => m.STUDENT_ROUTES)

@@ -1,0 +1,69 @@
+<div class="container">
+    <h2>Gestión Académica</h2>
+
+    <div class="grid">
+        <!-- Current Cycle Status -->
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>Ciclo Lectivo Actual</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                @if (currentCycle(); as cycle) {
+                <div class="cycle-info">
+                    <p><strong>Año:</strong> {{ cycle.year }}</p>
+                    <p><strong>Cuatrimestre:</strong> {{ cycle.fourMonthPeriod }}°</p>
+                    <p><strong>Inicio:</strong> {{ cycle.startTime | date:'dd/MM/yyyy' }}</p>
+                    <p><strong>Fin:</strong> {{ cycle.finalTime | date:'dd/MM/yyyy' }}</p>
+
+                    <div class="toggle-container">
+                        <mat-slide-toggle [checked]="cycle.examTablesEnabled" (change)="toggleExamTables($event)"
+                            color="primary">
+                            Habilitar Mesas de Examen
+                        </mat-slide-toggle>
+                        <p class="hint">
+                            {{ cycle.examTablesEnabled ? 'Los alumnos pueden inscribirse a exámenes.' : 'Inscripción a
+                            exámenes cerrada.' }}
+                        </p>
+                    </div>
+                </div>
+                } @else {
+                <p>No hay un ciclo lectivo activo.</p>
+                }
+            </mat-card-content>
+        </mat-card>
+
+        <!-- Create New Cycle -->
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>Iniciar Nuevo Ciclo Lectivo</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="cycleForm" (ngSubmit)="createCycle()" class="form">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Año</mat-label>
+                        <input matInput type="number" formControlName="year">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cuatrimestre</mat-label>
+                        <input matInput type="number" formControlName="fourMonthPeriod" min="1" max="2">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha Inicio</mat-label>
+                        <input matInput type="date" formControlName="startTime">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha Fin</mat-label>
+                        <input matInput type="date" formControlName="finalTime">
+                    </mat-form-field>
+
+                    <button mat-raised-button color="primary" type="submit" [disabled]="cycleForm.invalid">
+                        Crear Ciclo
+                    </button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

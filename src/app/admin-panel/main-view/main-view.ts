@@ -25,6 +25,7 @@ export class MainView {
     { name: 'Gestión de Materias', route: '/Subject' },
     { name: 'Gestión de Profesores', route: '/Professor' },
     { name: 'Gestión de Alumnos', route: '/Student' },
+    { name: 'Gestión Académica', route: '/AcademicManagement' },
   ];
   private authService = inject(AuthService);
   constructor(private router: Router) { }
