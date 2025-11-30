@@ -57,7 +57,7 @@ export class StudentLayout implements OnInit {
   }
 
   loadCareers() {
-    // Hardcoded student ID for now
+    
     this.backConnection.getStudentCareers(this.fileNumber1).subscribe(data => {
       this.careers.set(data);
       if (data.length > 0) {
@@ -68,7 +68,7 @@ export class StudentLayout implements OnInit {
 
   onCareerChange(career: Career) {
     this.selectedCareer.set(career);
-    // Here you might want to trigger a global state update or reload data
+    
     console.log('Selected career:', career);
   }
 

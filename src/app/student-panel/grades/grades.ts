@@ -19,7 +19,7 @@ export class Grades implements OnInit {
   private backConnection = inject(BackConnection);
   private authService = inject(AuthService);
 
-  // Map backend data to flat structure
+  
   grades = toSignal(this.backConnection.getStudentGrades(this.authService.currentUser()?.id || "1").pipe(
     map((data: any[]) => data.map(item => ({
       subject: item.Exam?.AcademicPosition?.Subject?.name || 'Unknown',
@@ -32,6 +32,6 @@ export class Grades implements OnInit {
   displayedColumns: string[] = ['subject', 'exam', 'grade'];
 
   ngOnInit() {
-    // No need to load subjects separately
+    
   }
 }

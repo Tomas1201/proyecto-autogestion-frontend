@@ -147,7 +147,7 @@ export class BackConnection {
 
 
 
-  //Subjects
+  
   getSubjects(): Observable<any> {
     return this.http.get(`${this.apiUrl}/Subject`);
   }
@@ -163,7 +163,7 @@ export class BackConnection {
     return this.http.post(`${this.apiUrl}/subject/`, data);
   }
 
-  //Professor
+  
   getProfessor(): Observable<any> {
     return this.http.get(`${this.apiUrl}/professor/`);
   }
@@ -182,7 +182,7 @@ export class BackConnection {
     return this.http.post(`${this.apiUrl}/professor/registerToSubject/${professorId}`, data);
   }
 
-  //Students
+  
 
   updateStudent(id: string, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/student/${id}`, data);
@@ -211,7 +211,7 @@ export class BackConnection {
     return this.http.post(`${this.apiUrl}/student/registerToSubject/${studentId}`, data);
   }
 
-  // Student Panel Methods
+  
 
   getStudentCareers(studentId: string): Observable<Career[]> {
     return this.http.get<{ status: string, data: Career[] }>(`${this.apiUrl}/student-panel/careers/${studentId}`, { withCredentials: true })
@@ -219,7 +219,7 @@ export class BackConnection {
   }
 
   getAvailableSubjectsForRegistration(studentId: string, careerId: string): Observable<any[]> {
-    // Backend infers student from token and active career
+    
     return this.http.get<{ status: string, data: any[] }>(`${this.apiUrl}/student-panel/available-subjects`, { withCredentials: true })
       .pipe(map(res => res.data));
   }
@@ -237,7 +237,7 @@ export class BackConnection {
   }
 
   getStudentExams(studentId: string): Observable<any[]> {
-    // This maps to available final exams
+    
     return this.http.get<any[]>(`${this.apiUrl}/student-panel/final-exams/${studentId}`, { withCredentials: true });
   }
 

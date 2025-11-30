@@ -23,7 +23,7 @@ export class Attendance implements OnInit {
 
   attendance = toSignal(this.backConnection.getStudentAttendance((this.userId() || "1")).pipe(
     map((data: any[]) => {
-      // Group by subject
+      
       const grouped = data.reduce((acc, curr) => {
         const subjectName = curr.AcademicPosition?.Subject?.name || 'Unknown';
         if (!acc[subjectName]) {
@@ -36,7 +36,7 @@ export class Attendance implements OnInit {
         return acc;
       }, {} as Record<string, { total: number, present: number }>);
 
-      // Calculate percentage
+      
       return Object.keys(grouped).map(subject => ({
         subject,
         attendance: Math.round((grouped[subject].present / grouped[subject].total) * 100) + '%'
@@ -47,6 +47,6 @@ export class Attendance implements OnInit {
   displayedColumns: string[] = ['subject', 'attendance'];
 
   ngOnInit() {
-    // No need to load subjects separately
+    
   }
 }

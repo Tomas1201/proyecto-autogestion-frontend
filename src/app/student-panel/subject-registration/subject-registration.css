@@ -17,7 +17,7 @@ table {
     font-size: 12px;
     margin-left: 10px;
     display: block;
-    /* Ensure it breaks line on small screens if needed, or stays inline */
+    
 }
 
 @media (max-width: 600px) {

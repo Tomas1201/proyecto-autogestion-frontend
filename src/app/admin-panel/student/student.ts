@@ -100,7 +100,7 @@ export class Student implements OnInit {
     const key = cellKey as keyof StudentI;
     const value = element[key];
 
-    // Lógica de formateo...
+    
     if (cellKey === 'career' && Array.isArray(value)) {
       return value.join(', ');
     }

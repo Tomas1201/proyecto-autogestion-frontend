@@ -1,7 +1,7 @@
 <div class="dashboard-container" *ngIf="professor()">
   <h2>Bienvenido, {{ professor()?.academicTitle }} {{ professor()?.lastName }}</h2>
   <div class="cards-grid">
-    <!-- Card 1: Mis Asignaturas -->
+    
     <mat-card class="dashboard-card">
       <mat-card-header>
         <mat-card-title>Mis Asignaturas</mat-card-title>
@@ -15,7 +15,7 @@
       </mat-card-actions>
     </mat-card>
 
-    <!-- Card 2: Disponibilidad -->
+    
     <mat-card class="dashboard-card">
       <mat-card-header>
         <mat-card-title>Disponibilidad</mat-card-title>
@@ -31,7 +31,7 @@
       </mat-card-actions>
     </mat-card>
 
-    <!-- Card 3: Legajo/Estado -->
+    
     <mat-card class="dashboard-card">
       <mat-card-header>
         <mat-card-title>Legajo/Estado</mat-card-title>
@@ -43,7 +43,7 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <!-- No specific action requested, but could link to profile -->
+        
         <button mat-button color="primary" routerLink="/professor-panel/availability">Ver Perfil</button>
       </mat-card-actions>
     </mat-card>

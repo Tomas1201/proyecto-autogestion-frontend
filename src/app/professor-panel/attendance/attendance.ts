@@ -82,9 +82,9 @@ export class ProfessorAttendance implements OnInit {
   onSubjectChange() {
     if (this.selectedSubjectId) {
       const today = new Date().toISOString().split('T')[0];
-      // Load students first
+      
       this.professorService.getStudentsBySubject(this.selectedSubjectId).subscribe(students => {
-        // Then load attendance for today
+        
         this.professorService.getAttendance(this.selectedSubjectId, today).subscribe(attendance => {
           const merged = students.map(stu => {
             const att = attendance.find(a => a.studentId === stu.studentId);

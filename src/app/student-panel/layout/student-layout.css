@@ -9,13 +9,13 @@
 .content {
   padding: 20px;
   overflow-x: auto;
-  /* Ensure content doesn't overflow horizontally on small screens */
+  
 }
 
 .active-link {
   background-color: rgba(0, 0, 0, 0.05);
   border-left: 4px solid #3f51b5;
-  /* Primary color */
+  
 }
 
 .toolbar {
@@ -37,7 +37,7 @@
   width: 200px;
 }
 
-/* Override Material Form Field styles for toolbar integration */
+
 ::ng-deep .dense-form-field .mat-mdc-form-field-subscript-wrapper {
   display: none;
 }

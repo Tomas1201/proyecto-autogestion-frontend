@@ -128,7 +128,7 @@ export class ProfessorExams implements OnInit {
 
   updateGrade(registration: any) {
     const newStatus = registration.grade >= 4 ? 'PASSED' : 'FAILED';
-    registration.status = newStatus; // Optimistic
+    registration.status = newStatus; 
     this.professorService.updateExamGrade(registration.id, registration.grade, newStatus).subscribe({
       next: () => console.log('Grade updated'),
       error: (err) => alert('Error updating grade: ' + err.message)

@@ -3,7 +3,7 @@
     flex-direction: column;
     gap: 20px;
     padding: 10px;
-    /* Add padding for mobile */
+    
 }
 
 .cards-grid {
@@ -11,13 +11,13 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    /* Center cards on mobile */
+    
 }
 
 .dashboard-card {
     width: 300px;
     max-width: 100%;
-    /* Ensure it doesn't overflow on very small screens */
+    
 }
 
 @media (max-width: 600px) {

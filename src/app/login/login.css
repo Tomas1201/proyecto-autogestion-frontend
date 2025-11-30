@@ -1,12 +1,12 @@
-/* Contenedor principal para centrar el login */
+
 .login-page-wrapper {
   display: flex;
   justify-content: center;
-  /* Centrado horizontal */
+  
   padding: 10px 0;
 }
 
-/* Estilos de responsividad para pantallas pequeñas */
+
 @media (max-width: 600px) {
   .login-card {
     margin: 10px;

@@ -24,7 +24,7 @@ export class FinalExams implements OnInit {
   private readonly snackBar = inject(MatSnackBar);
   private readonly authService = inject(AuthService);
 
-  // We use a signal to hold the exams data. 
+  
   exams = signal<Exam[]>([]);
 
   displayedColumns: string[] = ['subject', 'date', 'action'];
@@ -37,10 +37,10 @@ export class FinalExams implements OnInit {
     const studentId = this.authService.currentUser()?.id || "1";
     this.backConnection.getStudentExams(studentId).subscribe(data => {
       const mappedExams: Exam[] = data.map((item: any) => ({
-        id: item.id, // finalExamId
+        id: item.id, 
         name: item.Subject ? item.Subject.name : 'Unknown',
         examDate: new Date(item.date),
-        registered: false // Default to false as backend doesn't return this yet
+        registered: false 
       }));
       this.exams.set(mappedExams);
     });
@@ -52,7 +52,7 @@ export class FinalExams implements OnInit {
       this.backConnection.registerForExam(studentId, exam.id).subscribe({
         next: () => {
           this.snackBar.open('Inscripción exitosa', 'Cerrar', { duration: 3000 });
-          // Update local state
+          
           this.exams.update(currentExams =>
             currentExams.map(e => e.id === exam.id ? { ...e, registered: true } : e)
           );

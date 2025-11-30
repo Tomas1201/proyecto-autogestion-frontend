@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
-// Interfaz reutilizada de ConfiguredSubject para tipar los datos
+
 export interface ConfiguredSubject {
     subjectId: string;
     name: string;
@@ -13,7 +13,7 @@ export interface ConfiguredSubject {
     correlativeId: string | null;
 }
 
-// Datos que se inyectarán al modal desde CareerComponent
+
 interface SubjectModalData {
     careerName: string;
     subjects: ConfiguredSubject[];

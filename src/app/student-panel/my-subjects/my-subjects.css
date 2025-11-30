@@ -1,14 +1,14 @@
 .container {
     padding: 20px;
     overflow-x: auto;
-    /* Allow horizontal scrolling on small screens */
+    
 }
 
 table {
     width: 100%;
     margin-top: 20px;
     min-width: 600px;
-    /* Ensure table doesn't squash too much */
+    
 }
 
 @media (max-width: 600px) {

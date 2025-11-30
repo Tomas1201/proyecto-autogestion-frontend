@@ -48,7 +48,7 @@ export class AssignSubject implements OnInit {
     loadSubjects() {
         this.backConnection.getSubjects().subscribe({
             next: (response: any) => {
-                // Assuming response structure, adjust if needed
+                
                 this.subjects = response.data || response;
             },
             error: (err) => console.error('Error loading subjects', err)

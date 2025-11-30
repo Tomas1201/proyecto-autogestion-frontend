@@ -10,7 +10,7 @@ import { AuthService } from '../../auth.service';
 export interface RegistrationSubject extends Subject {
     year: number;
     prerequisitesMet: boolean;
-    registered?: boolean; // Local state to track registration during session
+    registered?: boolean; 
 }
 
 @Component({
@@ -35,14 +35,14 @@ export class SubjectRegistration implements OnInit {
     }
 
     loadSubjects() {
-        // Backend infers student from token. Passing placeholders if needed, or real data.
-        // Using fileNumber as studentId if that's what the service expects, or just 0 if backend ignores it.
-        // The user requested using currentUser elements.
+        
+        
+        
         const studentId = this.fileNumber1;
         this.backConnection.getAvailableSubjectsForRegistration(studentId, "0").subscribe(data => {
-            // Map backend AcademicPosition to RegistrationSubject
+            
             const mappedSubjects: RegistrationSubject[] = data.map((item: any) => ({
-                id: item.id, // This is academicPositionId
+                id: item.id, 
                 name: item.Subject ? item.Subject.name : 'Unknown',
                 year: item.year || 1,
                 prerequisitesMet: true,

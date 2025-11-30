@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-/* --- TÍTULO --- */
+
 h2[mat-dialog-title] {
   text-align: center;
   font-weight: 600;
@@ -98,7 +98,7 @@ button[mat-raised-button]:hover {
   transform: translateY(-1px);
 }
 
-/* --- RESPONSIVE --- */
+
 @media (max-width: 768px) {
   mat-dialog-content {
     padding: 16px;

@@ -10,9 +10,9 @@ import { AddCareer } from './add-career/add-career';
 import { EditCareer } from './edit-career/edit-career';
 import { BackConnection } from '../../back-connection.service';
 import { CommonModule } from '@angular/common';
-import { SubjectDisplayModal } from '../career/subject-display-modal/subject-display-modal'; // Asegúrate de que esta ruta sea correcta
+import { SubjectDisplayModal } from '../career/subject-display-modal/subject-display-modal'; 
 
-// Reutilizamos la interfaz de asignaturas configuradas para los datos de la carrera
+
 export interface ConfiguredSubject {
     subjectId: string;
     name: string;
@@ -25,7 +25,7 @@ export interface Career {
   name: string;
   description: string;
   duration: number;
-  subjects?: ConfiguredSubject[]; // Array de asignaturas configuradas
+  subjects?: ConfiguredSubject[]; 
 }
 
 interface CareerColumn {

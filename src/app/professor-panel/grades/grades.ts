@@ -105,7 +105,7 @@ export class ProfessorGrades implements OnInit {
   }
 
   updateStatus(student: any, newStatus: string) {
-    student.status = newStatus; // Optimistic update
+    student.status = newStatus; 
     this.professorService.updateStudentStatus(student.registrationId, newStatus, student.grade).subscribe({
       next: () => console.log(`Updated ${student.name}: Status=${newStatus}, Grade=${student.grade}`),
       error: (err) => alert('Error updating: ' + err.message)

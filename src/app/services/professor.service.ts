@@ -14,7 +14,7 @@ export class ProfessorService {
   private authService = inject(AuthService);
   private apiUrl = 'http://localhost:3000/api/v1';
 
-  // State signals
+  
   private _currentProfessor = signal<Professor | null>(null);
   private _professorSubjects = signal<ProfessorSubject[]>([]);
 
@@ -23,7 +23,7 @@ export class ProfessorService {
     if (!user) {
       throw new Error('User not authenticated');
     }
-    // Use entityId (Professor ID) if available, otherwise fallback to user ID (though this might fail if they are different)
+    
     return user.entityId || user.id;
   }
 
@@ -62,7 +62,7 @@ export class ProfessorService {
     return of(subjects.length > 0 ? subjects[0] : null);
   }
 
-  // New methods for features using Real Backend
+  
   getStudentsBySubject(subjectId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/registrations/subject/${subjectId}`).pipe(
       catchError((err) => {
@@ -86,7 +86,7 @@ export class ProfessorService {
     });
   }
 
-  // Attendance
+  
   getAttendance(subjectId: string, date: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/attendance/subject/${subjectId}/date/${date}`).pipe(
       catchError(() => of([]))
@@ -101,7 +101,7 @@ export class ProfessorService {
     });
   }
 
-  // Final Exams
+  
   getFinalExams(subjectId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/final-exams/subject/${subjectId}`).pipe(
       catchError(() => of([]))

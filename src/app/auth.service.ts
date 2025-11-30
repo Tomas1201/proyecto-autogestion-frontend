@@ -14,7 +14,7 @@ export interface User {
   name: string;
   role: UserRole;
   email?: string;
-  fileNumber?: string; // Legajo
+  fileNumber?: string; 
   entityId?: string;
 }
 
@@ -24,11 +24,11 @@ export interface User {
 export class AuthService {
   private apiUrl = 'http://localhost:3000/api/v1/auth/login';
 
-  // Signals for reactive state
+  
   currentUser = signal<User | null>(null);
   isLoggedIn = computed(() => !!this.currentUser());
 
-  // Derived signal: automatically updates when currentUser changes
+  
   userRole = computed(() => this.currentUser()?.role);
 
   constructor(private http: HttpClient) {
@@ -40,7 +40,7 @@ export class AuthService {
       tap((response: any) => {
         console.log('Login response received:', response);
 
-        // Check if token is at top level or inside data
+        
         const token = response.jwt_token || response.data?.jwt_token || response.token;
 
         if (token) {
@@ -65,7 +65,7 @@ export class AuthService {
     window.location.href = '/login';
   }
 
-  // Helper to decode JWT
+  
   private decodeTokenAndSetUser(token: string) {
     try {
       const payload = this.decodeJwtPayload(token);
@@ -80,7 +80,7 @@ export class AuthService {
         name: 'User',
         role: role,
         fileNumber: payload.file,
-        entityId: payload.entityId // Add entityId
+        entityId: payload.entityId 
       });
 
       console.log('User set from token:', this.currentUser());
@@ -96,7 +96,7 @@ export class AuthService {
     }
 
     let base64Url = parts[1];
-    // Add padding if needed
+    
     while (base64Url.length % 4) {
       base64Url += '=';
     }
@@ -110,7 +110,7 @@ export class AuthService {
     return JSON.parse(jsonPayload);
   }
 
-  // Cookie helpers
+  
   private getCookie(key: string): string | null {
     const cookies = document.cookie
       .split(";")
@@ -122,7 +122,7 @@ export class AuthService {
       console.log('Cookie found:', name, rest.join("="));
       if (name === key) {
         console.log('Cookie found:', name, rest.join("="));
-        // Las cookies pueden tener '=' en el valor, por eso usamos rest.join("=")
+        
         return decodeURIComponent(rest.join("="));
       }
     }
