@@ -23,28 +23,33 @@
                 maxlength="500"></textarea>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Materias</mat-label>
-      
-      <mat-select 
-        multiple 
-        [(ngModel)]="newCareer.materiasSeleccionadas" 
-        name="materias">
-        
-        @for (materia of materiasDisponibles; track materia.id) {
-          <mat-option [value]="materia.id">
-            {{ materia.nombre }}
-          </mat-option>
-        }
-      </mat-select>
-      
-      <mat-icon matSuffix>list</mat-icon>
-    </mat-form-field>
+    <!-- ELIMINAMOS EL mat-select Y AÑADIMOS EL BOTÓN PARA CONFIGURAR MATERIAS -->
+    <div class="full-width">
+      <button 
+        mat-flat-button 
+        color="accent" 
+        (click)="openSubjectConfiguration()" 
+        class="subject-config-button"
+        type="button">
+        <mat-icon>settings</mat-icon>
+        Configurar {{ newCareer.subjects.length }} Asignaturas
+      </button>
+      @if (newCareer.subjects.length > 0) {
+        <p class="text-sm text-green-600 mt-1">
+          {{ newCareer.subjects.length }} materias configuradas.
+        </p>
+      }
+    </div>
 
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="onCancelar()">Cancelar</button>
-  <button mat-raised-button color="primary" [disabled]="!newCareer.name || !newCareer.duration" (click)="onGuardar()">Guardar</button>
+  <button mat-raised-button 
+          color="primary" 
+          [disabled]="!newCareer.name || !newCareer.duration || newCareer.subjects.length === 0" 
+          (click)="onGuardar()">
+    Guardar
+  </button>
 </mat-dialog-actions>

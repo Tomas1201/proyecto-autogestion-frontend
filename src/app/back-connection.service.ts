@@ -5,19 +5,28 @@ import { Observable, map, throwError, BehaviorSubject, tap, catchError, of } fro
 export interface Career {
   id: string;
   name: string;
-  // Otros campos
+  duration: number; 
+  description: string; 
+  subjects: CareerSubjectDetail[]
+}
+export interface CareerSubjectDetail {
+  id: any;                
+  name: string;           
+  year: number;           
+  correlativeId: any | null; 
+  correlativeName?: string; 
 }
 
 export interface Subject {
   id: string;
   name: string;
-  // Otros campos
+  
 }
 
 export interface Professor {
   id: string;
   name: string;
-  // Otros campos
+  
 }
 
 export interface StudentI {
